@@ -70,6 +70,9 @@
 
 \newcommand{\martin}[1]{\todo[inline,color=blue!40]{MN: #1}}
 \newcommand{\fabian}[1]{\todo[inline,color=pink!40]{FK: #1}}
+\newcommand{\birgit}[1]{\todo[inline,color=red!40]{BS: #1}}
+\newcommand{\michael}[1]{\todo[inline,color=green!40]{MH: #1}}
+\newcommand{\soeren}[1]{\todo[inline,color=orange!40]{SN: #1}}
 
 \begin{document}
 
@@ -86,13 +89,15 @@
 \section{Hardness}
 \fabian{Use the reduction from Till Bruckdorfers Dissertation \cite{bruckdorferschematics}. The Clauses can be modelled as triangles, the Variables as Circles with every second segment connected to a path. Path should have even length, segments are of length four.}
 
-\section{Trees}
-\fabian{Algorithm running in $O(k^2n)$ where $ k $ is the max degree of the tree.}
 
-\section{Bridge? Cactus Graphs}
-\fabian{Algorithm running in $ O(kn^2) $?}
+\section{Two Polynomial Cases}
+\subsection{Trees}
+\fabian{Algorithm running in $O(kn)$ where $ k $ is the max degree of the tree.}
 
-\section{Series Parallel Graphs?}
+\subsection{Cacti of Degree Three}
+\fabian{Algorithm running in $ O(kn) $.}
+
+\section{Conclusion}
 
 
 \bibliography{paper}

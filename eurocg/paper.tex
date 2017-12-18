@@ -1,0 +1,100 @@
+% for section-numbered lemmas etc., use "numberwithinsect"
+\documentclass[a4paper,english,numberwithinsect]{eurocg18}
+
+% the recommended bibstyle
+\bibliographystyle{plainurl}
+
+%------------------------------------------------------------------- 
+%if unwanted, comment out or use option "draft"
+\usepackage{todonotes}
+\usepackage{microtype}
+\usepackage[noend, linesnumbered]{algorithm2e}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{cite}
+\usepackage{pifont}
+\usepackage{enumerate}
+
+% Line numbers are helpful for refereeing
+\usepackage[mathlines]{lineno}
+\newcommand*\patchAmsMathEnvironmentForLineno[1]{%
+\expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
+\expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
+\renewenvironment{#1}%
+     {\linenomath\csname old#1\endcsname}%
+     {\csname oldend#1\endcsname\endlinenomath}}%
+\newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
+  \patchAmsMathEnvironmentForLineno{#1}%
+  \patchAmsMathEnvironmentForLineno{#1*}}%
+\AtBeginDocument{%
+\patchBothAmsMathEnvironmentsForLineno{equation}%
+\patchBothAmsMathEnvironmentsForLineno{align}%
+\patchBothAmsMathEnvironmentsForLineno{flalign}%
+\patchBothAmsMathEnvironmentsForLineno{alignat}%
+\patchBothAmsMathEnvironmentsForLineno{gather}%
+\patchBothAmsMathEnvironmentsForLineno{multline}%
+}
+\linenumbers
+
+%helpful if your graphic files are in another directory
+%\graphicspath{{./graphics/}}
+
+% Author macros::begin %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\polylog{{\rm polylog}}
+
+% Author metadata::begin %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Maximal Symmetric Partial Edge Drawings With Degree $ > 2$}
+%optional, in case that the title is too long; 
+%the running title should fit into the top page column
+\titlerunning{MaxSPEDs with degree $ > 2$}
+
+%% Please provide for each author the \author and \affil macro, 
+%even when authors have the same affiliation, i.e. for each 
+%author there needs to be the  \author and \affil macros
+\author[1]{Michael H\"oller}
+\author[2]{Fabian Klute}
+\author[3]{Soeren Nickel}
+\author[4]{Martin N\"ollenburg}
+\author[5]{Birgit Schreiber}
+
+\affil[1]{TU Vienna \texttt{}}
+\affil[2]{Algorithms and Complexity Group TU Vienna \texttt{fklute@ac.tuwien.ac.at}}
+\affil[3]{TU Vienna \texttt{}}
+\affil[4]{Algorithms and Complexity Group TU Vienna \texttt{noellenburg@ac.tuwien.ac.at}}
+\affil[5]{TU Vienna \texttt{}}
+%mandatory. First: Use abbreviated first/middle names. 
+%Second (only in severe cases): Use first author plus 'et. al.'
+\authorrunning{F. Klute and M. N\"ollenburg} 
+
+% Author macros::end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\martin}[1]{\todo[inline,color=blue!40]{MN: #1}}
+\newcommand{\fabian}[1]{\todo[inline,color=pink!40]{FK: #1}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\section{Introduction}
+
+\section{Definitions}
+
+\section{Hardness}
+\fabian{Use the reduction from Till Bruckdorfers Dissertation \cite{bruckdorferschematics}. The Clauses can be modelled as triangles, the Variables as Circles with every second segment connected to a path. Path should have even length, segments are of length four.}
+
+\section{Trees}
+\fabian{Algorithm running in $O(k^2n)$ where $ k $ is the max degree of the tree.}
+
+\section{Bridge? Cactus Graphs}
+\fabian{Algorithm running in $ O(kn^2) $?}
+
+\section{Series Parallel Graphs?}
+
+
+\bibliography{paper}
+
+\end{document}

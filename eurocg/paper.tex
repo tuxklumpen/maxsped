@@ -75,6 +75,9 @@
 \newcommand{\michael}[1]{\todo[inline,color=green!40]{MH: #1}}
 \newcommand{\soeren}[1]{\todo[inline,color=orange!40]{SN: #1}}
 
+\newcommand{\ped}{\ensuremath{\textsc{PED}}\xspace}
+\newcommand{\maxsped}{\ensuremath{\textsc{MaxSped}}\xspace}
+
 \begin{document}
 
 \maketitle
@@ -94,21 +97,19 @@ Martin
 \end{itemize}
 
 \section{Preliminaries}
+%\begin{itemize}
+%	\item basic definitions and notation
+%	\item segment intersection graph
+%	\item alle planaren Graphen können auftreten (insbes. Bäume und Kakteen)
+%\end{itemize}
+%Input: $k$-plane graph drawing $\Gamma$ of a graph $G$ with edge set $S={s_1, \dots, s_m}$ (set of segments)
+%Intersection graph $C=(V,E)$ with $V=S$ and edges if two segments intersect 
+%Consider maximum degree of $C$ -- here mostly 3.
 
-Fabian
+Let $ G $ be a \emph{simple graph} with edge set $ S = \{s_1,\dots,s_m\}$ and $ \Gamma $ a straight line drawing of $ G $ in the plane. We call $ \Gamma $ \emph{$ k $-plane} if every edge $ s_i \in S $ is crossed by at most $ k $ other edges from $ S $ in $ \Gamma $. The \emph{intersection graph} $ C = (V,E) $ of $ \Gamma $ is the graph containing one vertex in $ V $ for every $ s_i \in S $ and an edge $ uv \in E $ between vertices $ u,v \in V $ whenever the to $ u $ and $ v $ corresponding edges $ s_i, s_j \in S $ intersect in $ \Gamma $. Observe that the intersection graph $ C $ of a $ k $-plane drawing $ \Gamma $ has maximum degree $ k $. Its known that every planar graph is also representable as intersection graph of line segments \cite{chalopin2009every}.
 
-\begin{itemize}
-	\item basic definitions and notation
-	\item segment intersection graph
-	\item alle planaren Graphen können auftreten (insbes. Bäume und Kakteen)
-\end{itemize}
-
-Input: $k$-plane graph drawing $\Gamma$ of a graph $G$ with edge set $S={s_1, \dots, s_m}$ (set of segments)
-
-Intersection graph $C=(V,E)$ with $V=S$ and edges if two segments intersect 
-
-Consider maximum degree of $C$ -- here mostly 3.
-
+\fabian{This part has to be adapted once the intro is fixed}
+We define a \emph{partial edge drawing} \ped $ \Gamma' $ of $ G $ as a drawing using the same embedding as $ \Gamma $, but edges are drawn as \emph{stubs}, i.e., we do not depict an edge $ s_i \in S $ by a line segment connecting the two vertices, but remove the middle part of the edges such that no two stubs intersect in $ \Gamma' $. We call a \ped $ \Gamma' $ \emph{symmetric} if for one edge $ s_is_j \in S $ its stub have equal lengths in $ \Gamma' $. Finally we define \maxsped as a symmetric \ped $ \gamma' $ of $ G $ where the sum of the lengths of the stubs is maximized.
 
 \section{Hardness}
 \fabian{Use the reduction from Till Bruckdorfers Dissertation \cite{bruckdorferschematics}. The Clauses can be modelled as triangles, the Variables as Circles with every second segment connected to a path. Path should have even length, segments are of length four.}

@@ -85,18 +85,63 @@
 
 \section{Introduction}
 
-\section{Definitions}
+Martin
+
+\begin{itemize}
+	\item motivation
+	\item related work
+	\item contribution
+\end{itemize}
+
+\section{Preliminaries}
+
+Fabian
+
+\begin{itemize}
+	\item basic definitions and notation
+	\item segment intersection graph
+	\item alle planaren Graphen können auftreten (insbes. Bäume und Kakteen)
+\end{itemize}
+
+Input: $k$-plane graph drawing $\Gamma$ of a graph $G$ with edge set $S={s_1, \dots, s_m}$ (set of segments)
+
+Intersection graph $C=(V,E)$ with $V=S$ and edges if two segments intersect 
+
+Consider maximum degree of $C$ -- here mostly 3.
+
 
 \section{Hardness}
 \fabian{Use the reduction from Till Bruckdorfers Dissertation \cite{bruckdorferschematics}. The Clauses can be modelled as triangles, the Variables as Circles with every second segment connected to a path. Path should have even length, segments are of length four.}
 
+Soeren?
+
 
 \section{Two Polynomial Cases}
-\subsection{Trees}
-\fabian{Algorithm running in $O(kn)$ where $ k $ is the max degree of the tree.}
 
-\subsection{Cacti of Degree Three}
-\fabian{Algorithm running in $ O(kn) $.}
+\begin{itemize}
+	\item dynamic programming
+	\item table entries $T_i(s)$ for $i = 1, \dots, \deg(s)$
+	\item $i$ corresponds to increasing stub lengths
+	\item stub lengths $l_i(s)$ for $i = 1, \dots, \deg(s)$ (not the pair of stubs)
+\end{itemize}
+
+\subsection{Trees}
+\fabian{Algorithm running in $O(kn)$ where $ k $ is the max degree of the tree + intersection graph bauen.}
+
+Birgit
+
+\begin{itemize}
+	\item segment $s$ with $d$ children $u_1, \dots, u_{d}$ and parent $p(s) = p$.
+	\item Assume children are sorted by their intersection points on $s$, i.e., $u_1$ produces stub length $l_1$ etc.
+	\item for stub length relating to parent use offset from next longer stub length
+\end{itemize}
+
+\subsection{Cacti (of Degree Three)}
+\fabian{Algorithm running in $ O(kn) $ + intersection graph bauen.}
+
+\begin{itemize}
+	\item seems to work for all cactus graphs
+\end{itemize}
 
 \section{Conclusion}
 

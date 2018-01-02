@@ -14,6 +14,7 @@
 \usepackage{cite}
 \usepackage{pifont}
 \usepackage{enumerate}
+\usepackage[basic]{complexity}
 
 % Line numbers are helpful for refereeing
 \usepackage[mathlines]{lineno}
@@ -40,7 +41,7 @@
 %\graphicspath{{./graphics/}}
 
 % Author macros::begin %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand\polylog{{\rm polylog}}
+%\newcommand\polylog{{\rm polylog}}
 
 % Author metadata::begin %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{Maximizing Ink in Symmetric Partial Edge Drawings of $k$-plane Graphs}
@@ -76,19 +77,38 @@
 \newcommand{\soeren}[1]{\todo[inline,color=orange!40]{SN: #1}}
 
 \newcommand{\ped}{\ensuremath{\textsc{PED}}\xspace}
-\newcommand{\maxsped}{\ensuremath{\textsc{MaxSped}}\xspace}
+\newcommand{\maxsped}{\ensuremath{\textsc{MaxSPED}}\xspace}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-
+	TBD
 \end{abstract}
 
 \section{Introduction}
 
-Martin
+Visualizing non-planar graphs as node-link diagrams is challenging due to the visual clutter caused by edge crossings. The layout readability deteriorates as the edge density and thus the number of crossings increases.
+Therefore alternative layout styles are necessary for non-planar graphs.
+A radical approach first used in applied work by Becker et al.~\cite{bew-vnd-95} is to start with a traditional straight-line graph drawing and simply drop a large central part of each edge and with it many of the edge crossings.
+This idea relies on the closure and continuation principles in Gestalt theory that based on the remaining edge stubs humans can still see the interrupted line segments by filling in the missing information in our brains.
+User studies have confirmed that such drawings remain readable while reducing clutter significantly~\cite{bvkw-epdldge-12}.
+
+Partial edge drawings have subsequently been defined as a formal notion of this idea~\cite{bk-ecbe-12,bcgkmn-pped-17}. 
+A \emph{partial edge drawing (PED)} is a graph drawing that maps vertices to points and edges to pairs of crossing-free edge stubs of positive length pointing towards each other.
+These edge stubs are obtained by erasing one contiguous central part of the straight-line segment connecting the two endpoints of each edge.
+In other words each straight-line edge is divided into three parts, of which only the two outer ones are drawn.
+More restricted variations of PEDs are \emph{symmetric} PEDs, in which both stubs of an edge must have the same length, and \emph{homogeneous} PEDs, in which the ratio of the stub length to the total edge length is the same for all edges.
+The natural optimization problem in this formal setting is \emph{ink maximization}, i.e., maximizing the total stub length, so that as much information as possible is given in the drawing while all crossings disappear in the negative background space. 
+
+In this work we study the ink maximization problem for symmetric partial edge drawings (SPEDs) with a given geometric input drawing.
+This problem is denoted as \maxsped. 
+Bruckdorfer and Kaufmann~\cite{bk-ecbe-12} presented an integer linear program for solving \maxsped. 
+Later, Bruckdorfer et al.~\cite{bcgkmn-pped-17} gave an $O(n \log n)$-time algorithm for \maxsped on the class of 2-plane input drawings (no edge has more than two crossings), where $n$ is the number of vertices, and an efficient 2-approximation algorithm for the dual problem of minimizing the amount of erased ink for arbitrary input drawings.
+Bruckdorfer~\cite{b-sgh-15} further gives an \NP-hardness proof for \maxsped.
+
+
 
 \begin{itemize}
 	\item motivation
@@ -112,7 +132,7 @@ Let $ G $ be a \emph{simple graph} with edge set $ S = \{s_1,\dots,s_m\}$ and $ 
 We define a \emph{partial edge drawing} \ped $ \Gamma' $ of $ G $ as a drawing using the same embedding as $ \Gamma $, but edges are drawn as \emph{stubs}, i.e., we do not depict an edge $ s_i \in S $ by a line segment connecting the two vertices, but remove the middle part of the edges such that no two stubs intersect in $ \Gamma' $. We call a \ped $ \Gamma' $ \emph{symmetric} if for one edge $ s_is_j \in S $ its stub have equal lengths in $ \Gamma' $. Finally we define \maxsped as a symmetric \ped $ \gamma' $ of $ G $ where the sum of the lengths of the stubs is maximized.
 
 \section{Hardness}
-\fabian{Use the reduction from Till Bruckdorfers Dissertation \cite{bruckdorferschematics}. The Clauses can be modelled as triangles, the Variables as Circles with every second segment connected to a path. Path should have even length, segments are of length four.}
+\fabian{Use the reduction from Till Bruckdorfers Dissertation \cite{b-sgh-15}. The Clauses can be modelled as triangles, the Variables as Circles with every second segment connected to a path. Path should have even length, segments are of length four.}
 
 Soeren?
 

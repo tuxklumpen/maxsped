@@ -89,9 +89,9 @@
 	Partial edge drawing (PED) is a drawing style for non-planar graphs, in which edges are drawn only partially as pairs of opposing stubs on the respective end-vertices. 
 	In a PED, by erasing the central parts of edges, all edge crossings and the resulting visual clutter are hidden in the undrawn parts of the edges.
 	We study symmetric partial edge drawings (SPEDs), in which the two stubs of each edge are required to have the same length. 
-	It is known that maximizing the ink (or the total stub length) when transforming a straight-line drawing with crossings into a SPED is generally \NP-hard.
+	It is known that maximizing the ink (or the total stub length) when transforming a straight-line drawing with crossings into a SPED is tractable for 2-plane input drawings, but generally \NP-hard.
 	We show that the problem remains \NP-hard even for 3-plane input drawings.
-	For $k$-plane input drawings whose edge intersection graph forms a collection of trees or cacti we present polynomial time algorithms for ink maximization.
+	Yet, for $k$-plane input drawings whose edge intersection graph forms a collection of trees or cacti we present efficient algorithms for ink maximization.
 \end{abstract}
 
 \section{Introduction}
@@ -130,7 +130,7 @@ Bruckdorfer~\cite{b-sgh-15} further gives an \NP-hardness proof for \maxsped.
 
 \noindent\textbf{Contribution.} We extend the results of Bruckdorfer et al.~\cite{bcgkmn-pped-17} on 2-plane geometric graph drawings to $k$-plane graph drawings for $k > 2$. 
 In particular, we show that \maxsped is \NP-hard even for 3-plane input drawings. 
-However, for graph drawings whose edge intersection graphs are trees or cacti of maximum degree $k$, we give polynomial-time algorithms for solving \maxsped.
+However, for $k$-plane graph drawings whose edge intersection graphs are collections of trees or cacti (which have maximum degree $k$), we give polynomial-time algorithms for solving \maxsped.
 
 
 

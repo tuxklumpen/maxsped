@@ -146,13 +146,13 @@ However, for $k$-plane graph drawings whose edge intersection graphs are collect
 %Intersection graph $C=(V,E)$ with $V=S$ and edges if two segments intersect 
 %Consider maximum degree of $C$ -- here mostly 3.
 
-Let $ G $ be a \emph{simple graph} with edge set $ S = \{s_1,\dots,s_m\}$ and $ \Gamma $ a straight line drawing of $ G $ in the plane. We call $ \Gamma $ \emph{$ k $-plane} if every edge $ s_i \in S $ is crossed by at most $ k $ other edges from $ S $ in $ \Gamma $. The \emph{intersection graph} $ C = (V,E) $ of $ \Gamma $ is the graph containing a vertex $v_i$ in $ V $ for every $ s_i \in S $ and an edge $ v_i v_j \in E $ between vertices $ v_i, v_j \in V $ if the corresponding edges $ s_i, s_j \in S $ intersect in $ \Gamma $. Observe that the intersection graph $ C $ of a $ k $-plane drawing $ \Gamma $ has maximum degree $ k $. It is known that every planar graph is representable as the intersection graph of line segments~\cite{chalopin2009every}.
+Throughout the paper let $ G $ be a \emph{simple graph} with edge set $ S = \{s_1,\dots,s_m\}$ and $ \Gamma $ a straight line drawing of $ G $ in the plane. We call $ \Gamma $ \emph{$ k $-plane} if every edge $ s_i \in S $ is crossed by at most $ k $ other edges from $ S $ in $ \Gamma $. The \emph{intersection graph} $ C = (V,E) $ of $ \Gamma $ is the graph containing a vertex $v_i$ in $ V $ for every $ s_i \in S $ and an edge $ v_i v_j \in E $ between vertices $ v_i, v_j \in V $ if the corresponding edges $ s_i, s_j \in S $ intersect in $ \Gamma $. Observe that the intersection graph $ C $ of a $ k $-plane drawing $ \Gamma $ has maximum degree $ k $. Also it is known that every planar graph is representable as the intersection graph of line segments~\cite{chalopin2009every}.
 
-\fabian{This part has to be adapted once the intro is fixed}
-
-We define a \emph{partial edge drawing} (\ped) $ \Gamma' $ of $ G $ as a drawing using the same embedding as $ \Gamma $, but edges are drawn as \emph{stubs}, i.e., we do not depict an edge $ s_i \in S $ by a line segment connecting the two vertices, but remove the middle part of the edges such that no two stubs intersect in $ \Gamma' $. We call a \ped $ \Gamma' $ \emph{symmetric} if for every edge $ s_i s_j \in S $ its two stubs have equal lengths in $ \Gamma' $. Finally we define the problem \maxsped as finding a symmetric \ped $ \Gamma' $ of $ G $ where the sum of the lengths of the stubs is maximized. This is also known as ink maximization~\cite{bcgkmn-pped-17}.
-
-\martin{Maybe we don't need the above paragraph as PED, SPED, maxSPED are all somewhat defined in the introduction}
+%\fabian{This part has to be adapted once the intro is fixed}
+%
+%We define a \emph{partial edge drawing} (\ped) $ \Gamma' $ of $ G $ as a drawing using the same embedding as $ \Gamma $, but edges are drawn as \emph{stubs}, i.e., we do not depict an edge $ s_i \in S $ by a line segment connecting the two vertices, but remove the middle part of the edges such that no two stubs intersect in $ \Gamma' $. We call a \ped $ \Gamma' $ \emph{symmetric} if for every edge $ s_i s_j \in S $ its two stubs have equal lengths in $ \Gamma' $. Finally we define the problem \maxsped as finding a symmetric \ped $ \Gamma' $ of $ G $ where the sum of the lengths of the stubs is maximized. This is also known as ink maximization~\cite{bcgkmn-pped-17}.
+%
+%\martin{Maybe we don't need the above paragraph as PED, SPED, maxSPED are all somewhat defined in the introduction}
 
 \section{Hardness}
 \fabian{Use the reduction from Till Bruckdorfers Dissertation \cite{b-sgh-15}. The Clauses can be modelled as triangles, the Variables as Circles with every second segment connected to a path. Path should have even length, segments are of length four.}

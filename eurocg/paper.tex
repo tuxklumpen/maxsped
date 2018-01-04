@@ -80,6 +80,8 @@
 
 \newcommand{\ped}{\ensuremath{\textsc{PED}}\xspace}
 \newcommand{\maxsped}{\ensuremath{\textsc{MaxSPED}}\xspace}
+\newcommand{\sollong}{\ensuremath{\textit{long}}\xspace}
+\newcommand{\solshort}{\ensuremath{\textit{short}}\xspace}
 
 \begin{document}
 
@@ -162,23 +164,60 @@ Soeren?
 
 \section{Two Polynomial Cases}
 
-\begin{itemize}
-	\item dynamic programming
-	\item table entries $T_i(s)$ for $i = 1, \dots, \deg(s)$
-	\item $i$ corresponds to increasing stub lengths
-	\item stub lengths $l_i(s)$ for $i = 1, \dots, \deg(s)$ (not the pair of stubs)
-\end{itemize}
+%\begin{itemize}
+%	\item dynamic programming
+%	\item table entries $T_i(s)$ for $i = 1, \dots, \deg(s)$
+%	\item $i$ corresponds to increasing stub lengths
+%	\item stub lengths $l_i(s)$ for $i = 1, \dots, \deg(s)$ (not the pair of stubs)
+%\end{itemize}
+Let $ C = (V,E) $ be the intersection graph of a graph $ G $ with edge set $ S $ and a drawing $ \Gamma $ of $ G $. Let $ u \in V $ with degree $ k $ and $ s \in S $ the corresponding edge in $ G $. There are $ k $ possible stub lengths $ \ell_1, \dots, \ell_k $. We assume $ \ell_1,\dots,\ell_k $ to be sorted from smaller to longer stubs. Additionally there is the possibility of drawing $ s $ as a complete segment which we set as $ \ell_0 $
 
 \subsection{Trees}
-\fabian{Algorithm running in $O(kn)$ where $ k $ is the max degree of the tree + intersection graph bauen.}
+Here we assume $ C = (V,E) $ to be a tree of maximum degree $ k $. We give a bottom up dynamic program solving the \maxsped problem on $ C $. We store the partial solutions for each vertex $ u \in V $ and stub length $ \ell_i $ of $ u $ in $ T_i(u) $. If $ u $ is a leaf there are exactly two such values. Now let $ u $ be a vertex with degree $ k' \leq k$. There are exactly $ k' + 1 $ possibilities for the drawn stubs of $ u $, still of those $ k' + 1 $ possibilities only two are of interest to us. 
 
-Birgit
+\begin{figure}
+	\centering
+	\includegraphics{two_solutions_needed}
+	\caption{Consider $ u $, then only the blue and the green solution are relevant.}
+	\label{fig:two_solutions}
+\end{figure}
+Since we know $ C $ is a tree every vertex $ u \in V $ has a parent $ p(u) \in V $. For this parent there exists one stub length $ \ell_j(p(u)) $ in the sequence of stub lengths $ \ell_0(p(u)),\dots,\ell_{k'}(p(u)) $ such that drawing $ p(u) $ with these stubs does not intersect a completely drawn $ u $, while drawing $ p(u) $ with $ \ell_{j + 1}(p(u)) $, i.e. the next longer stub length, intersects $ \ell_0(u) $. We call the solution which would intersect the parent $ \sollong(u) $ and the one not intersecting the parent $ \solshort(u) $. More formally let $ j $ be the index such that stubs of length $ \ell_j(p(u)) $ do not intersect $ s(u) $, but $ \ell_{j +1}(p(u)) $ would. Then:
+\begin{align*}
+	\solshort(u) = \max\{T_1(u),\dots,T_j(u)\} \\
+	\sollong(u) = \max\{T_0(u),\dots,T_{k'}(u)\}
+\end{align*}
 
-\begin{itemize}
-	\item segment $s$ with $d$ children $u_1, \dots, u_{d}$ and parent $p(s) = p$.
-	\item Assume children are sorted by their intersection points on $s$, i.e., $u_1$ produces stub length $l_1$ etc.
-	\item for stub length relating to parent use offset from next longer stub length
-\end{itemize}
+Assuming the solutions for all children $ c(u) $ of $ u $ are computed we can calculate $ T_i(u) $ as:
+
+\begin{align*}
+	T_i(u) = \ell_i + \sum_{v \in c(u)}
+	\begin{cases}
+		\solshort(v) & \text{if } s(u) \text{ with length } \ell_i \text{ intersects } s(v) \\
+		\max\{\solshort(v),\sollong(v)\} & \text{else}
+	\end{cases}
+\end{align*}
+
+\begin{lemma}
+	\label{lem:compute_vertex}
+	Let $ C = (V,E) $ be a tree with maximum degree $ k $ and vertex weights $ \ell_0,\dots,\ell_{k'} $ for every $ u \in V $ with degree $ k' $. The set $ \{T_i(u) \mid 0 \leq i < k' \} $ can be computed in $ O(k') $ time and space, if the values $ \sollong(v) $ and $ \solshort(v) $ are computed for all children $ v \in c(u) $.
+\end{lemma}
+
+\begin{theorem}
+	Let $ G $ be a simple graph and $ \Gamma $ a straight-line drawing of $ G $, if the intersection graph $ C = (V,E) $ of $ G $ is a tree with maximum degree $ k \in \mathbb{N} $ the \maxsped problem can be solved in $ O(kn) $ time and space.
+\end{theorem}
+\begin{proof}
+	The intersection graph $ C = (V,E) $ and the necessary weights $ \ell_i $ can be computed in quadratic time in number of vertices of $ G $.
+	
+	Let $ u \in V $ be a leaf, then computing $ T_i(u) $ takes constant time, since there are only two possible stub length, hence computing $ \sollong(u) $ and $ \solshort(u) $ takes also just constant time.
+	
+	Let $ u \in V $ be not a leaf, but for all children $ v \in c(u) $ we know the values $ \solshort(v) $ and $ \sollong(v) $ for every stub length $ \ell_i(v) $. By Lemma~\ref{lem:compute_vertex} we can compute $ \sollong(u) $ and $ \solshort(u) $ in $ O(k) $. Hence if $ r \in V $ is the root of the tree $ C $, computing $ T_i(r) $ for all $ i $ takes $ O(nk) $ time. The maximum of
+\end{proof}
+
+%\begin{itemize}
+%	\item segment $s$ with $d$ children $u_1, \dots, u_{d}$ and parent $p(s) = p$.
+%	\item Assume children are sorted by their intersection points on $s$, i.e., $u_1$ produces stub length $l_1$ etc.
+%	\item for stub length relating to parent use offset from next longer stub length
+%\end{itemize}
 
 \subsection{Cacti (of Degree Three)}
 \fabian{Algorithm running in $ O(kn) $ + intersection graph bauen.}

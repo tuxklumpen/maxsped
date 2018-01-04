@@ -210,7 +210,9 @@ Assuming the solutions for all children $ c(u) $ of $ u $ are computed we can ca
 	
 	Let $ u \in V $ be a leaf, then computing $ T_i(u) $ takes constant time, since there are only two possible stub length, hence computing $ \sollong(u) $ and $ \solshort(u) $ takes also just constant time.
 	
-	Let $ u \in V $ be not a leaf, but for all children $ v \in c(u) $ we know the values $ \solshort(v) $ and $ \sollong(v) $ for every stub length $ \ell_i(v) $. By Lemma~\ref{lem:compute_vertex} we can compute $ \sollong(u) $ and $ \solshort(u) $ in $ O(k) $. Hence if $ r \in V $ is the root of the tree $ C $, computing $ T_i(r) $ for all $ i $ takes $ O(nk) $ time. The maximum of
+	Let $ u \in V $ be not a leaf, but for all children $ v \in c(u) $ we know the values $ \solshort(v) $ and $ \sollong(v) $ for every stub length $ \ell_i(v) $. By Lemma~\ref{lem:compute_vertex} we can compute $ \sollong(u) $ and $ \solshort(u) $ in $ O(k) $. Hence if $ r \in V $ is the root of the tree $ C $, computing $ T_i(r) $ for all $ i $ takes $ O(nk) $ time.
+	
+	It remains to show that the maximum over all $ T_i(r) $, with $ r \in V $ being the root, is the optimal value over all solutions to the \maxsped problem on $ G $. Assume $ t $ is the maximum value for some $ T_i(r) $'s and $ r $ the root. Let $ t' $ be the value of another solution on $ G $ with drawing $ \Gamma $ and $ t' > t $. 
 \end{proof}
 
 %\begin{itemize}

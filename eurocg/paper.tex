@@ -148,7 +148,9 @@ However, for $k$-plane graph drawings whose edge intersection graphs are collect
 %Intersection graph $C=(V,E)$ with $V=S$ and edges if two segments intersect 
 %Consider maximum degree of $C$ -- here mostly 3.
 
-Throughout the paper let $ G $ be a \emph{simple graph} with edge set $ S = \{s_1,\dots,s_m\}$ and $ \Gamma $ a straight line drawing of $ G $ in the plane. We call $ \Gamma $ \emph{$ k $-plane} if every edge $ s_i \in S $ is crossed by at most $ k $ other edges from $ S $ in $ \Gamma $. The \emph{intersection graph} $ C = (V,E) $ of $ \Gamma $ is the graph containing a vertex $v_i$ in $ V $ for every $ s_i \in S $ and an edge $ v_i v_j \in E $ between vertices $ v_i, v_j \in V $ if the corresponding edges $ s_i, s_j \in S $ intersect in $ \Gamma $. Observe that the intersection graph $ C $ of a $ k $-plane drawing $ \Gamma $ has maximum degree $ k $. Also it is known that every planar graph is representable as the intersection graph of line segments~\cite{chalopin2009every}.
+Throughout the paper let $ G $ be a \emph{simple graph} with edge set $ S = \{s_1,\dots,s_m\}$ and $ \Gamma $ a straight line drawing of $ G $ in the plane. We call $ \Gamma $ \emph{$ k $-plane} if every edge $ s_i \in S $ is crossed by at most $ k $ other edges from $ S $ in $ \Gamma $. We use the terms edge in $ S $ and segment in $ \Gamma $ interchangeable, since there will always be a drawing $ \Gamma $ given with the graph $ G $. 
+
+The \emph{intersection graph} $ C = (V,E) $ of $ \Gamma $ is the graph containing a vertex $v_i$ in $ V $ for every $ s_i \in S $ and an edge $ v_i v_j \in E $ between vertices $ v_i, v_j \in V $ if the corresponding edges $ s_i, s_j \in S $ intersect in $ \Gamma $. Observe that the intersection graph $ C $ of a $ k $-plane drawing $ \Gamma $ has maximum degree $ k $. Also it is known that every planar graph is representable as the intersection graph of line segments~\cite{chalopin2009every}.
 
 %\fabian{This part has to be adapted once the intro is fixed}
 %
@@ -170,10 +172,10 @@ Soeren?
 %	\item $i$ corresponds to increasing stub lengths
 %	\item stub lengths $l_i(s)$ for $i = 1, \dots, \deg(s)$ (not the pair of stubs)
 %\end{itemize}
-Let $ C = (V,E) $ be the intersection graph of a graph $ G $ with edge set $ S $ and a drawing $ \Gamma $ of $ G $. Let $ u \in V $ with degree $ k $ and $ s \in S $ the corresponding edge in $ G $. There are $ k $ possible stub lengths $ \ell_1, \dots, \ell_k $. We assume $ \ell_1,\dots,\ell_k $ to be sorted from smaller to longer stubs. Additionally there is the possibility of drawing $ s $ as a complete segment which we set as $ \ell_0 $
+Let $ C = (V,E) $ be the intersection graph of a graph $ G $ with edge set $ S $ and a drawing $ \Gamma $ of $ G $. Let $ u \in V $ with degree $ k $ and $ s \in S $ the corresponding edge in $ G $. For a vertex $ u \in V $ there are $ k $ possible stub lengths $ \ell_1(u), \dots, \ell_k(u) $. We assume $ \ell_1(u),\dots,\ell_k(u) $ to be sorted from smaller to longer stubs. Additionally there is the possibility of drawing $ s $ as a complete segment which we set as $ \ell_0(u) $. We say an edge $ s $ is drawn with stub length $ \ell_i(u) $ to indicate that we draw only the two stubs of length $ \ell_i(u) $ and delete the middle part.
 
 \subsection{Trees}
-Here we assume $ C = (V,E) $ to be a tree of maximum degree $ k $. We give a bottom up dynamic program solving the \maxsped problem on $ C $. We store the partial solutions for each vertex $ u \in V $ and stub length $ \ell_i $ of $ u $ in $ T_i(u) $. If $ u $ is a leaf there are exactly two such values. Now let $ u $ be a vertex with degree $ k' \leq k$. There are exactly $ k' + 1 $ possibilities for the drawn stubs of $ u $, still of those $ k' + 1 $ possibilities only two are of interest to us. 
+Here we assume $ C = (V,E) $ to be a tree of maximum degree $ k $. We give a bottom up dynamic program solving the \maxsped problem on $ C $. We store the partial solutions for each vertex $ u \in V $ and stub length $ \ell_i(u) $ in $ T_i(u) $. If $ u $ is a leaf there are exactly two such values. Now let $ u $ be a vertex with degree $ k' \leq k$. There are exactly $ k' + 1 $ possibilities for the drawn stubs of $ u $, still of those $ k' + 1 $ possibilities only two are of interest to us.
 
 \begin{figure}
 	\centering
@@ -189,18 +191,22 @@ Since we know $ C $ is a tree every vertex $ u \in V $ has a parent $ p(u) \in V
 
 Assuming the solutions for all children $ c(u) $ of $ u $ are computed we can calculate $ T_i(u) $ as:
 
-\begin{align*}
+\begin{align}
+	\label{rec:tree}
 	T_i(u) = \ell_i + \sum_{v \in c(u)}
 	\begin{cases}
 		\solshort(v) & \text{if } s(u) \text{ with length } \ell_i \text{ intersects } s(v) \\
 		\max\{\solshort(v),\sollong(v)\} & \text{else}
 	\end{cases}
-\end{align*}
+\end{align}
 
 \begin{lemma}
 	\label{lem:compute_vertex}
 	Let $ C = (V,E) $ be a tree with maximum degree $ k $ and vertex weights $ \ell_0,\dots,\ell_{k'} $ for every $ u \in V $ with degree $ k' $. The set $ \{T_i(u) \mid 0 \leq i < k' \} $ can be computed in $ O(k') $ time and space, if the values $ \sollong(v) $ and $ \solshort(v) $ are computed for all children $ v \in c(u) $.
 \end{lemma}
+\begin{proof}
+	Let $ u \in V $ be a vertex with degree $ k' < k $ for which we have computed $ \sollong $ and $ \solshort $ for every of its children. The crucial part is that $ T_i(u) $ can be built iteratively by going through the list of stub lengths for $ u $ in ascending order. First we compute $ T_1(u) $, this is simply the solution for $ u $ in which we can draw all its children and the parent with their full segments. This means we need to build the sum of $ \ell_1(u) $ and the $ \sollong(v) $ for every $ v \in c(u) $ which runs in $ O(k') $. The same can be done for $ T_0(u) $, but taking all the $ \solshort(v) $ values for the children $ v \in c(u) $. Assume we computed $ T_j(u) $ for all stub lengths $ \ell_(i) $ with $ i \leq j $. Now we want to compute $ T_{j+1}(u) $. By drawing $ s(u) $ with stub length $ \ell_{j +1} $ we make it a bit longer since we consider the $ \ell_i(u) $ in ascending order. Hence by doing so we now intersect the $ j $-th child $ v_j \in c(u) $. Since $ s(v_j) $ is the only segment affected by drawing $ u $ with stub length $ \ell_{j + 1} $ instead of $ \ell_j $ we can compute $ T_{j+1}(u) $ by subtracting simply $ \sollong(v) $ and adding $ \solshort(v) $.
+\end{proof}
 
 \begin{theorem}
 	Let $ G $ be a simple graph and $ \Gamma $ a straight-line drawing of $ G $, if the intersection graph $ C = (V,E) $ of $ G $ is a tree with maximum degree $ k \in \mathbb{N} $ the \maxsped problem can be solved in $ O(kn) $ time and space.
@@ -212,7 +218,7 @@ Assuming the solutions for all children $ c(u) $ of $ u $ are computed we can ca
 	
 	Let $ u \in V $ be not a leaf, but for all children $ v \in c(u) $ we know the values $ \solshort(v) $ and $ \sollong(v) $ for every stub length $ \ell_i(v) $. By Lemma~\ref{lem:compute_vertex} we can compute $ \sollong(u) $ and $ \solshort(u) $ in $ O(k) $. Hence if $ r \in V $ is the root of the tree $ C $, computing $ T_i(r) $ for all $ i $ takes $ O(nk) $ time.
 	
-	It remains to show that the maximum over all $ T_i(r) $, with $ r \in V $ being the root, is the optimal value over all solutions to the \maxsped problem on $ G $. Assume $ t $ is the maximum value for some $ T_i(r) $'s and $ r $ the root. Let $ t' $ be the value of another solution on $ G $ with drawing $ \Gamma $ and $ t' > t $. 
+	It remains to show that the maximum over all $ T_i(r) $, with $ r \in V $ being the root, is the optimal value over all solutions to the \maxsped problem on $ G $. Assume $ t $ is the maximum value for some $ T_i(r) $'s and $ r $ the root. Let $ t' $ be the value of another solution on $ G $ with drawing $ \Gamma $ and $ t' > t $. This solution has to be the sum of a set of stub lengths for each edge in $ G $ such that no two stubs intersect. Further we know the stubs can be categorized into two sets relative to their parent. Then if there was a solution $ t' $ with larger value than $ t $ there would necessarily be a third set, since Recurrence~\ref{rec:tree} builds just the maximum over the $ \solshort $ and $ \sollong $ values, such that no two stubs intersect.
 \end{proof}
 
 %\begin{itemize}

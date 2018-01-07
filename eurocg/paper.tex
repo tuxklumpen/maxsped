@@ -17,6 +17,7 @@
 \usepackage[basic]{complexity}
 \usepackage{subcaption}
 \usepackage{wrapfig}
+\usepackage{graphicx}
 
 % Line numbers are helpful for refereeing
 \usepackage[mathlines]{lineno}
@@ -80,6 +81,7 @@
 
 \newcommand{\ped}{\ensuremath{\textsc{PED}}\xspace}
 \newcommand{\maxsped}{\ensuremath{\textsc{MaxSPED}}\xspace}
+\newcommand{\ppsat}{\ensuremath{\textsc{Positive Planar 1-in-3 SAT}}\xspace}
 \newcommand{\sollong}{\ensuremath{\textit{long}}\xspace}
 \newcommand{\solmid}{\ensuremath{\textit{midt}}\xspace}
 \newcommand{\solshort}{\ensuremath{\textit{short}}\xspace}
@@ -164,25 +166,81 @@ Using a standard sweep-line algorithm, computing the intersection graph $C$ of a
 \section{Hardness of \maxsped for $k\ge3$}\label{sec:hardness}
 \fabian{Use the reduction from Till Bruckdorfers Dissertation \cite{b-sgh-15}. The Clauses can be modelled as triangles, the Variables as Circles with every second segment connected to a path. Path should have even length, segments are of length four.}
 
-\soeren{comilation didn't work yet}
+\soeren{Should the graph in this section too be called G and its drawing $\Gamma$? Also,~\cite{b-sgh-15} claims, paths need to have not only even but equal length, which seems plausible and helps my argument. I'm however not sure if it is actually necessary.}
 
-To that \maxsped is \NP-hard even for 3-plane input drawings, we will provide a reduction from the \NP-hard positive planar 1-in-3SAT to \maxsped, similar to Till Bruckdorfers Dissertation \cite{b-sgh-15}. An incremental explanation of positive planar 1-in-3SAT would be: Given a formula $\phi$ in 3-CNF, in which every single occurring literal is not negated (positive). Consider the graph $P(\phi)$ that contains a vertex for each clause (clause vertex) and a vertex for each variable (variable vertex) and every variable vertex is connected via an edge with a clause vertex, if and only if the variable occurs in the corresponding clause. If $P(\phi)$ is planar, $\phi$ and a planar embedding $\Pi$ of $P(\phi)$ is an instance of positive planar 1-in-3SAT. The problem is to decide whether $\phi$ has a satisfying truth assignment, such that only one (and since it is a satisfying assignment, exactly one) variable in each clause is set to true.
+To show that \maxsped is \NP-hard even for 3-plane input drawings, we will provide a reduction from the \NP-hard \ppsat to \maxsped, similar to Till Bruckdorfers Dissertation \cite{b-sgh-15}. An incremental explanation of \ppsat would be: Given a formula $\phi$ in 3-CNF, in which every single occurring literal is not negated (positive). Consider the graph $P(\phi)$ that contains a vertex for each clause (clause vertex) and a vertex for each variable (variable vertex) and every variable vertex is connected via an edge with a clause vertex, if and only if the variable occurs in the corresponding clause. If $P(\phi)$ is planar, $\phi$ and a planar embedding $\Pi$ of $P(\phi)$ is an instance of \ppsat. The problem is to decide whether $\phi$ has a satisfying truth assignment, such that only one (and since it is a satisfying assignment, exactly one) variable in each clause is set to true.
 
-We create an instance of \maxsped out of an instance of positive planar 1-in-3SAT by creating:
-\begin{itemize}
-	\item a triangle of overlapping lines for every clause vertex
-	\item a circle of overlapping lines of even length for every variable vertex
-	\item a path of overlapping lines of even length for every connection between a variable vertex and a clause vertex in $\Pi$
-\end{itemize}
-\soeren{all these points need to be illustrated with suitable pictures}
-\soeren{TODO: explain construction in more detail, argue equivalence (both direction)}
+\begin{figure}
+	\centering
+	\hfill
+	\includegraphics[width=.2\linewidth]{clause_to_triangle}
+	\hfill
+	\includegraphics[width=.5\linewidth]{variable_to_circle}
+	\caption{A triangle representing a clause, with unit lengths (a) and circles of segments representing variables, coloured in red and green (b).}
+	\label{fig:gadgets}
+\end{figure}
 
+We create a graph G which is an instance of \maxsped out of an instance of \ppsat by creating the following components.
 
+%\begin{itemize}
+%	\item a triangle of overlapping lines for every clause vertex (Fig.~\ref{fig:gadgets} (a))
+%	\item a circle of overlapping lines of even length for every variable vertex (Fig.~\ref{fig:gadgets} (b))
+%	\item a path of overlapping lines of even length for every connection between a variable vertex and a clause vertex in $\Pi$ (Fig.~\ref{fig:gadget_connection})
+%\end{itemize}
 
-We construct our instance of positive planar 1-in-3SAT in the following fashion:
-\begin{itemize}
-	\item 
-\end{itemize} 
+A triangle (gadget clause) of overlapping lines $l_{x_a}$, $l_{x_b}$, and $l_{x_c}$ is constructed for each clause $(x_a \lor x_b \lor x_c)$ such that each edge of the trinagle is split into two stubs of length 1 and a middle part of length 2 (see Fig~\ref{fig:gadgets}(a)). Each edge of this clause gadget will be connected to exactly one variable gadget since every clause in $\phi$ consists of exactly three literals. Observe that only one edge at a time can be drawn completely since it intersects both other edges, that the optimal solution in terms of maximized ink is drawing one edge completely (4 units) and the stubs of the other two edges (2 units respectively), so 8 units in total and that all three solutions are equivalent.
+
+\begin{wrapfigure}[11]{r}{0.45\textwidth}
+	\centering
+	\includegraphics[width=.45\linewidth]{circle_true}
+	\hfill
+	\includegraphics[width=.45\linewidth]{circle_false}
+	\caption{Variable gadget representing a true variable (a) and a false variable (b)}
+	\label{fig:optimal_circles}
+\end{wrapfigure}
+
+Circles of segments (variable gadgets) are constructed in a very similar fashion. Let $m$ be the maximum number of clauses in which a single variable appears. Every variable $x_n$ will be represented by $m$ pairs of segments one red and one green which are connected as seen in Fig.~\ref{fig:gadgets} (b) and form a circle. It can be observed that every segment $s_n$ intersects exactly 2 other segments $s_{n-1}$ and $s_{n+1}$ ($s_{2m}$ intersects with $s_1$ to create the circle). These intersections split every segmet in three parts, which again have length 1 for the stubs and 2 for the middle part. If $x$ is true, the green edges will be drawn completely, if it is false the red edges will be drawn completely. Observe that fixing a green edge to be drawn completely fixes all green edges to be drawn completely, like in Fig.~\ref{fig:optimal_circles} (a) (in order to have an optimal solution for this circle) and conversely for the red edges, like in Fig.~\ref{fig:optimal_circles} (b). We will associate the first version, with subdivided green edges, with the variable being true and the second one with the variable being false. Since all edges are cut in the same fashion, the two solutions are equivalent in terms of maximized ink and amount to $4m + 2m = 6m$.
+
+The variable clauses are arranged on a spine and the clause gadgets are placed above or below the spine, according to the planar embedding of the \ppsat. Then the clause gadgets are connected to the variable gadgets corresponding to the occuring variables via segment chains (see Fig.\ref{fig:gadget_connection}, segment chains are for the sake of visualization not all equally long). These chains are composed of $t$ (where $t$ is an sufficiently large even integer) equal length segments $s_1$, \dots, $s_t$, which are again coloured alternatingly red and green. Every segment $s_i$ crosses with $s_{i-1}$ (except for $s_1$) and $s_{i+1}$ (except for $s_t$). All segments are divided again into 3 parts with the stubs having length 1, and the middle part having length 2. $s_1$ is also split in this ratio by one of the green stubs of a variable gadget, however the stub is intersected such that the remaining stub has length $1-\varepsilon$. The same holds for $s_t$ and a stub of an edge in the clause gadget. Here again the optimal solution in terms of maximizing ink is by drawing either all green edges completely and all red ones as stubs, or vice versa. Both solutions have a value of $4\frac{t}{2} + 2\frac{t}{2} = 3t$. It should be noted that completely drawing the red edges cuts of a small piece (of length $\varepsilon$) of the stubs of both the green edge of the variable gadget and the edge of the clause gadget, to which the chain is connected.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\linewidth]{variable_clause_connection}
+	\caption{Connection between the clause and variable gadgets, created by chains of an even number of segments.}
+	\label{fig:gadget_connection}
+\end{figure}
+
+Let $q$ be the number of clauses and $p$ be the number of distinct variables in $\phi$.
+
+\begin{lemma}
+	\label{lem:optimal value}	 
+	The construcetd Graph G has an optimal  value in terms of maximizing ink of $8q + 6mp + 9qt - (4q + 2p)\varepsilon$ if $\varepsilon$ is chosen sufficiently small.
+\end{lemma}
+
+\begin{proof}
+	\soeren{i have an idea for this but i don't know if it would be out of scope, or if i might not even need this lemma. Also is our \maxsped defined as "Does this graph have a drawing with at least x amount of ink?" since thats what this bound is aiming at?"}
+\end{proof}
+\soeren{it also still needs to be shown that this bound ensures that the two criterias from~\cite{b-sgh-15}, namely that at least one edge in the triangle is drawn and that the segment chains are alternatingly drawn and not drawn.}
+
+\begin{theorem}
+	Computing a \maxsped for 3-planar graphs is \NP-hard.
+\end{theorem}
+
+\begin{proof}
+	Let $\phi$ be a boolean formula and $\Pi$ be a planar embedding corresponding to that formula sucht that ($\phi$, $\Pi$) is an instance of \ppsat. Let $\Gamma$ be a drawing constructed from that instance in the previously described way. We will show that there is a valid truth assignement for $\phi$ if and only if $\Gamma$ admits a \maxsped with a value of at least $8q + 6mp + 3q (3t - 4\varepsilon)$ in terms of maximizing ink.
+	~
+	\begin{enumerate}
+		\item[$\Rightarrow$:] Let $x$ be a variable and $c$ be a clause containing $x$. If $x$ is true draw all red edges in the associated variable gadget completely, which in turn means all green edges are drawn partially and vice versa for when $x$ is false. By drawing the green edges partially we enable the red edges in the segment chains to be drawn completely (if we shorten the stubs for one green edge in the variable gadget by $\varepsilon$). this also means we can draw the edges of the clause gadgets to which this segment chain is connected completely. Since $\phi$ has a satisfying variable assignement where exactly one variable per clause is true we have exactly one of these segment chains which allows exactly one edge per clause graph to be drawn completely. This results in every clause graph having the value $8 - 4\varepsilon$, every variable gadget having the value of $6m - 2\varepsilon$ and every segment chain having the value of $3t$. Let $q$ be the number of clauses and $p$ be the number of distinct variables in $\phi$. This results in 
+		
+		\soeren{is there a nice way to format this?}
+		$(8 - 4\varepsilon)q + (6m - 2\varepsilon)p + 3t*3q = $
+		$8q + 6mp + 9qt - (4q + 2p)\varepsilon$
+		
+		\item[$\Leftarrow$:]  Assume $\phi$ does not have a stisfying variable assignement. Then there must always exist a clause in which all three contained variables $x_1$, $x_2$ and $x_3$ are false. That however means that, by construction, there is a clause gadget where all the corresponding variable gadgets have all their green edges completely drawn. This adds at most the value of $2\varepsilon$. In order to get the maximal drawing, this propagates through the segment chains up to the clause gadget where it causes all three edges of that gadget to be not drawn. This in turn means that this specific gadget has only the value $6 - 6\varepsilon$. The total value of this drawing in terms of maximizing ink is therefore at least $2$ smaller than normal. If we would try to supplement the missing drawn edge of the clause gadget, we would need to switch up the alternation of drawing segments in the chains, which causes 2 consecutive segments to not be drawn. Since the last edge in the chain was dran before, it now can't be drawn and it therefore again results in a difference of at least $2$ in the complete drawing.
+	\end{enumerate}
+\end{proof}
+
+\soeren{TODO: argue equivalence (both direction)}
 
 
 \section{Two polynomial special cases}
@@ -253,13 +311,13 @@ Solving Recurrence~\ref{rec:tree} straight forward would yield an algorithm runn
 	Let $ C = (V,E) $ be a tree with maximum degree $ k $ and vertex weights $ \ell_0,\dots,\ell_{\delta} $ for every $ u \in V $ with degree $ \delta $. We can compute $ \solshort(u) $ and $ \sollong(u) $ in $ O(\delta) $ time and space, if the values $ \sollong(v) $ and $ \solshort(v) $ are computed for all children $ v \in c(u) $.
 \end{lemma}
 \begin{proof}
-<<<<<<< HEAD
+%<<<<<<< HEAD
 	\fabian{todo}
-=======
-	Let $ u \in V $ be a vertex with degree $ \delta < k $ for which we have computed $ \sollong $ and $ \solshort $ for every of its children. The crucial part is that $ T_i(u) $ can be built iteratively by going through the list of stub lengths for $ u $ in ascending order. First we compute $ T_1(u) $, this is the solution for $ u $ in which we are able to draw the children with any of their stub lengths. This means we need to build the sum of $ \ell_1(u) $ and the $ \sollong(v) $ for every $ v \in c(u) $ which runs in $ O(\delta) $. The same can be done for $ T_0(u) $, but taking all the $ \solshort(v) $ values for the children $ v \in c(u) $. Assume we computed $ T_j(u) $ for all stub lengths $ \ell_i(u) $ with $ i \leq j $. Now we want to compute $ T_{j+1}(u) $ (see Figure~\ref{fig:speedup}). By drawing $ s(u) $ with stub length $ \ell_{j +1} $ we make it a bit longer since we consider the $ \ell_i(u) $ in ascending order. Hence by doing so we now potentially intersect the corresponding edge of the $ j $-th child $ v_j \in c(u) $. Since $ s(v_j) $ is the only segment affected by drawing $ u $ with stub length $ \ell_{j + 1} $ instead of $ \ell_j $ we can compute $ T_{j+1}(u) $ in $O(1)$ time by simply subtracting $ \sollong(v) $ and adding $ \solshort(v) $.
-	
-	Finally we need to compute $ \solshort(u) $ and $ \sollong(u) $, but this are just two maximizations over at most $ \delta + 1 $ values at most. This can be done in $ O(\delta) $ by simply sweeping over the values.
->>>>>>> 579c12b7895efe3946892997d4f93b4ff0a1bff7
+%=======
+	% Let $ u \in V $ be a vertex with degree $ \delta < k $ for which we have computed $ \sollong $ and $ \solshort $ for every of its children. The crucial part is that $ T_i(u) $ can be built iteratively by going through the list of stub lengths for $ u $ in ascending order. First we compute $ T_1(u) $, this is the solution for $ u $ in which we are able to draw the children with any of their stub lengths. This means we need to build the sum of $ \ell_1(u) $ and the $ \sollong(v) $ for every $ v \in c(u) $ which runs in $ O(\delta) $. The same can be done for $ T_0(u) $, but taking all the $ \solshort(v) $ values for the children $ v \in c(u) $. Assume we computed $ T_j(u) $ for all stub lengths $ \ell_i(u) $ with $ i \leq j $. Now we want to compute $ T_{j+1}(u) $ (see Figure~\ref{fig:speedup}). By drawing $ s(u) $ with stub length $ \ell_{j +1} $ we make it a bit longer since we consider the $ \ell_i(u) $ in ascending order. Hence by doing so we now potentially intersect the corresponding edge of the $ j $-th child $ v_j \in c(u) $. Since $ s(v_j) $ is the only segment affected by drawing $ u $ with stub length $ \ell_{j + 1} $ instead of $ \ell_j $ we can compute $ T_{j+1}(u) $ in $O(1)$ time by simply subtracting $ \sollong(v) $ and adding $ \solshort(v) $.
+%	
+%	Finally we need to compute $ \solshort(u) $ and $ \sollong(u) $, but this are just two maximizations over at most $ \delta + 1 $ values at most. This can be done in $ O(\delta) $ by simply sweeping over the values.
+%>>>>>>> 579c12b7895efe3946892997d4f93b4ff0a1bff7
 \end{proof}
 
 \begin{theorem}

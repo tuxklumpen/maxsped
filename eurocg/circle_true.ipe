@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70206" creator="Ipe 7.2.7">
-<info created="D:20180105170659" modified="D:20180107104229"/>
+<info created="D:20180105163925" modified="D:20180107172632"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -254,44 +254,54 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<path layer="alpha" stroke="black" pen="ultrafat">
-192 576.039 m
-256.034 686.831 l
-320 576 l
-192 576.039 l
+<path layer="alpha" stroke="green" pen="ultrafat">
+44.8925 731.524 m
+56.077 743.314 l
 </path>
-<path stroke="black" pen="ultrafat">
-192 576 m
-128 576 l
+<path stroke="green" pen="ultrafat">
+79.4965 768 m
+88.8331 777.842 l
 </path>
-<path stroke="black" pen="ultrafat">
-320 576 m
-384 576 l
+<path stroke="green" pen="ultrafat">
+99.944 778.519 m
+111.378 768 l
 </path>
-<path stroke="black" pen="ultrafat">
-256.034 686.831 m
-224.131 742.089 l
+<path stroke="green" pen="ultrafat">
+136.396 744.984 m
+147.039 735.193 l
 </path>
-<path stroke="black" pen="ultrafat">
-256.034 686.831 m
-287.932 742.08 l
+<path stroke="green" pen="ultrafat">
+147.723 725.54 m
+136.574 713.717 l
 </path>
-<path stroke="black" pen="ultrafat">
-320 576 m
-352.184 520.255 l
+<path stroke="green" pen="ultrafat">
+113.133 688.858 m
+103.922 679.09 l
 </path>
-<path stroke="black" pen="ultrafat">
-192 576 m
-159.952 520.491 l
+<path stroke="green" pen="ultrafat">
+92.5117 678.401 m
+81.1094 688.955 l
 </path>
-<text matrix="1 0 0 1 -4.24794 -2.03825" transformations="translations" pos="257.392 581.127" stroke="black" type="label" width="7.895" height="11.097" depth="0" valign="baseline" size="LARGE" style="math">2</text>
-<text matrix="1 0 0 1 -4.09487 -1.53558" transformations="translations" pos="161.674 581.127" stroke="black" type="label" width="7.895" height="11.097" depth="0" valign="baseline" size="LARGE" style="math">1</text>
-<text matrix="1 0 0 1 187.34 -1.53585" transformations="translations" pos="161.674 581.127" stroke="black" type="label" width="7.895" height="11.097" depth="0" valign="baseline" size="LARGE" style="math">1</text>
-<text matrix="0.498806 -0.866714 0.866714 0.498806 -358.075 555.006" transformations="translations" pos="257.392 581.127" stroke="black" type="label" width="7.895" height="11.097" depth="0" valign="baseline" size="LARGE" style="math">2</text>
-<text matrix="0.498806 -0.866714 0.866714 0.498806 -357.563 555.124" transformations="translations" pos="161.674 581.127" stroke="black" type="label" width="7.895" height="11.097" depth="0" valign="baseline" size="LARGE" style="math">1</text>
-<text matrix="0.498806 -0.866714 0.866714 0.498806 -262.075 389.205" transformations="translations" pos="161.674 581.127" stroke="black" type="label" width="7.895" height="11.097" depth="0" valign="baseline" size="LARGE" style="math">1</text>
-<text matrix="0.492578 0.870268 -0.870268 0.492578 608.515 111.261" transformations="translations" pos="257.392 581.127" stroke="black" type="label" width="7.895" height="11.097" depth="0" valign="baseline" size="LARGE" style="math">2</text>
-<text matrix="0.492578 0.870268 -0.870268 0.492578 608.153 111.642" transformations="translations" pos="161.674 581.127" stroke="black" type="label" width="7.895" height="11.097" depth="0" valign="baseline" size="LARGE" style="math">1</text>
-<text matrix="0.492578 0.870268 -0.870268 0.492578 702.45 278.242" transformations="translations" pos="161.674 581.127" stroke="black" type="label" width="7.895" height="11.097" depth="0" valign="baseline" size="LARGE" style="math">1</text>
+<path stroke="green" pen="ultrafat">
+56.1611 712.045 m
+45.5474 721.869 l
+</path>
+<path matrix="1 0 0 1 -128 0" stroke="red" pen="ultrafat">
+192 768 m
+256 768 l
+</path>
+<path matrix="1 0 0 1 -128 0" stroke="red" pen="ultrafat">
+264.299 761.967 m
+264.663 698.102 l
+</path>
+<path matrix="-0.999995 0.00301141 -0.00301141 -0.999995 322.799 1456.23" stroke="red" pen="ultrafat">
+192 768 m
+256 768 l
+</path>
+<path matrix="-0.999995 0.00301141 -0.00301141 -0.999995 322.799 1456.23" stroke="red" pen="ultrafat">
+264.299 761.967 m
+264.663 698.102 l
+</path>
+<text matrix="1 0 0 1 -142 -0.187678" transformations="translations" pos="222.271 724.784" stroke="black" type="label" width="31.558" height="10.589" depth="0" valign="baseline" size="LARGE" style="math">true</text>
 </page>
 </ipe>

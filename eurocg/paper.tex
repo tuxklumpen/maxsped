@@ -81,6 +81,7 @@
 \newcommand{\ped}{\ensuremath{\textsc{PED}}\xspace}
 \newcommand{\maxsped}{\ensuremath{\textsc{MaxSPED}}\xspace}
 \newcommand{\sollong}{\ensuremath{\textit{long}}\xspace}
+\newcommand{\solmid}{\ensuremath{\textit{midt}}\xspace}
 \newcommand{\solshort}{\ensuremath{\textit{short}}\xspace}
 
 \begin{document}
@@ -280,13 +281,18 @@ Solving Recurrence~\ref{rec:tree} straight forward would yield an algorithm runn
 %	\item for stub length relating to parent use offset from next longer stub length
 %\end{itemize}
 
-\subsection{Cacti (of Degree Three)}
+\subsection{Cacti}
+In this section we restrict $ C = (V,E) $ to be a cactus graph, i.e. a simple graph in which no edge $ e \in E $ is part of more than one cycle. For a cactus graph $ C $ the \emph{block-cut tree} is the tree $ \mathcal T = (\mathcal V, \mathcal E) $where $ \mathcal V $ contains a vertex for every cycle and \emph{articulation}\fabian{define articulation in prelims?} vertex in $ C $ and an edge between a vertex in $ \mathcal V $ representing a cycle and one representing an articulation point if that articulation vertex is part of the cycle. \fabian{improve description, add reference}
 
+\fabian{We can solve \maxsped on cactus intersection graph iff every vertex in the block-cut tree representing a cycle carries the three optimal values depending on how the articulation point is drawn.}
+Let $ C = (V,E) $ be a cactus graph and moreover the intersection graph of a graph $ G $ and straight-line drawing $ \Gamma $. Now let $ \mathcal T = (\mathcal V, \mathcal E) $ be the block-cut tree of $ C $. Similar to Section~\ref{sec:trees} we define three values for every vertex in $ \mathcal V $. 
+\begin{align*}
+	\solshort(u) = \\
+	\solmid(u) = \\
+	\sollong(u) = \\
+\end{align*}
 
-\begin{itemize}
-	\item seems to work for all cactus graphs
-\end{itemize}
-
+\fabian{For one cycle we use the same approach as in Tills work. Cut up the cycle at some edge, then the cylce edges lie all on one path. From this path there are edges, but using the BC-tree this cut open graph is a tree. Other way to argue this?}
 \section{Conclusion}
 
 

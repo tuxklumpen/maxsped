@@ -159,7 +159,25 @@ Throughout the paper let $ G $ be a \emph{simple graph} with edge set $ S = \{s_
 \section{Hardness of \maxsped for $k\ge3$}
 \fabian{Use the reduction from Till Bruckdorfers Dissertation \cite{b-sgh-15}. The Clauses can be modelled as triangles, the Variables as Circles with every second segment connected to a path. Path should have even length, segments are of length four.}
 
-Soeren?
+\soeren{comilation didn't work yet}
+
+To that \maxsped is \NP-hard even for 3-plane input drawings, we will provide a reduction from the \NP-hard positive planar 1-in-3SAT to \maxsped, similar to Till Bruckdorfers Dissertation \cite{b-sgh-15}. An incremental explanation of positive planar 1-in-3SAT would be: Given a formula $\phi$ in 3-CNF, in which every single occurring literal is not negated (positive). Consider the graph $P(\phi)$ that contains a vertex for each clause (clause vertex) and a vertex for each variable (variable vertex) and every variable vertex is connected via an edge with a clause vertex, if and only if the variable occurs in the corresponding clause. If $P(\phi)$ is planar, $\phi$ and a planar embedding $\Pi$ of $P(\phi)$ is an instance of positive planar 1-in-3SAT. The problem is to decide whether $\phi$ has a satisfying truth assignment, such that only one (and since it is a satisfying assignment, exactly one) variable in each clause is set to true.
+
+We create an instance of \maxsped out of an instance of positive planar 1-in-3SAT by creating:
+\begin{itemize}
+	\item a triangle of overlapping lines for every clause vertex
+	\item a circle of overlapping lines of even length for every variable vertex
+	\item a path of overlapping lines of even length for every connection between a variable vertex and a clause vertex in $\Pi$
+\end{itemize}
+\soeren{all these points need to be illustrated with suitable pictures}
+\soeren{TODO: explain construction in more detail, argue equivalence (both direction)}
+
+
+
+We construct our instance of positive planar 1-in-3SAT in the following fashion:
+\begin{itemize}
+	\item 
+\end{itemize} 
 
 
 \section{Two polynomial special cases}

@@ -328,6 +328,7 @@ Solving Recurrence~\ref{rec:tree} straight forward would yield an algorithm runn
 \end{proof}
 
 \begin{theorem}
+	\label{thm:tree}
 	Let $ G $ be a simple graph with $m$ edges and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a tree with maximum degree $ k \in \mathbb{N} $ the \maxsped problem can be solved in $ O(mk + m \log m)) $ time and space.
 \end{theorem}
 \begin{proof}
@@ -348,7 +349,7 @@ Solving Recurrence~\ref{rec:tree} straight forward would yield an algorithm runn
 
 \subsection{Cacti}
 \label{sec:cactus}
-In this section we restrict $ C = (V,E) $ to be a cactus graph, i.e. a simple graph in which no edge $ e \in E $ is part of more than one cycle. For a cactus graph $ C $ the \emph{block-cut tree} is the tree $ \mathcal T = (\mathcal V, \mathcal E) $where $ \mathcal V $ contains a vertex for every cycle and \emph{cut vertex} in $ C $. We call a vertex $ u \in \mathcal V $ a \emph{block vertex} if it represents a cycle and \emph{articulation vertex} else. For a block vertex $ u \in \mathcal V $ representing an induced cycle with vertices $ V_c \subseteq V $ we define $ \textit{cycle}(u) = V_c$. For an articulation vertex $ u \in \mathcal V $ representing the cut vertex $ v \in V $ we define $ A(u) = v $. There is an edge $ uv \in \mathcal E $ between a block vertex $ u $ and articulation vertex $ v $ whenever $ v \in \textit{cycle}(u) $.
+In this section we restrict $ C = (V,E) $ to be a cactus graph, i.e. a simple graph in which no edge $ e \in E $ is part of more than one cycle. For a cactus graph $ C $ the \emph{block-cut tree} is the tree $ \mathcal T = (\mathcal V, \mathcal E) $where $ \mathcal V $ contains a vertex for every cycle and \emph{cut vertex} in $ C $. We call a vertex $ u \in \mathcal V $ a \emph{block vertex} if it represents a cycle and \emph{articulation vertex} else. For a block vertex $ u \in \mathcal V $ representing an induced cycle with vertices $ V_c \subseteq V $ we define $ \textit{cycle}(u) = V_c$. For an articulation vertex $ u \in \mathcal V $ representing the cut vertex $ v \in V $ we define $ A(u) = v $. There is an edge $ uv \in \mathcal E $ between a block vertex $ u $ and articulation vertex $ v $ whenever $ v \in \textit{cycle}(u) $ and an edge $ uv \in \mathcal E $ between two articulation vertices whenever $ A(u)A(v) $ was an edge in $ E $.
 
 Let $ C = (V,E) $ be a cactus graph and moreover the intersection graph of a graph $ G $ and straight-line drawing $ \Gamma $. Additionally let $ \mathcal T = (\mathcal V, \mathcal E) $ be the block-cut tree of $ C $ we define for each vertex $ u \in \mathcal V $ two values $ a,b \in \mathbb{R}_+ $, w.l.o.g $ a \leq b $. If $ u $ is an articulation vertex this are exactly the positions where the cycle represented by $ p(u) $ intersects $ s(A(u)) $ in $ \Gamma $. If $ u $ is a block vertex $ a,b $ are the points where the by $ \textit{cycle}(u) $ represented edges intersect $ s(A(p(u))) $. Similar to Section~\ref{sec:tree} we define three values for every vertex $ u \in \mathcal V $ with degree $ \delta $:
 \begin{align*}
@@ -359,7 +360,7 @@ Let $ C = (V,E) $ be a cactus graph and moreover the intersection graph of a gra
 
 For an articulation vertex $ u \in \mathcal V $:
 \begin{align}
-\label{rec:cactus_block}
+\label{rec:cactus_articulation}
 T_i(u) = \ell_i(A(u)) + \sum_{v \in c(u)}
 \begin{cases}
 \solshort(v) & \text{if } \ell_i(A(u)) \leq a \\
@@ -379,18 +380,26 @@ T_i(u) = \ell_i(A(u)) + \sum_{v \in c(u)}
 \end{proof}
 
 \begin{lemma}
-	\label{lem:compute_cactus}
+	\label{lem:compute_articulation}
 	Let $ \mathcal T = (\mathcal V,\mathcal E) $ be a cactus with maximum degree $ k $ and vertex weights $ \ell_0,\dots,\ell_{\delta} $ for every articulation vertex $ u \in \mathcal V $ with degree $ \delta $. We can compute $ \solshort(u) $, $ \solmid(u) $ and $ \sollong(u) $ in $ O(\delta) $ time and space, if the values $ \sollong(v) $, $ \solmid(v) $ and $ \solshort(v) $ are computed for all children $ v \in c(u) $.
 \end{lemma}
 \begin{proof}
-	\fabian{todo}
+	Follows from Lemma~\ref{lem:compute_vertex}, since an articulation vertex has at most $ \delta $ many children in $ \mathcal{T} $, one for each cycle it is part of in $ C $ and one for every other articulation vertex it was already connected to in $ C $. 
+\end{proof}
+
+\begin{lemma}
+	\label{lem:compute_block}
+	Let $ \mathcal T = (\mathcal V,\mathcal E) $ be a cactus with maximum degree $ k $ and vertex weights $ \ell_0,\dots,\ell_{\delta} $ for every block vertex $ u \in \mathcal V $ with degree $ \delta $. We can compute $ \solshort(u) $, $ \solmid(u) $ and $ \sollong(u) $ in $ O(n\delta) $ time and space, if the values $ \sollong(v) $, $ \solmid(v) $ and $ \solshort(v) $ are computed for all children $ v \in c(u) $.
+\end{lemma}
+\begin{proof}
+	Let $ G $, $ \Gamma $,  $ C = (V,E) $ and $ \mathcal T = (\mathcal V,\mathcal E) $ as above and $ u \in \mathcal V $ a block vertex with degree $ \delta $. Computing the value for the cycle itself $ \textit{cycle}(u) $ takes $ O(n) $ time by Bruckdorfer et al. Now at every vertex $ v \in \textit{cycle}(u) $ there might be a set of up to $ \delta $ many children, which are all articulation points. Their values are already known and maximization over them can hence be done in $ O(\delta) $ time by the same argument as in Lemma~\ref{lem:compute_vertex}. Following we need $ O(n\delta) $ to compute the three values $ \solshort(u) $, $ \solmid(u) $ and $ \sollong(u) $.
 \end{proof}
 
 \begin{theorem}
 	Let $ G $ be a simple graph with $m$ edges and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a cactus with maximum degree $ k \in \mathbb{N} $ the \maxsped problem can be solved in $ O(mk^2 + m \log m)) $ time and space.
 \end{theorem}
 \begin{proof}
-	\fabian{todo}
+	Follows as in Theorem~\ref{thm:tree} by maximizing over the tree using Lemma~\ref{lem:cactus_correctness} and Recurrence~\ref{rec:cactus_articulation}. Then the running time follows from constructing the intersection graph and the block-cut tree as well as Lemma~\ref{lem:compute_articulation} and~\ref{lem:compute_block}.
 \end{proof}
 
 

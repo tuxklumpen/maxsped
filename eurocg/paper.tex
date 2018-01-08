@@ -209,7 +209,7 @@ In this section we close the gap between the known hardness of \maxsped~\cite{b-
 	For a positive (negative) literal, we create a path of even length between a green (red) edge of the variable gadget and one of the three edges of the clause gadget as shown in Fig.~\ref{fig:gadget_connection}.
 	The first edge $s$ of this path intersects the corresponding variable edge $s'$ such that $s'$ is split into a piece of length 2 and a piece of length 3, whereas $s$ is split into a piece of length 1 and a piece of length 4.
 	The last edge of the path intersects the corresponding clause edge with the same length ratios.
-	The path itself consists of a chain of red-green segment pairs, where, as before, each pair can contribute an ink value of at most~7.
+	The path itself consists of a chain of red-green segment pairs, so each pair contributes an ink value of at most~7.
 	
 	Since the drawing of $H_\phi$ has polynomial size, the number of segments created in the reduction is polynomial. 
 	Further, no segment intersects more than three other segments, so the constructed drawing is 3-plane. 
@@ -222,13 +222,13 @@ In this section we close the gap between the known hardness of \maxsped~\cite{b-
 	Hence the first segment of the path must be a full segment.
 	But because the variable is in the state that sets the literal to \emph{true}, the intersecting variable segment is drawn as two stubs and the path configuration is valid.
 	For the two non-selected literals, we can draw the last segments of their paths as full segments, as well as every segment at an even position, while the segments at odd positions are drawn as stubs. 
-	This is compatible with any of the two variable configurations and proves that we can indeed achieve ink value $L$.
+	This is compatible with any of the two variable configurations and proves that we can indeed achieve ink value~$L$.
 	
-	Conversely, assume that we have a SPED with ink $L$. 
-	By construction, every red-green segment pair and all clause gadgets must contribute their respective maximum ink value.
+	Conversely, assume that we have a SPED with ink value $L$. 
+	By construction, every red-green segment pair and every clause gadget must contribute its respective maximum ink value.
 	In particular, each variable gadget is either in state \emph{true} or \emph{false}.
 	We claim that this truth assignment satisfies $\phi$.
-	For each clause, one segment must have full length and as argued before the path connecting that segment to a variable gadget must have all segments at even positions as stubs and all segments at odd positions as full segments. 
+	For each clause, one segment must have full length and as argued before the path connecting that segment to a variable gadget must have all segments at even positions as length-1 stubs and all segments at odd positions as full segments. 
 	In particular the first segment of the literal path is fully drawn and therefore in a SPED with ink $L$ the intersecting segment of the variable cannot be fully drawn.
 	In fact, it must be drawn as length-1 stubs for otherwise the variable gadget would not contribute its maximum ink value.
 	But then by construction the selected variable value sets our literal to \emph{true}.

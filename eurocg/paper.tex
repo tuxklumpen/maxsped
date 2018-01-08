@@ -154,8 +154,14 @@ However, for $k$-plane graph drawings whose edge intersection graphs are collect
 Throughout the paper let $ G $ be a \emph{simple graph} with edge set $ S = \{s_1,\dots,s_m\}$ and $ \Gamma $ a straight line drawing of $ G $ in the plane. We call $ \Gamma $ \emph{$ k $-plane} if every edge $ s_i \in S $ is crossed by at most $ k $ other edges from $ S $ in $ \Gamma $. We use the terms edge in $ S $ and segment in $ \Gamma $ interchangeably, since our input is always a graph $G$ with a given drawing $ \Gamma $. Hence we can also interpret $S$ as a set of line segments.
 
 The \emph{intersection graph} $ C = (V,E) $ of $ \Gamma $ is the graph containing a vertex $v_i$ in $ V $ for every $ s_i \in S $ and an edge $ v_i v_j \in E $ between vertices $ v_i, v_j \in V $ if the corresponding edges $ s_i, s_j \in S $ intersect in $ \Gamma $. Observe that the intersection graph $ C $ of a $ k $-plane drawing $ \Gamma $ has maximum degree $ k $.  
+%
+Using a standard sweep-line algorithm, computing the intersection graph $C$ of a set of $m$ line segments takes $O(m \log m + |E|)$ time~\cite{bcko-cgaa-08}, where $|E|$ is  the number of intersections.
 
-Using a standard sweep-line algorithm, computing the intersection graph $C$ of a set of $m$ line segments takes $O(m \log m + I)$ time~\cite{bcko-cgaa-08}, where $I$ is the number of intersections, i.e., the number of edges of $C$. 
+A \emph{symmetric partial edge drawing} (SPED) $D$ of $\Gamma$ draws a fraction $0 < f_s \le 1$ of each edge $s = uv \in S$ by drawing two symmetric edge stubs at $u$ and $v$ of length $f_s \cdot |s|/2$ each. 
+No two stubs in $D$ may intersect.
+The \emph{ink} or \emph{ink value}  $I(D)$ of a SPED $D$ is the total stub length $I(D) = \sum_{s \in S} f_s |s|$.
+In the problem \maxsped the task is to find for a given drawing $\Gamma$ a SPED $D^*$ such that its ink $I(D^*)$ is maximum over all SPEDs.
+
 
 %\fabian{This part has to be adapted once the intro is fixed}
 %
@@ -164,96 +170,71 @@ Using a standard sweep-line algorithm, computing the intersection graph $C$ of a
 %\martin{Maybe we don't need the above paragraph as PED, SPED, maxSPED are all somewhat defined in the introduction}
 
 \section{Hardness of \maxsped for $k\ge3$}\label{sec:hardness}
-\soeren{Should the graph in this section too be called G and its drawing $\Gamma$? Also,~\cite{b-sgh-15} claims, paths need to have not only even but equal length, which seems plausible and helps my argument. I'm however not sure if it is actually necessary.}
 
-In this section we close the gap between the known hardness of \maxsped~\cite{b-sgh-15} and the polynomial-time algorithm for 2-plane drawings~\cite{bcgkmn-pped-17}.
+In this section we close the gap between the known hardness of \maxsped~\cite{b-sgh-15} and the polynomial-time algorithm for 2-plane drawings~\cite{bcgkmn-pped-17} as stated in the following theorem.
 
 \begin{theorem}\label{thm:hard}
 	The problem \maxsped is \NP-hard even for 3-plane graph drawings.
 \end{theorem}
 
 \begin{proof}
-	We reduce from the \NP-hard problem \ppsat~\cite{l-pftu-82} using similar ideas as Bruckdorfer's general proof of the hardness of \maxsped~\cite{b-sgh-15}. 
+	We reduce from the \NP-hard problem \ppsat~\cite{l-pftu-82} using similar ideas as in Bruckdorfer's general proof of the hardness of \maxsped~\cite{b-sgh-15}. %, which reduces from the more restricted problem \textsc{Planar Positive 1-in-3 Sat}. 
 	Let $\phi$ be a planar 3-Sat formula with $n$ variables $\{x_1, \dots, x_n\}$ and $m$ clauses $\{c_1, \dots, c_m\}$, each consisting of three literals.
-	We can assume that $\phi$ comes with a planar drawing of its variable-clause graph $H_\phi$ that has a vertex for each variable $x_i$ placed on a horizontal line and a vertex for each clause $c_j$ connected to the three variables appearing in $c_j$. 
-	In our gadget-based reduction we create a 3-plane drawing $\Gamma_\phi$ as a set of line segments of uniform length and a value $L$ such that $\Gamma$ has a SPED of total ink at least $L$ if and only if $\phi$ is satisfiable.
+	We can assume that $\phi$ comes with a planar drawing of its variable-clause graph $H_\phi$ that has a vertex for each variable $x_i$ placed on a horizontal line and a vertex for each clause $c_j$ either above or below the horizontal line and connected on that side of the line to the three variables appearing in $c_j$. 
+	In our gadget-based reduction we create a 3-plane drawing $\Gamma_\phi$ as a set of line segments of uniform length and a value $L$ such that $\Gamma$ has a SPED with ink at least $L$ if and only if $\phi$ is satisfiable.
+	Figure~\ref{fig:gadget_connection} shows a sketch of the gadgets.
 	
-	All segments 
+	\begin{figure}
+		\centering
+		\includegraphics[width=.5\linewidth]{variable_clause_connection}
+		\caption{Connection between the clause and variable gadgets, created by chains of an even number of segments.}
+		\label{fig:gadget_connection}
+	\end{figure}
 	
+	All segments in the gadgets are of length 5.
+	We use pairs of intersecting segments, alternatingly colored red and green.
+	The intersection point of each red-green segment pair is at distance 1 from an endpoint.
+	Thus the maximum amount of ink contributed by such a pair is 7 (one full segment of length 5 and the other one with two stubs of length 1 each).
+	
+	Each variable gadget is a cycle of segment pairs, with at least one pair for each occurence of the variable in $\phi$, see the three variable gadgets in the bottom of Fig.~\ref{fig:gadget_connection}. 
+	Observe that this cycle has exactly two ink-maximal SPEDs: either all red edges are full segments and all green edges are length-1 stubs or vice versa.
+	We associate the configuration with full red segments and green stubs with the value \emph{true} and the configuration with full green segments and red stubs with the value \emph{false}.
+	
+	For each clause we construct a triple of mutually intersecting segments, see the black triangle at the top of Fig.~\ref{fig:gadget_connection}.
+	Again, their intersection points are at distance 1 from the endpoints.
+	It is clear that in such a clause triangle at most one of the three segments can be fully drawn, while the stubs of the other two can have length at most 1.
+	Hence the maximum amount of ink in a SPED contributed by a clause gadget is 9.
+	
+	Finally, we connect variable and clause gadgets in such a way that a clause gadget can contribute its maximum ink value of 9 if and only if the clause is satisfied by the selected truth assignment to the variables.
+	For a positive (negative) literal, we create a path of even length between a green (red) edge of the variable gadget and one of the three edges of the clause gadget as shown in Fig.~\ref{fig:gadget_connection}.
+	The first edge $s$ of this path intersects the corresponding variable edge $s'$ such that $s'$ is split into a piece of length 2 and a piece of length 3, whereas $s$ is split into a piece of length 1 and a piece of length 4.
+	The last edge of the path intersects the corresponding clause edge with the same length ratios.
+	The path itself consists of a chain of red-green segment pairs, where, as before, each pair can contribute an ink value of at most~7.
+	
+	Since the drawing of $H_\phi$ has polynomial size, the number of segments created in the reduction is polynomial. 
+	Further, no segment intersects more than three other segments, so the constructed drawing is 3-plane. 
 
-
-% To show that \maxsped is \NP-hard even for 3-plane input drawings, we will provide a reduction from the \NP-hard \ppsat to \maxsped, similar to Till Bruckdorfers Dissertation \cite{b-sgh-15}. An incremental explanation of \ppsat would be: Given a formula $\phi$ in 3-CNF, in which every single occurring literal is not negated (positive). Consider the graph $P(\phi)$ that contains a vertex for each clause (clause vertex) and a vertex for each variable (variable vertex) and every variable vertex is connected via an edge with a clause vertex, if and only if the variable occurs in the corresponding clause. If $P(\phi)$ is planar, $\phi$ and a planar embedding $\Pi$ of $P(\phi)$ is an instance of \ppsat. The problem is to decide whether $\phi$ has a satisfying truth assignment, such that only one (and since it is a satisfying assignment, exactly one) variable in each clause is set to true.
-
-\begin{figure}
-	\centering
-	\hfill
-	\includegraphics[width=.2\linewidth]{clause_to_triangle}
-	\hfill
-	\includegraphics[width=.5\linewidth]{variable_to_circle}
-	\caption{A triangle representing a clause, with unit lengths (a) and circles of segments representing variables, coloured in red and green (b).}
-	\label{fig:gadgets}
-\end{figure}
-
-% We create a graph G which is an instance of \maxsped out of an instance of \ppsat by creating the following components.
-
-%\begin{itemize}
-%	\item a triangle of overlapping lines for every clause vertex (Fig.~\ref{fig:gadgets} (a))
-%	\item a circle of overlapping lines of even length for every variable vertex (Fig.~\ref{fig:gadgets} (b))
-%	\item a path of overlapping lines of even length for every connection between a variable vertex and a clause vertex in $\Pi$ (Fig.~\ref{fig:gadget_connection})
-%\end{itemize}
-
-A triangle (gadget clause) of overlapping lines $l_{x_a}$, $l_{x_b}$, and $l_{x_c}$ is constructed for each clause $(x_a \lor x_b \lor x_c)$ such that each edge of the trinagle is split into two stubs of length 1 and a middle part of length 2 (see Fig~\ref{fig:gadgets}(a)). Each edge of this clause gadget will be connected to exactly one variable gadget since every clause in $\phi$ consists of exactly three literals. Observe that only one edge at a time can be drawn completely since it intersects both other edges, that the optimal solution in terms of maximized ink is drawing one edge completely (4 units) and the stubs of the other two edges (2 units respectively), so 8 units in total and that all three solutions are equivalent.
-
-\begin{wrapfigure}[11]{r}{0.45\textwidth}
-	\centering
-	\includegraphics[width=.45\linewidth]{circle_true}
-	\hfill
-	\includegraphics[width=.45\linewidth]{circle_false}
-	\caption{Variable gadget representing a true variable (a) and a false variable (b)}
-	\label{fig:optimal_circles}
-\end{wrapfigure}
-
-Circles of segments (variable gadgets) are constructed in a very similar fashion. Let $m$ be the maximum number of clauses in which a single variable appears. Every variable $x_n$ will be represented by $m$ pairs of segments one red and one green which are connected as seen in Fig.~\ref{fig:gadgets} (b) and form a circle. It can be observed that every segment $s_n$ intersects exactly 2 other segments $s_{n-1}$ and $s_{n+1}$ ($s_{2m}$ intersects with $s_1$ to create the circle). These intersections split every segmet in three parts, which again have length 1 for the stubs and 2 for the middle part. If $x$ is true, the green edges will be drawn completely, if it is false the red edges will be drawn completely. Observe that fixing a green edge to be drawn completely fixes all green edges to be drawn completely, like in Fig.~\ref{fig:optimal_circles} (a) (in order to have an optimal solution for this circle) and conversely for the red edges, like in Fig.~\ref{fig:optimal_circles} (b). We will associate the first version, with subdivided green edges, with the variable being true and the second one with the variable being false. Since all edges are cut in the same fashion, the two solutions are equivalent in terms of maximized ink and amount to $4m + 2m = 6m$.
-
-The variable clauses are arranged on a spine and the clause gadgets are placed above or below the spine, according to the planar embedding of the \ppsat. Then the clause gadgets are connected to the variable gadgets corresponding to the occuring variables via segment chains (see Fig.\ref{fig:gadget_connection}, segment chains are for the sake of visualization not all equally long). These chains are composed of $t$ (where $t$ is an sufficiently large even integer) equal length segments $s_1$, \dots, $s_t$, which are again coloured alternatingly red and green. Every segment $s_i$ crosses with $s_{i-1}$ (except for $s_1$) and $s_{i+1}$ (except for $s_t$). All segments are divided again into 3 parts with the stubs having length 1, and the middle part having length 2. $s_1$ is also split in this ratio by one of the green stubs of a variable gadget, however the stub is intersected such that the remaining stub has length $1-\varepsilon$. The same holds for $s_t$ and a stub of an edge in the clause gadget. Here again the optimal solution in terms of maximizing ink is by drawing either all green edges completely and all red ones as stubs, or vice versa. Both solutions have a value of $4\frac{t}{2} + 2\frac{t}{2} = 3t$. It should be noted that completely drawing the red edges cuts of a small piece (of length $\varepsilon$) of the stubs of both the green edge of the variable gadget and the edge of the clause gadget, to which the chain is connected.
-
-\begin{figure}
-	\centering
-	\includegraphics[width=.8\linewidth]{variable_clause_connection}
-	\caption{Connection between the clause and variable gadgets, created by chains of an even number of segments.}
-	\label{fig:gadget_connection}
-\end{figure}
-
-% Let $q$ be the number of clauses and $p$ be the number of distinct variables in $\phi$.
-%
-% \begin{lemma}
-% 	\label{lem:optimal value}
-% 	The construcetd Graph G has an optimal  value in terms of maximizing ink of $8q + 6mp + 9qt - (4q + 2p)\varepsilon$ if $\varepsilon$ is chosen sufficiently small.
-% \end{lemma}
-%
-% \begin{proof}
-% 	\soeren{i have an idea for this but i don't know if it would be out of scope, or if i might not even need this lemma. Also is our \maxsped defined as "Does this graph have a drawing with at least x amount of ink?" since thats what this bound is aiming at?"}
-% \end{proof}
-\soeren{it also still needs to be shown that this bound ensures that the two criterias from~\cite{b-sgh-15}, namely that at least one edge in the triangle is drawn and that the segment chains are alternatingly drawn and not drawn.}
-
-
-	Let $\phi$ be a boolean formula and $\Pi$ be a planar embedding corresponding to that formula sucht that ($\phi$, $\Pi$) is an instance of \ppsat. Let $\Gamma$ be a drawing constructed from that instance in the previously described way. We will show that there is a valid truth assignement for $\phi$ if and only if $\Gamma$ admits a \maxsped with a value of at least $8q + 6mp + 3q (3t - 4\varepsilon)$ in terms of maximizing ink.
-	~
-	\begin{enumerate}
-		\item[$\Rightarrow$:] Let $x$ be a variable and $c$ be a clause containing $x$. If $x$ is true draw all red edges in the associated variable gadget completely, which in turn means all green edges are drawn partially and vice versa for when $x$ is false. By drawing the green edges partially we enable the red edges in the segment chains to be drawn completely (if we shorten the stubs for one green edge in the variable gadget by $\varepsilon$). this also means we can draw the edges of the clause gadgets to which this segment chain is connected completely. Since $\phi$ has a satisfying variable assignement where exactly one variable per clause is true we have exactly one of these segment chains which allows exactly one edge per clause graph to be drawn completely. This results in every clause graph having the value $8 - 4\varepsilon$, every variable gadget having the value of $6m - 2\varepsilon$ and every segment chain having the value of $3t$. Let $q$ be the number of clauses and $p$ be the number of distinct variables in $\phi$. This results in 
-		
-		\soeren{is there a nice way to format this?}
-		$(8 - 4\varepsilon)q + (6m - 2\varepsilon)p + 3t*3q = $
-		$8q + 6mp + 9qt - (4q + 2p)\varepsilon$
-		
-		\item[$\Leftarrow$:]  Assume $\phi$ does not have a stisfying variable assignement. Then there must always exist a clause in which all three contained variables $x_1$, $x_2$ and $x_3$ are false. That however means that, by construction, there is a clause gadget where all the corresponding variable gadgets have all their green edges completely drawn. This adds at most the value of $2\varepsilon$. In order to get the maximal drawing, this propagates through the segment chains up to the clause gadget where it causes all three edges of that gadget to be not drawn. This in turn means that this specific gadget has only the value $6 - 6\varepsilon$. The total value of this drawing in terms of maximizing ink is therefore at least $2$ smaller than normal. If we would try to supplement the missing drawn edge of the clause gadget, we would need to switch up the alternation of drawing segments in the chains, which causes 2 consecutive segments to not be drawn. Since the last edge in the chain was dran before, it now can't be drawn and it therefore again results in a difference of at least $2$ in the complete drawing.
-	\end{enumerate}
-
-
-\soeren{TODO: argue equivalence (both direction)}
-
+	For the correctness of the reduction, let $L$ be the ink value obtained by counting 7 for each red-green segment pair and 9 for each clause gadget. 
+	First assume that $\phi$ has a satisfying truth assignment and put each variable gadget in its corresponding state.
+	For each clause, select exactly one literal with value \emph{true} in the satisfying truth assignment. 
+	We draw the clause segment that connects to the selected literal as a full segment and the other two as length-1 stubs.
+	Since the last segment of the selected literal path must be drawn as length-1 stubs, the only way of having a maximum contribution of that path is by alternating stubs and full segments.
+	Hence the first segment of the path must be a full segment.
+	But because the variable is in the state that sets the literal to \emph{true}, the intersecting variable segment is drawn as two stubs and the path configuration is valid.
+	For the two non-selected literals, we can draw the last segments of their paths as full segments, as well as every segment at an even position, while the segments at odd positions are drawn as stubs. 
+	This is compatible with any of the two variable configurations and proves that we can indeed achieve ink value $L$.
+	
+	Conversely, assume that we have a SPED with ink $L$. 
+	By construction, every red-green segment pair and all clause gadgets must contribute their respective maximum ink value.
+	In particular, each variable gadget is either in state \emph{true} or \emph{false}.
+	We claim that this truth assignment satisfies $\phi$.
+	For each clause, one segment must have full length and as argued before the path connecting that segment to a variable gadget must have all segments at even positions as stubs and all segments at odd positions as full segments. 
+	In particular the first segment of the literal path is fully drawn and therefore in a SPED with ink $L$ the intersecting segment of the variable cannot be fully drawn.
+	In fact, it must be drawn as length-1 stubs for otherwise the variable gadget would not contribute its maximum ink value.
+	But then by construction the selected variable value sets our literal to \emph{true}.
 \end{proof}
-\newpage %delete later just for editing purposes
+
+\newpage %delete later
 \section{Two polynomial special cases}
 
 %\begin{itemize}
@@ -397,4 +378,85 @@ T_i(u) = \ell_i(A(u)) + \sum_{v \in c(u)}
 
 \bibliography{paper}
 
+
+
 \end{document}
+
+
+
+%%%% OLD TEXT PARTS %%%%%
+
+\begin{proof}
+
+
+% To show that \maxsped is \NP-hard even for 3-plane input drawings, we will provide a reduction from the \NP-hard \ppsat to \maxsped, similar to Till Bruckdorfers Dissertation \cite{b-sgh-15}. An incremental explanation of \ppsat would be: Given a formula $\phi$ in 3-CNF, in which every single occurring literal is not negated (positive). Consider the graph $P(\phi)$ that contains a vertex for each clause (clause vertex) and a vertex for each variable (variable vertex) and every variable vertex is connected via an edge with a clause vertex, if and only if the variable occurs in the corresponding clause. If $P(\phi)$ is planar, $\phi$ and a planar embedding $\Pi$ of $P(\phi)$ is an instance of \ppsat. The problem is to decide whether $\phi$ has a satisfying truth assignment, such that only one (and since it is a satisfying assignment, exactly one) variable in each clause is set to true.
+
+\begin{figure}
+	\centering
+	\hfill
+	\includegraphics[width=.2\linewidth]{clause_to_triangle}
+	\hfill
+	\includegraphics[width=.5\linewidth]{variable_to_circle}
+	\caption{A triangle representing a clause, with unit lengths (a) and circles of segments representing variables, coloured in red and green (b).}
+	\label{fig:gadgets}
+\end{figure}
+
+% We create a graph G which is an instance of \maxsped out of an instance of \ppsat by creating the following components.
+
+%\begin{itemize}
+%	\item a triangle of overlapping lines for every clause vertex (Fig.~\ref{fig:gadgets} (a))
+%	\item a circle of overlapping lines of even length for every variable vertex (Fig.~\ref{fig:gadgets} (b))
+%	\item a path of overlapping lines of even length for every connection between a variable vertex and a clause vertex in $\Pi$ (Fig.~\ref{fig:gadget_connection})
+%\end{itemize}
+
+A triangle (gadget clause) of overlapping lines $l_{x_a}$, $l_{x_b}$, and $l_{x_c}$ is constructed for each clause $(x_a \lor x_b \lor x_c)$ such that each edge of the trinagle is split into two stubs of length 1 and a middle part of length 2 (see Fig~\ref{fig:gadgets}(a)). Each edge of this clause gadget will be connected to exactly one variable gadget since every clause in $\phi$ consists of exactly three literals. Observe that only one edge at a time can be drawn completely since it intersects both other edges, that the optimal solution in terms of maximized ink is drawing one edge completely (4 units) and the stubs of the other two edges (2 units respectively), so 8 units in total and that all three solutions are equivalent.
+
+\begin{wrapfigure}[11]{r}{0.45\textwidth}
+	\centering
+	\includegraphics[width=.45\linewidth]{circle_true}
+	\hfill
+	\includegraphics[width=.45\linewidth]{circle_false}
+	\caption{Variable gadget representing a true variable (a) and a false variable (b)}
+	\label{fig:optimal_circles}
+\end{wrapfigure}
+
+Circles of segments (variable gadgets) are constructed in a very similar fashion. Let $m$ be the maximum number of clauses in which a single variable appears. Every variable $x_n$ will be represented by $m$ pairs of segments one red and one green which are connected as seen in Fig.~\ref{fig:gadgets} (b) and form a circle. It can be observed that every segment $s_n$ intersects exactly 2 other segments $s_{n-1}$ and $s_{n+1}$ ($s_{2m}$ intersects with $s_1$ to create the circle). These intersections split every segmet in three parts, which again have length 1 for the stubs and 2 for the middle part. If $x$ is true, the green edges will be drawn completely, if it is false the red edges will be drawn completely. Observe that fixing a green edge to be drawn completely fixes all green edges to be drawn completely, like in Fig.~\ref{fig:optimal_circles} (a) (in order to have an optimal solution for this circle) and conversely for the red edges, like in Fig.~\ref{fig:optimal_circles} (b). We will associate the first version, with subdivided green edges, with the variable being true and the second one with the variable being false. Since all edges are cut in the same fashion, the two solutions are equivalent in terms of maximized ink and amount to $4m + 2m = 6m$.
+
+The variable clauses are arranged on a spine and the clause gadgets are placed above or below the spine, according to the planar embedding of the \ppsat. Then the clause gadgets are connected to the variable gadgets corresponding to the occuring variables via segment chains (see Fig.\ref{fig:gadget_connection}, segment chains are for the sake of visualization not all equally long). These chains are composed of $t$ (where $t$ is an sufficiently large even integer) equal length segments $s_1$, \dots, $s_t$, which are again coloured alternatingly red and green. Every segment $s_i$ crosses with $s_{i-1}$ (except for $s_1$) and $s_{i+1}$ (except for $s_t$). All segments are divided again into 3 parts with the stubs having length 1, and the middle part having length 2. $s_1$ is also split in this ratio by one of the green stubs of a variable gadget, however the stub is intersected such that the remaining stub has length $1-\varepsilon$. The same holds for $s_t$ and a stub of an edge in the clause gadget. Here again the optimal solution in terms of maximizing ink is by drawing either all green edges completely and all red ones as stubs, or vice versa. Both solutions have a value of $4\frac{t}{2} + 2\frac{t}{2} = 3t$. It should be noted that completely drawing the red edges cuts of a small piece (of length $\varepsilon$) of the stubs of both the green edge of the variable gadget and the edge of the clause gadget, to which the chain is connected.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\linewidth]{variable_clause_connection}
+	\caption{Connection between the clause and variable gadgets, created by chains of an even number of segments.}
+	\label{fig:gadget_connection}
+\end{figure}
+
+% Let $q$ be the number of clauses and $p$ be the number of distinct variables in $\phi$.
+%
+% \begin{lemma}
+% 	\label{lem:optimal value}
+% 	The construcetd Graph G has an optimal  value in terms of maximizing ink of $8q + 6mp + 9qt - (4q + 2p)\varepsilon$ if $\varepsilon$ is chosen sufficiently small.
+% \end{lemma}
+%
+% \begin{proof}
+% 	\soeren{i have an idea for this but i don't know if it would be out of scope, or if i might not even need this lemma. Also is our \maxsped defined as "Does this graph have a drawing with at least x amount of ink?" since thats what this bound is aiming at?"}
+% \end{proof}
+\soeren{it also still needs to be shown that this bound ensures that the two criterias from~\cite{b-sgh-15}, namely that at least one edge in the triangle is drawn and that the segment chains are alternatingly drawn and not drawn.}
+
+
+	Let $\phi$ be a boolean formula and $\Pi$ be a planar embedding corresponding to that formula sucht that ($\phi$, $\Pi$) is an instance of \ppsat. Let $\Gamma$ be a drawing constructed from that instance in the previously described way. We will show that there is a valid truth assignement for $\phi$ if and only if $\Gamma$ admits a \maxsped with a value of at least $8q + 6mp + 3q (3t - 4\varepsilon)$ in terms of maximizing ink.
+	~
+	\begin{enumerate}
+		\item[$\Rightarrow$:] Let $x$ be a variable and $c$ be a clause containing $x$. If $x$ is true draw all red edges in the associated variable gadget completely, which in turn means all green edges are drawn partially and vice versa for when $x$ is false. By drawing the green edges partially we enable the red edges in the segment chains to be drawn completely (if we shorten the stubs for one green edge in the variable gadget by $\varepsilon$). this also means we can draw the edges of the clause gadgets to which this segment chain is connected completely. Since $\phi$ has a satisfying variable assignement where exactly one variable per clause is true we have exactly one of these segment chains which allows exactly one edge per clause graph to be drawn completely. This results in every clause graph having the value $8 - 4\varepsilon$, every variable gadget having the value of $6m - 2\varepsilon$ and every segment chain having the value of $3t$. Let $q$ be the number of clauses and $p$ be the number of distinct variables in $\phi$. This results in 
+		
+		\soeren{is there a nice way to format this?}
+		$(8 - 4\varepsilon)q + (6m - 2\varepsilon)p + 3t*3q = $
+		$8q + 6mp + 9qt - (4q + 2p)\varepsilon$
+		
+		\item[$\Leftarrow$:]  Assume $\phi$ does not have a stisfying variable assignement. Then there must always exist a clause in which all three contained variables $x_1$, $x_2$ and $x_3$ are false. That however means that, by construction, there is a clause gadget where all the corresponding variable gadgets have all their green edges completely drawn. This adds at most the value of $2\varepsilon$. In order to get the maximal drawing, this propagates through the segment chains up to the clause gadget where it causes all three edges of that gadget to be not drawn. This in turn means that this specific gadget has only the value $6 - 6\varepsilon$. The total value of this drawing in terms of maximizing ink is therefore at least $2$ smaller than normal. If we would try to supplement the missing drawn edge of the clause gadget, we would need to switch up the alternation of drawing segments in the chains, which causes 2 consecutive segments to not be drawn. Since the last edge in the chain was dran before, it now can't be drawn and it therefore again results in a difference of at least $2$ in the complete drawing.
+	\end{enumerate}
+
+
+\soeren{TODO: argue equivalence (both direction)}
+
+\end{proof}

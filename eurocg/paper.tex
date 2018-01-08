@@ -303,7 +303,6 @@ Solving Recurrence~\ref{rec:tree} yields an optimal solution to the \maxsped pro
 	\label{lem:tree_correctness}	
 	Let $ G $ be a simple graph and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a tree with root $ r \in V $ and maximum degree $ k $, then $ \sollong(r) = \max \{T_i(r) \mid 0 \leq i \leq k \} $ is an optimal solution to the \maxsped problem on $ G $ with drawing $ \Gamma $.
 \end{lemma}
-
 \begin{proof}
 	Let $ G $, $ \Gamma $ and $ C = (V,E) $ as above and $ u \in V $ a leaf of $ C $. Since $ c(u) $ is empty we simply get $ \solshort(u) = T_0(u) = \ell_1(u) $ and $ \sollong(u) = T_1(u) = \max\{\ell_0(u), \ell_1(u)\} $. Now let $ u \in V $ with degree $ \delta $ be an inner vertex. The values $ \solshort(v) $ and $ \sollong(v) $ are computed for all $ v \in c(u) $. $ T_i(u) $ for one $ 0 \leq i \leq \delta $ is then the sum of the maximum stubs we can draw among the children plus the stub length $ \ell_i(u) $ itself, which are just the values we are interested in. Setting then $ \sollong(u) $ and $ \solshort(u) $ as above gives the two necessary values for $ p(u) $.
 	
@@ -368,11 +367,20 @@ T_i(u) = \ell_i(A(u)) + \sum_{v \in c(u)}
 \sollong(v) & \text{else}
 \end{cases}
 \end{align}
-For a block vertex $ u \in \mathcal V $ we have to cut open the cycle it represents (compare \cite{bcgkmn-pped-17}). We do this at $ p = A(p(u)) $. The resulting graph is a path over the vertices in $ \textit{cycle}(u) $ with attached articulation vertices. This is especially a tree and we use the aglorithm from Section~\ref{sec:tree}, maximizing over three values of the articulation vertices though,  to compute the $ T_i(u) $.
 
 \begin{lemma}
-	\label{lem:compute_vertex_cactus}
-	Let $ \mathcal T = (\mathcal V,\mathcal E) $ be the block-cut tree of a cactus graph $ C = (V,E) $ of maximum degree $ k $ and vertex weights $ \ell_0,\dots,\ell_{\delta} $ for every $ u \in V $ with degree $ \delta $. We can compute $ \solshort(u) $, $ \solmid(u) $ and $ \sollong(u) $ in $ O(\delta^2) $ time and space, if the values $ \solshort(v) $, $ \solmid(v) $ and $ \sollong(v) $ are computed for all children $ v \in c(u) $.
+	\label{lem:cactus_correctness}	
+	Let $ G $ be a simple graph and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a cactus with root $ r \in V $ and maximum degree $ k $, then $ \sollong(r) = \max \{T_i(r) \mid 0 \leq i \leq k \} $ is an optimal solution to the \maxsped problem on $ G $ with drawing $ \Gamma $.
+\end{lemma}
+\begin{proof}	
+	Let $ G $, $ \Gamma $,  $ C = (V,E) $ and $ \mathcal T = (\mathcal V,\mathcal E) $ as above and $ u \in \mathcal V $ a leaf of $ \mathcal T$. Then either $ u $ is an articulation vertex and to be treated as in Lemma~\ref{lem:compute_vertex} or a cycle. In the latter case we find the optimal solution to the \maxsped problem on $ C[\textit{cycle}(u)] $ with the algorithm from Bruckdorfer et al. \cite{bcgkmn-pped-17}. Using the above described method we derive $ \solshort(u) $, $ \solmid(u) $ and $ \sollong(u) $, this are exactly the optimal values depending on how the cycle interacts with the articulation vertex $ p(u) $.
+
+	Now let $ u \in V $ with degree $ \delta $ be an inner vertex of $ \mathcal T $. The values $ \solshort(v) $, $ \solmid(v) $ and $ \sollong(v) $ are computed for all $ v \in c(u) $. Again first let $ u $ be an articulation vertex, then the maximum for stub $ \ell_i(A(u)) $ is said value plus the sum of the compatible children, which is just Recurrence~\ref{rec:cactus_block}. Now let $ u $ be a block vertex. We have to cut open the cycle it represents (compare \cite{bcgkmn-pped-17}). We do this at $ p = A(p(u)) $. The resulting graph is a path over the vertices in $ \textit{cycle}(u) $ with attached articulation vertices. This is especially a tree and we use the aglorithm from Section~\ref{sec:tree}, maximizing over three values of the articulation vertices though,  to compute the $ T_i(u) $.
+\end{proof}
+
+\begin{lemma}
+	\label{lem:compute_cactus}
+	Let $ \mathcal T = (\mathcal V,\mathcal E) $ be a cactus with maximum degree $ k $ and vertex weights $ \ell_0,\dots,\ell_{\delta} $ for every articulation vertex $ u \in \mathcal V $ with degree $ \delta $. We can compute $ \solshort(u) $, $ \solmid(u) $ and $ \sollong(u) $ in $ O(\delta) $ time and space, if the values $ \sollong(v) $, $ \solmid(v) $ and $ \solshort(v) $ are computed for all children $ v \in c(u) $.
 \end{lemma}
 \begin{proof}
 	\fabian{todo}

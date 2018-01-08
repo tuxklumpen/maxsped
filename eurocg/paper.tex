@@ -255,7 +255,7 @@ Section~\ref{sec:hardness} showed that \maxsped is generally \NP-hard for $k \ge
 \label{sec:tree}
 \begin{figure}[tbp]
 	\centering
-	\includegraphics{tree_illustration}
+%	\includegraphics{tree_illustration}
 	\caption{One edge $ u $ with intersecting segments. The shaded areas are the stubs, $ p(u) $ is the parent of $ u $. The stubs in the boxed area contribute to $ \solshort(u) $.}
 	\label{fig:tree}
 \end{figure}
@@ -274,16 +274,15 @@ It remains to define $ T_i(u) $ for a vertex $ u $ and stub length $ \ell_i(u) $
 		\sollong(v) & \text{else}
 	\end{cases}
 \end{align}
-Solving Recurrence~\ref{rec:tree} yields an optimal solution to the \maxsped problem on $ G $ with drawing $ \Gamma $ as the following lemma shows.
-
-\begin{lemma}
-	\label{lem:tree_correctness}	
-	Let $ G $ be a simple graph and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a tree with root $ r \in V $ and maximum degree $ k $, then $ \sollong(r) = \max \{T_i(r) \mid 0 \leq i \leq k \} $ is an optimal solution to the \maxsped problem on $ G $ with drawing $ \Gamma $.
-\end{lemma}
-\begin{proof}
-	Let $ G $, $ \Gamma $ and $ C = (V,E) $ as above and $ u \in V $ a leaf of $ C $. Since $ c(u) $ is empty we simply get $ \solshort(u) = T_0(u) = \ell_1(u) $ and $ \sollong(u) = T_1(u) = \max\{\ell_0(u), \ell_1(u)\} $. Now let $ u \in V $ with degree $ \delta $ be an inner vertex. The values $ \solshort(v) $ and $ \sollong(v) $ are computed for all $ v \in c(u) $. $ T_i(u) $ for one $ 0 \leq i \leq \delta $ is then the sum of the maximum stubs we can draw among the children plus the stub length $ \ell_i(u) $ itself, which are just the values we are interested in. Setting then $ \sollong(u) $ and $ \solshort(u) $ as above gives the two necessary values for $ p(u) $.
+By solving Recurrence~\ref{rec:tree} we find an optimal solution to the \maxsped problem on $ G $ with drawing $ \Gamma $.	Let $ C = (V,E) $ as above and $ u \in V $ a leaf of $ C $. Since $ c(u) $ is empty we simply get $ \solshort(u) = T_0(u) = \ell_1(u) $ and $ \sollong(u) = T_1(u) = \max\{\ell_0(u), \ell_1(u)\} $. Now let $ u \in V $ with degree $ \delta $ be an inner vertex. The values $ \solshort(v) $ and $ \sollong(v) $ are computed for all $ v \in c(u) $. $ T_i(u) $ for one $ 0 \leq i \leq \delta $ is then the sum of the maximum stubs we can draw among the children plus the stub length $ \ell_i(u) $ itself, which are just the values we are interested in. Setting then $ \sollong(u) $ and $ \solshort(u) $ as above gives the two necessary values for $ p(u) $.
+%\begin{lemma}
+%	\label{lem:tree_correctness}	
+%	Let $ G $ be a simple graph and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a tree with root $ r \in V $ and maximum degree $ k $, then $ \sollong(r) = \max \{T_i(r) \mid 0 \leq i \leq k \} $ is an optimal solution to the \maxsped problem on $ G $ with drawing $ \Gamma $.
+%\end{lemma}
+%\begin{proof}
+%	Let $ G $, $ \Gamma $ and $ C = (V,E) $ as above and $ u \in V $ a leaf of $ C $. Since $ c(u) $ is empty we simply get $ \solshort(u) = T_0(u) = \ell_1(u) $ and $ \sollong(u) = T_1(u) = \max\{\ell_0(u), \ell_1(u)\} $. Now let $ u \in V $ with degree $ \delta $ be an inner vertex. The values $ \solshort(v) $ and $ \sollong(v) $ are computed for all $ v \in c(u) $. $ T_i(u) $ for one $ 0 \leq i \leq \delta $ is then the sum of the maximum stubs we can draw among the children plus the stub length $ \ell_i(u) $ itself, which are just the values we are interested in. Setting then $ \sollong(u) $ and $ \solshort(u) $ as above gives the two necessary values for $ p(u) $.
 %	and $ t = \sollong(r) $ is the maximum value for some $ T_i(r) $'s and $ r $ the root. Now let $ t' $ be the value of a solution to the \maxsped problem on $ G $ with drawing $ \Gamma $ and $ t' > t $. This solution has to be the sum of a set of stub lengths for each edge in $ G $ such that no two stubs intersect by definition. Further we know the stubs can be categorized into two sets relative to their parent. Recurrence~\ref{rec:tree} builds just the maximum over the $ \solshort(v) $ and $ \sollong(v) $ values for all $ v \in c(u) $, such that no two stubs intersect. Hence if $ t $ was not optimal we would need to find at least a third stub length for at least one child $ v \in c(u) $ which was neither equal to $ \sollong(v) $ nor $ \solshort(v) $.
-\end{proof}
+%\end{proof}
 
 Solving Recurrence~\ref{rec:tree} straight forward would yield an algorithm running in $ O(mk^2) $. Using the order on the stub lengths though we can improve this to $ O(mk) $ by solving $ T_i(u) $ in linear time for one $ u \in V $.
 
@@ -292,7 +291,10 @@ Solving Recurrence~\ref{rec:tree} straight forward would yield an algorithm runn
 	Let $ C = (V,E) $ be a tree with maximum degree $ k $ and vertex weights $ \ell_0,\dots,\ell_{\delta} $ for every $ u \in V $ with degree $ \delta $. We can compute $ \solshort(u) $ and $ \sollong(u) $ in $ O(\delta) $ time and space, if the values $ \sollong(v) $ and $ \solshort(v) $ are computed for all children $ v \in c(u) $.
 \end{lemma}
 \begin{proof}
-	 Let $ u \in V $ be a vertex with degree $ \delta < k $ for which we have computed $ \sollong $ and $ \solshort $ for every of its children. The crucial part is that $ T_i(u) $ can be built iteratively by going through the list of stub lengths for $ u $ in ascending order. First we compute $ T_1(u) $, this is the solution for $ u $ in which we are able to draw the children with any of their stub lengths. This means we need to build the sum of $ \ell_1(u) $ and the $ \sollong(v) $ for every $ v \in c(u) $ which runs in $ O(\delta) $. The same can be done for $ T_0(u) $, but taking all the $ \solshort(v) $ values for the children $ v \in c(u) $. Assume we computed $ T_j(u) $ for all stub lengths $ \ell_i(u) $ with $ i \leq j $. Now we want to compute $ T_{j+1}(u) $ (see Figure~\ref{fig:tree}). By drawing $ s(u) $ with stub length $ \ell_{j +1} $ we make it a bit longer since we consider the $ \ell_i(u) $ in ascending order. Hence by doing so we now potentially intersect the corresponding edge of the $ j $-th child $ v_j \in c(u) $. Since $ s(v_j) $ is the only segment affected by drawing $ u $ with stub length $ \ell_{j + 1} $ instead of $ \ell_j $ we can compute $ T_{j+1}(u) $ in $O(1)$ time by simply subtracting $ \sollong(v) $ and adding $ \solshort(v) $.
+	 Let $ u \in V $ be a vertex with degree $ \delta < k $ for which we have computed $ \sollong $ and $ \solshort $ for every of its children. 
+%	 The crucial part is that $ T_i(u) $ can be built iteratively by going through the list of stub lengths for $ u $ in ascending order. 
+	First we compute $ T_0(u) $ and $ T_1(u) $, this can be done since they represent the longest (whole edge) and shortest stub lengths. 	 
+	 Now assume we computed $ T_j(u) $ for all stub lengths $ \ell_i(u) $ with $ i \leq j $, hence we want to compute $ T_{j+1}(u) $ next. Doing so only requires to consider the next stub-length $ \ell_{j + 1}(u) $, since all other affected by drawing $ s(u) $ with $ \ell_{j+1}(u) $ where already considered. Hence we can compute $ T_{j+1}(u) $ in $O(1)$ time by simply subtracting $ \sollong(v) $ and adding $ \solshort(v) $.
 	
 	Finally we need to compute $ \solshort(u) $ and $ \sollong(u) $, but this are just two maximizations over at most $ \delta + 1 $ values at most. This can be done in $ O(\delta) $ by simply sweeping over the values.
 \end{proof}
@@ -303,9 +305,9 @@ Solving Recurrence~\ref{rec:tree} straight forward would yield an algorithm runn
 \end{theorem}
 \begin{proof}
 	Since $ C $ is known to be a tree, and hence $ |E| = O(m) $, we can compute the intersection graph and the stub lengths in $ O(m\log m) $ time and space.
-	
-	To solve the \maxsped problem on $ G $ we need to compute $ \max \{T_i(r) \mid 0 \leq i \leq k \} $ for the root $ r \in V $ of $ C $ by Lemma~\ref{lem:tree_correctness}. Doing this bottom up requires one pass through $ C $ hence by applying Lemma~\ref{lem:compute_vertex} we need $ O(mk) $ time to compute all $ T_i(u) $ for all $ u \in V $. For every vertex we only need to compute $ O(k) $ values and store two of them, namely $ \sollong(u) $ and $ \solshort(u) $, so we do not need more than $ O(mk) $ memory. Adding the bounds yields the desired runtime of $ O(mk + m \log m)) $.
-	
+	With Lemma~\ref{lem:compute_vertex} and Recurrence~\ref{rec:tree} we need one pass through the tree to find the roots maximum in $ O(mk) $ time. Adding the bounds yields the desired runtime of $ O(mk + m \log m)) $.
+%	To solve the \maxsped problem on $ G $ we need to compute $ \max \{T_i(r) \mid 0 \leq i \leq k \} $ for the root $ r \in V $ of $ C $ as seen above. Doing this bottom up requires one pass through $ C $ hence by applying Lemma~\ref{lem:compute_vertex} we need $ O(mk) $ time to compute all $ T_i(u) $ for all $ u \in V $. For every vertex we only need to compute $ O(k) $ values and store two of them, namely $ \sollong(u) $ and $ \solshort(u) $, so we do not need more than $ O(mk) $ memory. Adding the bounds yields the desired runtime of $ O(mk + m \log m)) $.
+%	
 	Retrieving the actual stub length for each edge in $ G $ needed to produce the SPED can be done by backtracking the subsolutions which requires at most $ O(mk) $ time.
 \end{proof}
 

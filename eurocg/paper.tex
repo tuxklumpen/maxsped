@@ -83,7 +83,7 @@
 \newcommand{\maxsped}{\ensuremath{\textsc{MaxSPED}}\xspace}
 \newcommand{\ppsat}{\ensuremath{\textsc{Positive Planar 1-in-3 SAT}}\xspace}
 \newcommand{\sollong}{\ensuremath{\textit{long}}\xspace}
-\newcommand{\solmid}{\ensuremath{\textit{midt}}\xspace}
+\newcommand{\solmid}{\ensuremath{\textit{mid}}\xspace}
 \newcommand{\solshort}{\ensuremath{\textit{short}}\xspace}
 
 \begin{document}
@@ -262,6 +262,7 @@ Let $ C = (V,E) $ be the intersection graph of the edge set $S$ in a given drawi
 %\fabian{add to prelims}
 
 \subsection{Trees}
+\label{sec:tree}
 Here we assume that the intersection graph $ C = (V,E) $ is a rooted tree of maximum degree $ k $. We give a bottom up dynamic programming algorithm for solving \maxsped on $ C $. For a vertex $ u \in V $ let $ p(u) $ denote the parent of $ u $ in $ C $ and let $ c(u) $ denote the set of its children. The ink values of the partial \maxsped solutions for the subtrees $T_u$ rooted at each vertex $ u \in V $ such that stub length $ \ell_i(u) $ is used for $s(u)$ are computed and stored as $ T_i(u) $.
 
 \begin{figure}[tbp]
@@ -336,17 +337,46 @@ Solving Recurrence~\ref{rec:tree} straight forward would yield an algorithm runn
 %\end{itemize}
 
 \subsection{Cacti}
-In this section we restrict $ C = (V,E) $ to be a cactus graph, i.e. a simple graph in which no edge $ e \in E $ is part of more than one cycle. For a cactus graph $ C $ the \emph{block-cut tree} is the tree $ \mathcal T = (\mathcal V, \mathcal E) $where $ \mathcal V $ contains a vertex for every cycle and \emph{articulation}\fabian{define articulation in prelims?} vertex in $ C $ and an edge between a vertex in $ \mathcal V $ representing a cycle and one representing an articulation point if that articulation vertex is part of the cycle. \fabian{improve description, add reference}
+\label{sec:cactus}
+In this section we restrict $ C = (V,E) $ to be a cactus graph, i.e. a simple graph in which no edge $ e \in E $ is part of more than one cycle. For a cactus graph $ C $ the \emph{block-cut tree} is the tree $ \mathcal T = (\mathcal V, \mathcal E) $where $ \mathcal V $ contains a vertex for every cycle and \emph{cut vertex} in $ C $. We call a vertex $ u \in \mathcal V $ a \emph{block vertex} if it represents a cycle and \emph{articulation vertex} else. For a block vertex $ u \in \mathcal V $ representing an induced cycle with vertices $ V_c \subseteq V $ we define $ \textit{cycle}(u) = V_c$. For an articulation vertex $ u \in \mathcal V $ representing the cut vertex $ v \in V $ we define $ A(u) = v $. There is an edge $ uv \in \mathcal E $ between a block vertex $ u $ and articulation vertex $ v $ whenever $ v \in \textit{cycle}(u) $.
 
-\fabian{We can solve \maxsped on cactus intersection graph iff every vertex in the block-cut tree representing a cycle carries the three optimal values depending on how the articulation point is drawn.}
-Let $ C = (V,E) $ be a cactus graph and moreover the intersection graph of a graph $ G $ and straight-line drawing $ \Gamma $. Now let $ \mathcal T = (\mathcal V, \mathcal E) $ be the block-cut tree of $ C $. Similar to Section~\ref{sec:trees} we define three values for every vertex in $ \mathcal V $. 
+Let $ C = (V,E) $ be a cactus graph and moreover the intersection graph of a graph $ G $ and straight-line drawing $ \Gamma $. Additionally let $ \mathcal T = (\mathcal V, \mathcal E) $ be the block-cut tree of $ C $ we define for each vertex $ u \in \mathcal V $ two values $ a,b \in \mathbb{R}_+ $, w.l.o.g $ a \leq b $. If $ u $ is an articulation vertex this are exactly the positions where the cycle represented by $ p(u) $ intersects $ s(A(u)) $ in $ \Gamma $. If $ u $ is a block vertex $ a,b $ are the points where the by $ \textit{cycle}(u) $ represented edges intersect $ s(A(p(u))) $. Similar to Section~\ref{sec:tree} we define three values for every vertex $ u \in \mathcal V $ with degree $ \delta $:
 \begin{align*}
-	\solshort(u) = \\
-	\solmid(u) = \\
-	\sollong(u) = \\
+	\solshort(u) &= \max\{T_0(u),\dots,T_\delta(u)\}\\
+	\solmid(u) &= \max\{T_1(u),\dots,T_{a}(u)\}\\
+	\sollong(u) &= \max\{T_1(u),\dots,T_{b}(u)\}\\
 \end{align*}
 
-\fabian{For one cycle we use the same approach as in Tills work. Cut up the cycle at some edge, then the cylce edges lie all on one path. From this path there are edges, but using the BC-tree this cut open graph is a tree. Other way to argue this?}
+For an articulation vertex $ u \in \mathcal V $:
+\begin{align}
+\label{rec:cactus_block}
+T_i(u) = \ell_i(A(u)) + \sum_{v \in c(u)}
+\begin{cases}
+\solshort(v) & \text{if } \ell_i(A(u)) \leq a \\
+\solmid(v) & \text{if } a < \ell_i(A(u)) \leq b \\
+\sollong(v) & \text{else}
+\end{cases}
+\end{align}
+For a block vertex $ u \in \mathcal V $ we have to cut open the cycle it represents (compare \cite{bcgkmn-pped-17}). We do this at $ p = A(p(u)) $. The resulting graph is a path over the vertices in $ \textit{cycle}(u) $ with attached articulation vertices. This is especially a tree and we use the aglorithm from Section~\ref{sec:tree}, maximizing over three values of the articulation vertices though,  to compute the $ T_i(u) $.
+
+\begin{lemma}
+	\label{lem:compute_vertex_cactus}
+	Let $ \mathcal T = (\mathcal V,\mathcal E) $ be the block-cut tree of a cactus graph $ C = (V,E) $ of maximum degree $ k $ and vertex weights $ \ell_0,\dots,\ell_{\delta} $ for every $ u \in V $ with degree $ \delta $. We can compute $ \solshort(u) $, $ \solmid(u) $ and $ \sollong(u) $ in $ O(\delta^2) $ time and space, if the values $ \solshort(v) $, $ \solmid(v) $ and $ \sollong(v) $ are computed for all children $ v \in c(u) $.
+\end{lemma}
+\begin{proof}
+	\fabian{todo}
+\end{proof}
+
+\begin{theorem}
+	Let $ G $ be a simple graph with $m$ edges and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a cactus with maximum degree $ k \in \mathbb{N} $ the \maxsped problem can be solved in $ O(mk^2 + m \log m)) $ time and space.
+\end{theorem}
+\begin{proof}
+	\fabian{todo}
+\end{proof}
+
+
+
+
 \section{Conclusion}
 
 

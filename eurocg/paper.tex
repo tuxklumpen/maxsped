@@ -357,9 +357,9 @@ In this section we restrict $ C = (V,E) $ to be a cactus graph, i.e. a simple gr
 
 Let $ C = (V,E) $ be a cactus graph and moreover the intersection graph of a graph $ G $ and straight-line drawing $ \Gamma $. Additionally let $ \mathcal T = (\mathcal V, \mathcal E) $ be the block-cut tree of $ C $ we define for each vertex $ u \in \mathcal V $ two values $ a,b \in \mathbb{R}_+ $, w.l.o.g $ a \leq b $. If $ u $ is an articulation vertex this are exactly the positions where the cycle represented by $ p(u) $ intersects $ s(A(u)) $ in $ \Gamma $. If $ u $ is a block vertex $ a,b $ are the points where edges $ s(v), v \in \textit{cycle}(u) $ intersect $ s(A(p(u))) $. Similar to Section~\ref{sec:tree} we define three values for every vertex $ u \in \mathcal V $ with degree $ \delta $:
 \begin{align*}
-	\solshort(u) &= \max\{T_0(u),\dots,T_\delta(u)\}\\
-	\solmid(u) &= \max\{T_1(u),\dots,T_{a}(u)\}\\
-	\sollong(u) &= \max\{T_1(u),\dots,T_{b}(u)\}
+	\solshort(u) = \max\{T_0(u),\dots,T_\delta(u)\}\\
+	\solmid(u) = \max\{T_1(u),\dots,T_{a}(u)\}\\
+	\sollong(u) = \max\{T_1(u),\dots,T_{b}(u)\}
 \end{align*}
 For an articulation vertex $ u \in \mathcal V $:
 \begin{align}

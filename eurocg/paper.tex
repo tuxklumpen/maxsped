@@ -192,7 +192,7 @@ In this section we close the gap between the known hardness of \maxsped~\cite{b-
 %		\begin{cutout}{2}{0pt}{0.44\textwidth}{15}
 	We reduce from the \NP-hard problem \ppsat~\cite{l-pftu-82} using similar ideas as in Bruckdorfer's general proof of the hardness of \maxsped~\cite{b-sgh-15}. %, which reduces from the more restricted problem \textsc{Planar Positive 1-in-3 Sat}. 
 	Let $\phi$ be a planar 3-Sat formula with $n$ variables $\{x_1, \dots, x_n\}$ and $m$ clauses $\{c_1, \dots, c_m\}$, each consisting of three literals.
-	We can assume that $\phi$ comes with a planar drawing of its variable-clause graph $H_\phi$ that has a vertex for each variable $x_i$ and a vertex for each clause $c_j$.
+	We can assume that $\phi$ comes with a planar drawing of its variable-clause graph $H_\phi$, which has a vertex for each variable $x_i$ and a vertex for each clause $c_j$.
 	Each clause vertex is connected to the three variables appearing in the clause.
 	In the drawing of $H_\phi$ all variable vertices are placed on a horizontal line and the clause vertices connect to the adjacent variable vertices either from above or from below the horizontal line.
 	In our gadget-based reduction we mimic the drawing of $H_\phi$ by creating a 3-plane drawing $\Gamma_\phi$ as a set of line segments of uniform length and a value $L$ such that $\Gamma_\phi$ has a SPED with ink at least $L$ if and only if $\phi$ is satisfiable.

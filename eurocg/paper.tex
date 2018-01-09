@@ -157,7 +157,7 @@ Hence we can also interpret $S$ as a set of line segments.
 
 The \emph{intersection graph} $ C = (V,E) $ of $ \Gamma $ is the graph containing a vertex $v_i$ in $ V $ for every $ s_i \in S $ and an edge $ v_i v_j \in E $ between vertices $ v_i, v_j \in V $ if the corresponding edges $ s_i, s_j \in S $ intersect in $ \Gamma $. 
 We also denote the segment in $S$ corresponding to a vertex $v \in V$ by $s(v)$.
-Observe that the intersection graph $ C $ of a $ k $-plane drawing $ \Gamma $ has maximum degree $ k $.  
+Observe that the intersection graph $ C $ of a $ k $-plane drawing $ \Gamma $ has maximum degree~$ k $.  
 %
 Using a standard sweep-line algorithm, computing the intersection graph $C$ of a set of $m$ line segments takes $O(m \log m + |E|)$ time~\cite{bcko-cgaa-08}, where $|E|$ is  the number of intersections.
 
@@ -298,12 +298,12 @@ let $ i_p $ be the index of the stub length $\ell_{i_p}(u)$ induced by the inter
 %the shorter length between one of $ s(u) $'s endpoints and the intersection point between $ s(u) $ and $ s(p(u)) $. 
 We define the following two values, which allow us to categorize the stub lengths into those not affecting the stubs of the parent and those that do affect the parent:
 %Since we know $ C $ is a tree every vertex $ u \in V $ with degree $ \delta $ has a parent $ p(u) \in V $. For this parent there exists one stub length $ \ell_j(p(u)) $ in the sequence of stub lengths $ \ell_0(p(u)),\dots,\ell_{\delta}(p(u)) $ such that drawing $ p(u) $ with these stubs does not intersect a completely drawn $ u $, while drawing $ p(u) $ with $ \ell_{j + 1}(p(u)) $, i.e. the next longer stub length, intersects $ \ell_0(u) $. We call the solution which would intersect the parent $ \sollong(u) $ and the one not intersecting the parent $ \solshort(u) $. See Figure~\ref{fig:tree} for an illustration. More formally let $ j $ be the index such that stubs of length $ \ell_j(p(u)) $ do not intersect $ s(u) $, but $ \ell_{j +1}(p(u)) $ would, we set:
-%\begin{align*}
-\[	
-	\solshort(u) = \max\{T_1(u),\dots,T_{i_p}(u)\} \qquad
+\begin{align*}
+%\[	
+	\solshort(u) = \max\{T_1(u),\dots,T_{i_p}(u)\}\\ % \qquad
 	\sollong(u) = \max\{T_0(u),\dots,T_{\delta}(u)\}.
-\]
-%\end{align*}
+%\]
+\end{align*}
 Figure~\ref{fig:tree} highlights the stub lengths that are considered in $\solshort(u)$. We recursively define % for a vertex $ u $ and stub length $ \ell_i(u) $:
 \begin{align}
 	\label{rec:tree}
@@ -512,9 +512,9 @@ Combining the linear running time for cycles of Bruckdorfer et al.~\cite{bcgkmn-
 	
 	\bibitem{bkl-us-15}
 	Till Bruckdorfer, Michael Kaufmann, and Simon Leibßle.
-	\newblock Ped user study.
+	\newblock PED user study.
 	\newblock In {\em Graph Drawing (GD'15)}, volume 9411 of {\em LNCS}, pages
-	551--553. Springer International Publishing, 2015.
+	551--553. Springer, 2015.
 	
 	\bibitem{bvkw-epdldge-12}
 	Michael Burch, Corinna Vehlow, Natalia Konevtsova, and Daniel Weiskopf.

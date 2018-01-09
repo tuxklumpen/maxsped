@@ -349,7 +349,7 @@ Since the intersection graph $C$ is a tree with $O(m)$ edges it can be computed 
 
 \begin{theorem}
 	\label{thm:tree}
-	Let $ G $ be a simple graph with $m$ edges and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a tree with maximum degree $ k \in \mathbb{N} $ problem \maxsped can be solved in $ O(mk + m \log m)) $ time and space.
+	Let $ G $ be a simple graph with $m$ edges and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a tree with maximum degree $ k \in \mathbb{N} $, problem \maxsped can be solved in $ O(mk + m \log m)) $ time and space.
 \end{theorem}
 % \begin{proof}
 % 	Since $ C $ is known to be a tree, and hence $ |E| = O(m) $, we can compute the intersection graph and the stub lengths in $ O(m\log m) $ time and space.
@@ -368,29 +368,52 @@ Since the intersection graph $C$ is a tree with $O(m)$ edges it can be computed 
 %	\item for stub length relating to parent use offset from next longer stub length
 %\end{itemize}
 
-\subsection{Cacti}
+\subsection{Cactus graphs}
 \label{sec:cactus}
-In this section we restrict $ C = (V,E) $ to be a cactus graph, i.e. a simple graph in which no edge $ e \in E $ is part of more than one cycle. For a cactus graph $ C $ the \emph{block-cut tree} is the tree $ \mathcal T = (\mathcal V, \mathcal E) $ where $ \mathcal V $ contains a vertex for every cycle and cut vertex in $ C $. We call a vertex $ u \in \mathcal V $ a \emph{block vertex} if it represents an induced cycle with vertices $ V_c \subseteq V $ and \emph{articulation vertex} of the cut vertex $ v \in V $ else. For a block vertex $ u \in \mathcal V $ we define $ \textit{cycle}(u) = V_c$ and for an articulation vertex $ u \in \mathcal V $ we define $ A(u) = v $. There is an edge $ uv \in \mathcal E $ between a block vertex $ u $ and articulation vertex $ v $ whenever $ v \in \textit{cycle}(u) $ and an edge $ uv \in \mathcal E $ between two articulation vertices whenever $ A(u)A(v) $ was an edge in $ E $.
+We now generalize our previous algorithm to cactus graphs. 
+Due to space constraints we provide only a sketch of the arguments and omit further details.
+Let the intersection graph $ C = (V,E) $ be a \emph{cactus graph}, i.e. a simple graph in which no edge $ e \in E $ is part of more than one cycle. 
+For a cactus graph $ C $ the \emph{block-cut tree} is an arbitrarily rooted tree $ \mathcal T = (\mathcal V, \mathcal E) $, where $ \mathcal V $ contains a node for every cycle and for every cut vertex in $ C $. 
+We call a node $ u \in \mathcal V $ a \emph{block node} if it represents an induced cycle on vertices $ V(u) \subseteq V $ and an \emph{articulation node} of the cut vertex $ a(u) = v \in V $ otherwise. 
+%For a block node $ u \in \mathcal V $ we define $ \textit{cycle}(u) = V_c$ and f
+%For an articulation node $ u \in \mathcal V $ we define $ a(u) = v $ to be the corresponding cut vertex. 
+We have an edge $ uv \in \mathcal E $ between a block node $ u $ and an articulation node $ v $ whenever $ a(v) \in V(u) $ and an edge $ uv \in \mathcal E $ between two articulation nodes whenever $ a(u)a(v) \in E$. % is an edge in $ E $.
+We re-use the notation $p(u)$ and $c(u)$ to refer to the parent and to the children of a node $u \in \mathcal V$.
 
-Let $ C = (V,E) $ be a cactus graph and moreover the intersection graph of a graph $ G $ and straight-line drawing $ \Gamma $. Additionally let $ \mathcal T = (\mathcal V, \mathcal E) $ be the block-cut tree of $ C $ we define for each vertex $ u \in \mathcal V $ two indices $ i_p,i_q $, w.l.o.g $ i_p > i_q $. This are exactly the indices of the stub-lengths leading to an intersection between two cycles of segments in $ \Gamma $. Similar to Section~\ref{sec:tree} we define three values for every vertex $ u \in \mathcal V $ with degree $ \delta $:
+%Let $ C = (V,E) $ be a cactus graph and moreover the intersection graph of a graph $ G $ and straight-line drawing $ \Gamma $. Additionally let $ \mathcal T = (\mathcal V, \mathcal E) $ be the block-cut tree of $ C $ 
+We further define for each node $ u \in \mathcal V $ two indices $ i_p(u) \le i_q(u) $. %, w.l.o.g $ i_p > i_q $. 
+For an articulation node $u$, $i_p$ and $i_q$ are the indices corresponding to the stub lengths induced by the intersection points of $s(a(u))$ and its neighbors in $C$ among the vertex set of $p(u)$.
+For a block node $u$, $i_p$ and $i_q$ are the indices corresponding to the intersection points of the parent's segment $s(a(p(u)))$ with its neighbors in $V(u)$.
+%These are exactly the indices of the stub-lengths leading to an intersection between two cycles of segments in $ \Gamma $. 
+Similar to Section~\ref{sec:tree} we now define three values for each articulation node $ u \in \mathcal V $ with degree $ \delta $:
 \begin{align*}
-	\solshort(u) = \max\{T_0(u),\dots,T_\delta(u)\}\\
-	\solmid(u) = \max\{T_1(u),\dots,T_{i_p}(u)\}\\
-	\sollong(u) = \max\{T_1(u),\dots,T_{i_q}(u)\}
+	\sollong(u) = \max\{T_0(u),\dots,T_\delta(u)\}\\
+	\solmid(u) = \max\{T_1(u),\dots,T_{i_q}(u)\}\\
+	\solshort(u) = \max\{T_1(u),\dots,T_{i_p}(u)\}
 \end{align*}
-For an articulation vertex $ u \in \mathcal V $ we can define a similar recurrence to Recurrence~\ref{rec:tree}:
+Further we define the recurrence $T_i(u)$ for all articulation nodes $u \in \mathcal V$:
 \begin{align}
 \label{rec:cactus_articulation}
-T_i(u) = \ell_i(A(u)) + \sum_{v \in c(u)}
+T_i(u) = \ell_i(a(u)) + \sum_{v \in c(u)}
 \begin{cases}
-\solshort(v) & \text{if } \ell_i(A(u)) \leq a \\
-\solmid(v) & \text{if } a < \ell_i(A(u)) \leq b \\
-\sollong(v) & \text{else}
-\end{cases}
+T_{i_p(v)}(v) & \text{if } i < i_p(v)\\ %\ell_i(a(u)) \leq a \\
+T_{i_q(v)}(v) & \text{if } i_p(v) < i \leq i_q(v) \\
+T_{0}(v) & \text{otherwise}
+% \solshort(v) & \text{if } i < i_p(v)\\ %\ell_i(a(u)) \leq a \\
+% \solmid(v) & \text{if } i_p(v) < i \leq i_q(v) \\
+% \sollong(v) & \text{otherwise}
+\end{cases}.
 \end{align}
-For a block vertex $ u \in \mathcal V $ we have to cut open the cycle it represents (compare \cite{bcgkmn-pped-17}). We do this at $ A(p(u)) $. The resulting graph is a path over the vertices in $ \textit{cycle}(u) $ with attached articulation vertices. This is especially a tree and we use the aglorithm from Section~\ref{sec:tree}, maximizing over three values of the articulation vertices though,  to compute the $ T_i(u) $.
+For a block node $ u \in \mathcal V $ we cut open the cycle it represents at vertex $a(p(u))$ (refer to Bruckdorfer et al.~\cite{bcgkmn-pped-17} for details) and consider the three relevant stub lengths of the parent's segment $s(a(p(u)))$ induced by $i_p(u)$ and $i_q(u)$ and the whole segment. 
+The resulting subgraph is a path on $V(u)$ with attached children that are articulation vertices in $\mathcal T$ so we can apply our algorithm of Section~\ref{sec:tree} with minor modifications.
+Once all values in the subgraph of block node $u$ are computed, we can derive the values $T_i(u)$ for the block node $u$.
 
-The correctness follows as in the case of a tree in Section~\ref{sec:tree} if the values computed for the block vertices is correct. This is the case since we only extended the cycle by attaching some leafs, which can be dealt with after cutting the cycle open as in \cite{bcgkmn-pped-17}. For the runtime we can again do the same as in Section~\ref{sec:tree}, but this time we have to also check cycles of length $ n_c $ which leads to a runtime of $ O(n_c\delta) $ for a block vertex $ u \in \mathcal V $ with degree $ \delta $ and $ n_c = |\textit{cycle}(u)| $. In case $ u $ is an articulation vertex we can solve it in $ O(\delta) $. As before the optimal solution to the \maxsped problem on $ G $ with drawing $ \Gamma $ can be found by backtracking from the root. Additionally the intersection graph can be computed in $ O(m\log m) $ where $ m $ is the number of edges in the original graph $ G $ and we obtain the following theorem.
+% The resulting graph is a path over the vertices in $ \textit{cycle}(u) $ with attached articulation vertices. This is especially a tree and we use the aglorithm from Section~\ref{sec:tree}, maximizing over three values of the articulation vertices though,  to compute the $ T_i(u) $.
+
+Correctness can be proved by modifying the inductive arguments of Section~\ref{sec:tree} accordingly. 
+Combining the linear running time for cycles of Bruckdorfer et al.~\cite{bcgkmn-pped-17} with the running time for trees of Theorem~\ref{thm:tree} we can argue that cactus graphs can in fact be handled in the same time and space bounds as trees.
+
+% The correctness follows as in the case of a tree in Section~\ref{sec:tree} if the values computed for the block vertices is correct. This is the case since we only extended the cycle by attaching some leafs, which can be dealt with after cutting the cycle open as in \cite{bcgkmn-pped-17}. For the runtime we can again do the same as in Section~\ref{sec:tree}, but this time we have to also check cycles of length $ n_c $ which leads to a runtime of $ O(n_c\delta) $ for a block vertex $ u \in \mathcal V $ with degree $ \delta $ and $ n_c = |\textit{cycle}(u)| $. In case $ u $ is an articulation vertex we can solve it in $ O(\delta) $. As before the optimal solution to the \maxsped problem on $ G $ with drawing $ \Gamma $ can be found by backtracking from the root. Additionally the intersection graph can be computed in $ O(m\log m) $ where $ m $ is the number of edges in the original graph $ G $ and we obtain the following theorem.
 %$ G $, $ \Gamma $,  $ C = (V,E) $ and $ \mathcal T = (\mathcal V,\mathcal E) $ as above and $ u \in \mathcal V $ a leaf of $ \mathcal T$. Then either $ u $ is an articulation vertex and to be treated as in Lemma~\ref{lem:compute_vertex} or a cycle. In the latter case we find the optimal solution to the \maxsped problem on $ C[\textit{cycle}(u)] $ with the algorithm from Bruckdorfer et al. \cite{bcgkmn-pped-17}. Using the above described method we derive $ \solshort(u) $, $ \solmid(u) $ and $ \sollong(u) $, this are exactly the optimal values depending on how the cycle interacts with the articulation vertex $ p(u) $.
 %
 %Now let $ u \in V $ with degree $ \delta $ be an inner vertex of $ \mathcal T $. The values $ \solshort(v) $, $ \solmid(v) $ and $ \sollong(v) $ are computed for all $ v \in c(u) $. Again first let $ u $ be an articulation vertex, then the maximum for stub $ \ell_i(A(u)) $ is said value plus the sum of the compatible children, which is just Recurrence~\ref{rec:cactus_articulation}. Now let $ u $ be a block vertex. 
@@ -412,7 +435,7 @@ The correctness follows as in the case of a tree in Section~\ref{sec:tree} if th
 %\end{proof}
 
 \begin{theorem}
-	Let $ G $ be a simple graph with $m$ edges and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a cactus with maximum degree $ k \in \mathbb{N} $ the \maxsped problem can be solved in $ O(mk + m \log m)) $ time and space.
+	Let $ G $ be a simple graph with $m$ edges and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a cactus with maximum degree $ k \in \mathbb{N} $, problem \maxsped can be solved in $ O(mk + m \log m)) $ time and space.
 \end{theorem}
 %\begin{proof}
 %	Follows as in Theorem~\ref{thm:tree} by maximizing over the tree using Recurrence~\ref{rec:cactus_articulation}. Then the running time follows from constructing the intersection graph and the block-cut tree as well as Lemma~\ref{lem:compute_block} for the block vertices and applying Lemma~\ref{lem:compute_vertex} for the articulation vertices.

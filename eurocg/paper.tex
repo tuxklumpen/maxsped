@@ -267,6 +267,13 @@ Then for the corresponding segment $ s(u) \in S $ there are $ \delta + 1 $ possi
 \subsection{Trees}
 \label{sec:tree}
 
+% \begin{figure}[tbp]
+% 	\centering
+%  	\includegraphics{tree_illustration}
+% 	\caption{One edge $ s(u) $ with intersecting segments. The shaded areas are the stubs, $ p(u) $ is the parent of $ u $. The stubs in the boxed area contribute to $ \solshort(u) $.}
+% 	\label{fig:tree}
+% \end{figure}
+
 Here we assume that $ C =(V,E) $ is a rooted tree of maximum degree $ k $. 
 We give a bottom up dynamic programming algorithm for solving \maxsped on $ C $. 
 For each vertex $u \in V$ we compute and store the maximum ink values $T_i(u)$ for $i = 0, \dots, \delta$ with $\delta = \deg(u)$ for the subtree rooted at $u$ such that $s(u)$ is drawn as a pair of stubs of length $\ell_i(u)$.
@@ -402,16 +409,7 @@ Now let $ u \in V $ with degree $ \delta $ be an inner vertex of $ \mathcal T $.
 	Follows as in Theorem~\ref{thm:tree} by maximizing over the tree using Recurrence~\ref{rec:cactus_articulation}. Then the running time follows from constructing the intersection graph and the block-cut tree as well as Lemma~\ref{lem:compute_block} for the block vertices and applying Lemma~\ref{lem:compute_vertex} for the articulation vertices.
 \end{proof}
 
-
-
-
-\section{Conclusion}
-
-
 \bibliography{paper}
-
-
-
 \end{document}
 
 

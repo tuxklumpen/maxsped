@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70206" creator="Ipe 7.2.7">
-<info created="D:20180109094301" modified="D:20180109114827"/>
+<info created="D:20180109094301" modified="D:20180109122622"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -252,37 +252,33 @@ h
 <tiling name="rising" angle="30" step="4" width="1"/>
 </ipestyle>
 <ipestyle name="kitcolors">
-<color name="KITwhite" value="1"/>
-<color name="KITblack" value="0"/>
-<color name="KITblack70" value="0.3"/>
-<color name="KITblack50" value="0.5"/>
-<color name="KITblack30" value="0.7"/>
+<color name="KITblue15" value="0.891 0.908 0.95"/>
+<color name="KITred15" value="0.944 0.867 0.873"/>
+<color name="KITpalegreen15" value="0.926 0.961 0.885"/>
+<color name="KITyellow15" value="0.997 0.985 0.861"/>
+<color name="KITgreen15" value="0.85 0.938 0.926"/>
+<color name="KITlilac50" value="0.813 0.5 0.735"/>
+<color name="KITblue" value="0.274 0.392 0.666"/>
 <color name="KITblack15" value="0.85"/>
 <color name="KITgreen" value="0 0.588 0.509"/>
 <color name="KITgreen70" value="0.3 0.711 0.656"/>
 <color name="KITgreen50" value="0.5 0.794 0.754"/>
 <color name="KITgreen30" value="0.7 0.876 0.852"/>
-<color name="KITgreen15" value="0.85 0.938 0.926"/>
-<color name="KITblue" value="0.274 0.392 0.666"/>
 <color name="KITblue70" value="0.492 0.574 0.766"/>
 <color name="KITblue50" value="0.637 0.696 0.833"/>
 <color name="KITblue30" value="0.782 0.817 0.9"/>
-<color name="KITblue15" value="0.891 0.908 0.95"/>
-<color name="KITred" value="0.627 0.117 0.156"/>
-<color name="KITred70" value="0.739 0.382 0.409"/>
-<color name="KITred50" value="0.813 0.558 0.578"/>
-<color name="KITred30" value="0.888 0.735 0.747"/>
-<color name="KITred15" value="0.944 0.867 0.873"/>
+<color name="KITblack" value="0"/>
+<color name="KITblack70" value="0.3"/>
+<color name="KITblack50" value="0.5"/>
+<color name="KITblack30" value="0.7"/>
 <color name="KITpalegreen" value="0.509 0.745 0.235"/>
 <color name="KITpalegreen70" value="0.656 0.821 0.464"/>
 <color name="KITpalegreen50" value="0.754 0.872 0.617"/>
 <color name="KITpalegreen30" value="0.852 0.923 0.77"/>
-<color name="KITpalegreen15" value="0.926 0.961 0.885"/>
 <color name="KITyellow" value="0.98 0.901 0.078"/>
 <color name="KITyellow70" value="0.986 0.931 0.354"/>
 <color name="KITyellow50" value="0.99 0.95 0.539"/>
 <color name="KITyellow30" value="0.994 0.97 0.723"/>
-<color name="KITyellow15" value="0.997 0.985 0.861"/>
 <color name="KITorange" value="0.862 0.627 0.117"/>
 <color name="KITorange70" value="0.903 0.739 0.382"/>
 <color name="KITorange50" value="0.931 0.813 0.558"/>
@@ -293,9 +289,12 @@ h
 <color name="KITbrown50" value="0.813 0.754 0.598"/>
 <color name="KITbrown30" value="0.888 0.852 0.758"/>
 <color name="KITbrown15" value="0.944 0.926 0.879"/>
+<color name="KITred" value="0.627 0.117 0.156"/>
+<color name="KITred70" value="0.739 0.382 0.409"/>
+<color name="KITred50" value="0.813 0.558 0.578"/>
+<color name="KITred30" value="0.888 0.735 0.747"/>
 <color name="KITlilac" value="0.627 0 0.47"/>
 <color name="KITlilac70" value="0.739 0.3 0.629"/>
-<color name="KITlilac50" value="0.813 0.5 0.735"/>
 <color name="KITlilac30" value="0.888 0.7 0.841"/>
 <color name="KITlilac15" value="0.944 0.85 0.92"/>
 <color name="KITcyanblue" value="0.313 0.666 0.901"/>
@@ -308,6 +307,7 @@ h
 <color name="KITseablue50" value="0.598 0.656 0.774"/>
 <color name="KITseablue30" value="0.758 0.794 0.864"/>
 <color name="KITseablue15" value="0.879 0.897 0.932"/>
+<color name="KITwhite" value="1"/>
 </ipestyle>
 <ipestyle name="dashstyles">
 <dashstyle name="dashed-narrow" value="[2] 0"/>
@@ -330,7 +330,7 @@ h
 <layer name="highlights"/>
 <view layers="alpha true1 false2 true3 tri1 paths highlights" active="highlights"/>
 <view layers="alpha true1 false1 true2 false2 true3 false3 tri1 tri2 tri3 paths highlights" active="highlights"/>
-<path layer="highlights" matrix="0.55 0 0 0.55 88.1664 280.063" fill="lightyellow">
+<path layer="highlights" matrix="0.55 0 0 0.55 88.1664 280.063" fill="KITbrown15">
 254.928 805.855 m
 270.928 805.855 l
 302.928 750.429 l
@@ -339,7 +339,7 @@ h
 222.928 750.429 l
 h
 </path>
-<path matrix="0.48985 0 0 0.48985 114.294 336.634" fill="KITseablue15">
+<path matrix="0.48985 0 0 0.48985 114.294 336.634" fill="KITcyanblue15">
 328 660 m
 328 572 l
 225.94 534.059 l
@@ -348,14 +348,14 @@ h
 225.934 697.949 l
 h
 </path>
-<path matrix="0.485 0 0 0.485 265.08 339.622" fill="KITseablue15">
+<path matrix="0.485 0 0 0.485 265.08 339.622" fill="KITcyanblue15">
 28 660 m
 28 572 l
 116 572 l
 116 660 l
 h
 </path>
-<path matrix="0.485 0 0 0.485 113.08 339.622" fill="KITseablue15">
+<path matrix="0.485 0 0 0.485 113.08 339.622" fill="KITcyanblue15">
 28 660 m
 28 572 l
 116 572 l
@@ -494,19 +494,19 @@ h
 112 592 m
 64 592 l
 </path>
-<path layer="false2" matrix="0.5 0 0 0.5 152 330.382" stroke="KITred" dash="dotted-narrower" pen="heavier">
+<path layer="false2" matrix="0.5 0 0 0.5 152 330.382" stroke="KITred" dash="dotted-narrow" pen="heavier">
 64 640 m
 111.984 640 l
 </path>
-<path matrix="0.5 0 0 0.5 152 330.382" stroke="KITred" dash="dotted-narrower" pen="heavier">
+<path matrix="0.5 0 0 0.5 152 330.382" stroke="KITred" dash="dotted-narrow" pen="heavier">
 64 592 m
 112 592 l
 </path>
-<path matrix="0.5 0 0 0.5 152 330.382" stroke="KITred" dash="dotted-narrower" pen="heavier">
+<path matrix="0.5 0 0 0.5 152 330.382" stroke="KITred" dash="dotted-narrow" pen="heavier">
 227.874 640.008 m
 227.874 592.008 l
 </path>
-<path matrix="0.5 0 0 0.5 152 330.382" stroke="KITred" dash="dotted-narrower" pen="heavier">
+<path matrix="0.5 0 0 0.5 152 330.382" stroke="KITred" dash="dotted-narrow" pen="heavier">
 179.89 592.008 m
 145.94 558.059 l
 </path>
@@ -574,19 +574,19 @@ h
 48 592 m
 48 576 l
 </path>
-<path layer="true1" matrix="0 0.5 -0.5 0 456 602.382" stroke="KITpalegreen" dash="dotted-narrower" pen="heavier">
+<path layer="true1" matrix="0 0.5 -0.5 0 456 602.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
 48 640 m
 48 592 l
 </path>
-<path matrix="0 0.5 -0.5 0 456 602.382" stroke="KITpalegreen" dash="dotted-narrower" pen="heavier">
+<path matrix="0 0.5 -0.5 0 456 602.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
 96 592 m
 96 640 l
 </path>
-<path layer="true3" matrix="0.5 0 0 0.5 48 330.382" stroke="KITpalegreen" dash="dotted-narrower" pen="heavier">
+<path layer="true3" matrix="0.5 0 0 0.5 48 330.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
 480 640 m
 480 592 l
 </path>
-<path matrix="0.5 0 0 0.5 48 330.382" stroke="KITpalegreen" dash="dotted-narrower" pen="heavier">
+<path matrix="0.5 0 0 0.5 48 330.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
 528 640 m
 528 592 l
 </path>
@@ -670,11 +670,11 @@ h
 272 384 m
 296 425.569 l
 </path>
-<path matrix="0.5 0 0 0.5 84.7767 501.838" stroke="black" dash="dotted-narrower" pen="heavier">
+<path matrix="0.5 0 0 0.5 84.7767 501.838" stroke="black" dash="dotted-narrow" pen="heavier">
 296 425.569 m
 320 384 l
 </path>
-<path matrix="0.5 0 0 0.5 84.7767 501.838" stroke="black" dash="dotted-narrower" pen="heavier">
+<path matrix="0.5 0 0 0.5 84.7767 501.838" stroke="black" dash="dotted-narrow" pen="heavier">
 272 384 m
 320 384 l
 </path>
@@ -718,11 +718,11 @@ h
 384 640 m
 384 624 l
 </path>
-<path layer="paths" matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" dash="dotted-narrower" pen="heavier">
+<path layer="paths" matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
 128 688 m
 80 688 l
 </path>
-<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" dash="dotted-narrower" pen="heavier">
+<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
 384 688 m
 384 640 l
 </path>
@@ -750,11 +750,11 @@ h
 336 688 m
 384 688 l
 </path>
-<text layer="highlights" matrix="0.5 0 0 0.5 99.5899 300.789" transformations="translations" pos="60 616" stroke="black" type="label" width="38.991" height="5.521" depth="0.99" valign="baseline" size="small" style="math">x_1=true</text>
-<text matrix="0.5 0 0 0.5 173.266 328.911" transformations="translations" pos="60 616" stroke="black" type="label" width="43.468" height="6.23" depth="1.74" valign="baseline" size="small" style="math">x_2=false</text>
-<text matrix="0.5 0 0 0.5 250.505 300.789" transformations="translations" pos="60 616" stroke="black" type="label" width="38.991" height="5.521" depth="0.99" valign="baseline" size="small" style="math">x_3=true</text>
+<text layer="highlights" matrix="0.5 0 0 0.5 99.5899 300.789" transformations="translations" pos="60 616" stroke="black" type="label" width="39.476" height="5.521" depth="0.99" valign="baseline" size="small">$x_1$ = \emph{true}</text>
+<text matrix="0.5 0 0 0.5 173.266 328.911" transformations="translations" pos="60 616" stroke="black" type="label" width="41.241" height="6.23" depth="1.74" valign="baseline" size="small">$x_2$ = \emph{false}</text>
+<text matrix="0.5 0 0 0.5 250.505 300.789" transformations="translations" pos="60 616" stroke="black" type="label" width="39.476" height="5.521" depth="0.99" valign="baseline" size="small">$x_3$ = \emph{true}</text>
 <text matrix="0.5 0 0 0.5 135.266 353.918" transformations="translations" pos="221.556 723.417" stroke="black" type="label" width="60.889" height="4.988" depth="0.99" valign="baseline" size="small" style="math">x_1 \lor \neg x_2 \lor \neg x_3</text>
-<path layer="paths" matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" dash="dotted-narrower" pen="heavier">
+<path layer="paths" matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
 301.399 721.269 m
 336 688 l
 </path>
@@ -818,11 +818,11 @@ h
 162.897 720.958 m
 188.203 770.918 l
 </path>
-<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" dash="dotted-narrower" pen="heavier">
+<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
 116.911 734.702 m
 162.897 720.958 l
 </path>
-<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" dash="dotted-narrower" pen="heavier">
+<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
 188.203 770.918 m
 225.553 740.769 l
 </path>
@@ -846,7 +846,7 @@ h
 145.934 673.949 m
 134.62 685.263 l
 </path>
-<path layer="false2" matrix="0.5 0 0 0.5 152 330.382" stroke="KITred" dash="dotted-narrower" pen="heavier">
+<path layer="false2" matrix="0.5 0 0 0.5 152 330.382" stroke="KITred" dash="dotted-narrow" pen="heavier">
 145.934 673.949 m
 179.875 640.008 l
 </path>
@@ -858,7 +858,7 @@ h
 249.554 726.913 m
 240.106 739.826 l
 </path>
-<path layer="paths" matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" dash="dotted-narrower" pen="heavier">
+<path layer="paths" matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" dash="dotted-narrow" pen="heavier">
 249.554 726.913 m
 278.63 688.736 l
 </path>

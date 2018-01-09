@@ -250,7 +250,14 @@ In this section we close the gap between the known hardness of \maxsped~\cite{b-
 %\end{itemize}
 
 Section~\ref{sec:hardness} showed that \maxsped is generally \NP-hard for $k \ge 3$. In this section we consider the special case that the intersection graph of the $k$-plane input drawing is a tree or a cactus. In both cases we present polynomial-time dynamic programming algorithms. Let $ C = (V,E) $ be the intersection graph of a given drawing $\Gamma$ of graph $ G $ as defined in Section~\ref{sec:preliminaries}. Let $ u \in V $ and $ \deg(u) = \delta $. 
-Then for the corresponding segment $ s(u) \in S $ there are $ \delta + 1 $ possible stub pairs including drawing the whole segment. We store the lengths of the possible stub pairs as node weights $ \ell_1(u), \dots, \ell_\delta(u) \in \mathbb{R}_+$ and assume that $ \ell_1(u),\dots,\ell_\delta(u) $ are sorted from shorter to longer stubs. We define  $ \ell_0(u) $ as the length of the whole segment $ s(u) $. 
+Then for the corresponding segment $ s(u) \in S $ there are $ \delta + 1 $ possible stub pairs including drawing the whole segment, see Fig.~\ref{fig:tree}. We store the lengths of the possible stub pairs as node weights $ \ell_1(u), \dots, \ell_\delta(u) \in \mathbb{R}_+$ and assume that $ \ell_1(u),\dots,\ell_\delta(u) $ are sorted from shorter to longer stubs. We define  $ \ell_0(u) $ as the length of the whole segment $ s(u) $. 
+
+\begin{figure}[tbp]
+	\centering
+ 	\includegraphics{tree_illustration}
+	\caption{A segment with  intersecting segments and the different induced stub lengths.} % The shaded areas are the stubs, $ p(u) $ is the parent of $ u $. The stubs in the boxed area contribute to $ \solshort(u) $.}
+	\label{fig:tree}
+\end{figure}
 
 %Computing the intersection graph requires to identify all the intersections in $ \Gamma $. Using a standard sweep line algorithm \cite{}\fabian{add citation} this requires $ O(|S|\log |S| + I) $ where $ I $ is the number of crossings. Building the graph then takes $ O(|S|) $ time. When computing the intersection we can compute the stub lengths and their order as well.
 %
@@ -259,12 +266,7 @@ Then for the corresponding segment $ s(u) \in S $ there are $ \delta + 1 $ possi
 
 \subsection{Trees}
 \label{sec:tree}
-\begin{figure}[tbp]
-	\centering
- 	\includegraphics{tree_illustration}
-	\caption{One edge $ u $ with intersecting segments. The shaded areas are the stubs, $ p(u) $ is the parent of $ u $. The stubs in the boxed area contribute to $ \solshort(u) $.}
-	\label{fig:tree}
-\end{figure}
+
 Here we assume that $ C =(V,E) $ is a rooted tree of maximum degree $ k $. 
 We give a bottom up dynamic programming algorithm for solving \maxsped on $ C $. 
 For each vertex $u \in V$ we compute and store the maximum ink values $T_i(u)$ for $i = 0, \dots, \delta$ with $\delta = \deg(u)$ for the subtree rooted at $u$ such that $s(u)$ is drawn as a pair of stubs of length $\ell_i(u)$.
@@ -280,14 +282,14 @@ We define the following two values, which allow us to categorize the stub length
 	\sollong(u) = \max\{T_0(u),\dots,T_{\delta}(u)\}
 \]
 %\end{align*}
-Based on these two values we can recursively define $ T_i(u) $: % for a vertex $ u $ and stub length $ \ell_i(u) $:
+Figure~\ref{fig:tree} highlights the stub lengths that contribute to $\solshort(u)$. We recursively define % for a vertex $ u $ and stub length $ \ell_i(u) $:
 \begin{align}
 	\label{rec:tree}
 	T_i(u) = \ell_i(u) + \sum_{v \in c(u)}
 	\begin{cases}
 		\solshort(v) & \text{if } s(u) \text{ with length } \ell_i(u) \text{ intersects } s(v) \\
-		\sollong(v) & \text{else}
-	\end{cases}
+		\sollong(v) & \text{otherwise}
+	\end{cases}.
 \end{align}
 The correctness of Recurrence~(\ref{rec:tree}) follows by induction. 
 For a leaf $u$ in $C$ the set $c(u)$ is empty and the correctness of $T_i(u)$ is immediate.
@@ -329,21 +331,23 @@ Computing $\solshort(u)$ and $\sollong(u)$ clearly takes $O(k)$ time.
 % 	Finally we need to compute $ \solshort(u) $ and $ \sollong(u) $, but this are just two maximizations over at most $ \delta + 1 $ values at most. This can be done in $ O(\delta) $ by simply sweeping over the values.
 % \end{proof}
 
+So by solving Recurrence~(\ref{rec:tree}) in $O(mk)$ time we find an optimal solution to the \maxsped problem on $ G $ with drawing $ \Gamma $ using standard backtracking from $\max\{T_0(r), \dots, T_{\deg(r)}(r)\}$ for the root $r$ of $C$.	
+Since the intersection graph $C$ is a tree with $O(m)$ edges it can be computed in $O(m \log m)$ time and we obtain the following theorem.
+
 \begin{theorem}
 	\label{thm:tree}
-	Let $ G $ be a simple graph with $m$ edges and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a tree with maximum degree $ k \in \mathbb{N} $ the \maxsped problem can be solved in $ O(mk + m \log m)) $ time and space.
+	Let $ G $ be a simple graph with $m$ edges and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a tree with maximum degree $ k \in \mathbb{N} $ problem \maxsped can be solved in $ O(mk + m \log m)) $ time and space.
 \end{theorem}
-\begin{proof}
-	Since $ C $ is known to be a tree, and hence $ |E| = O(m) $, we can compute the intersection graph and the stub lengths in $ O(m\log m) $ time and space.
-	With Lemma~\ref{lem:compute_vertex} and Recurrence~\ref{rec:tree} we need one pass through the tree to find the roots maximum in $ O(mk) $ time. Adding the bounds yields the desired runtime of $ O(mk + m \log m)) $.
-%	To solve the \maxsped problem on $ G $ we need to compute $ \max \{T_i(r) \mid 0 \leq i \leq k \} $ for the root $ r \in V $ of $ C $ as seen above. Doing this bottom up requires one pass through $ C $ hence by applying Lemma~\ref{lem:compute_vertex} we need $ O(mk) $ time to compute all $ T_i(u) $ for all $ u \in V $. For every vertex we only need to compute $ O(k) $ values and store two of them, namely $ \sollong(u) $ and $ \solshort(u) $, so we do not need more than $ O(mk) $ memory. Adding the bounds yields the desired runtime of $ O(mk + m \log m)) $.
-%	
-
-By solving Recurrence~(\ref{rec:tree}) we find an optimal solution to the \maxsped problem on $ G $ with drawing $ \Gamma $ as $\max\{T_0(r), \dots, T_{\deg(r)}(r)\}$ for the root $r$ of $C$.	
-
-
-	Retrieving the actual stub length for each edge in $ G $ needed to produce the SPED can be done by backtracking the subsolutions which requires at most $ O(mk) $ time.
-\end{proof}
+% \begin{proof}
+% 	Since $ C $ is known to be a tree, and hence $ |E| = O(m) $, we can compute the intersection graph and the stub lengths in $ O(m\log m) $ time and space.
+% 	With Lemma~\ref{lem:compute_vertex} and Recurrence~\ref{rec:tree} we need one pass through the tree to find the roots maximum in $ O(mk) $ time. Adding the bounds yields the desired runtime of $ O(mk + m \log m)) $.
+% %	To solve the \maxsped problem on $ G $ we need to compute $ \max \{T_i(r) \mid 0 \leq i \leq k \} $ for the root $ r \in V $ of $ C $ as seen above. Doing this bottom up requires one pass through $ C $ hence by applying Lemma~\ref{lem:compute_vertex} we need $ O(mk) $ time to compute all $ T_i(u) $ for all $ u \in V $. For every vertex we only need to compute $ O(k) $ values and store two of them, namely $ \sollong(u) $ and $ \solshort(u) $, so we do not need more than $ O(mk) $ memory. Adding the bounds yields the desired runtime of $ O(mk + m \log m)) $.
+% %
+%
+%
+%
+% 	Retrieving the actual stub length for each edge in $ G $ needed to produce the SPED can be done by backtracking the subsolutions which requires at most $ O(mk) $ time.
+% \end{proof}
 
 %\begin{itemize}
 %	\item segment $s$ with $d$ children $u_1, \dots, u_{d}$ and parent $p(s) = p$.

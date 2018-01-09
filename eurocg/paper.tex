@@ -63,7 +63,7 @@
 \author[1]{Martin~N\"ollenburg}
 \author[1]{Birgit Schreiber}
 
-\affil[1]{Algorithms and Complexity Group, TU Wien, Vienna, Austria\\ \texttt{[fklute|noellenburg]@ac.tuwien.ac.at}}
+\affil[1]{Algorithms and Complexity Group, TU Wien, Vienna, Austria\\ \texttt{[fklute|noellenburg]@ac.tuwien.ac.at, soeren.nickel@tuwien.ac.at}}
 %\affil[2]{Algorithms and Complexity Group, TU Wien, Vienna, Austria} %\texttt{fklute@ac.tuwien.ac.at}}
 %\affil[3]{Algorithms and Complexity Group, TU Wien, Vienna, Austria \texttt{}}
 %\affil[4]{Algorithms and Complexity Group, TU Wien, Vienna, Austria} %\texttt{noellenburg@ac.tuwien.ac.at}}
@@ -414,10 +414,9 @@ Similar to Section~\ref{sec:tree} we now define three values for each articulati
 \begin{align*}
 	\sollong(u) = \max\{T_0(u),\dots,T_\delta(u)\}\\
 	\solmid(u) = \max\{T_1(u),\dots,T_{i_q}(u)\}\\
-	\solshort(u) = \max\{T_1(u),\dots,T_{i_p}(u)\}
+	\solshort(u) = \max\{T_1(u),\dots,T_{i_p}(u)\}.
 \end{align*}
 Further we define the recurrence $T_i(u)$ for all articulation nodes $u \in \mathcal V$:
-
 \begin{align}
 \label{rec:cactus_articulation}
 T_i(u) = \ell_i(a(u)) + \sum_{v \in c(u)}
@@ -432,7 +431,7 @@ T_i(u) = \ell_i(a(u)) + \sum_{v \in c(u)}
 %If the values computed for the block vertices is correct, we can follow the correctness of the algorithm as in Section~\ref{sec:tree}. Let $ u \in \mathcal V $ be a block vertex then by \cite{bcgkmn-pped-17} we know the optimal solution for \maxsped just on $ C[\textit{cycle}(u)] $ is correctly computed by the above procedure since the algorithm from Section~\ref{sec:tree} correctly handles the created path. Now if $ u $ has articulation vertices attached to it the above computes the correct value since this is simply a tree. Further there is no $ v \in c(u) $ which is not an articulation vertex, hence the maximum ink value for $ u $ is correctly computed if we know the values for the children in $ c(u) $.
 %
 %For the runtime we can again argue the same as in Section~\ref{sec:tree}, but this time we have to also check cycles of length $ n_c $ which leads to a runtime of $ O(n_ck^2) $ for a block vertex $ u \in \mathcal V $ with $ n_c = |\textit{cycle}(u)| $. In case $ u $ is an articulation vertex we can solve it in $ O(k) $. As before the optimal solution to the \maxsped problem on $ G $ with drawing $ \Gamma $ can be found by backtracking from the root. Additionally the intersection graph can be computed in $ O(m\log m) $ where $ m $ is the number of edges in the original graph $ G $ since $ |E| = O(m) $ in a cactus and we obtain the following theorem.
-T_{i_p(v)}(v) & \text{if } i < i_p(v)\\ %\ell_i(a(u)) \leq a \\
+T_{i_p(v)}(v) & \text{if } 1 \le i < i_p(v)\\ %\ell_i(a(u)) \leq a \\
 T_{i_q(v)}(v) & \text{if } i_p(v) < i \leq i_q(v) \\
 T_{0}(v) & \text{otherwise}
 % \solshort(v) & \text{if } i < i_p(v)\\ %\ell_i(a(u)) \leq a \\

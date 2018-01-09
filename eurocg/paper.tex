@@ -151,16 +151,19 @@ However, for $k$-plane graph drawings whose edge intersection graphs are collect
 %Intersection graph $C=(V,E)$ with $V=S$ and edges if two segments intersect 
 %Consider maximum degree of $C$ -- here mostly 3.
 
-Throughout the paper let $ G $ be a \emph{simple graph} with edge set $ S = \{s_1,\dots,s_m\}$ and $ \Gamma $ a straight line drawing of $ G $ in the plane. We call $ \Gamma $ \emph{$ k $-plane} if every edge $ s_i \in S $ is crossed by at most $ k $ other edges from $ S $ in $ \Gamma $. We use the terms edge in $ S $ and segment in $ \Gamma $ interchangeably, since our input is always a graph $G$ with a given drawing $ \Gamma $. Hence we can also interpret $S$ as a set of line segments.
+Throughout the paper let $ G $ be a \emph{simple graph} with edge set $ S = \{s_1,\dots,s_m\}$ and $ \Gamma $ a straight line drawing of $ G $ in the plane. We call $ \Gamma $ \emph{$ k $-plane} if every edge $ s_i \in S $ is crossed by at most $ k $ other edges from $ S $ in $ \Gamma $. We use the terms edge in $ S $ and segment in $ \Gamma $ interchangeably. %, since our input is always a graph $G$ with a given drawing $ \Gamma $. 
+Hence we can also interpret $S$ as a set of line segments.
 
-The \emph{intersection graph} $ C = (V,E) $ of $ \Gamma $ is the graph containing a vertex $v_i$ in $ V $ for every $ s_i \in S $ and an edge $ v_i v_j \in E $ between vertices $ v_i, v_j \in V $ if the corresponding edges $ s_i, s_j \in S $ intersect in $ \Gamma $. Observe that the intersection graph $ C $ of a $ k $-plane drawing $ \Gamma $ has maximum degree $ k $.  
+The \emph{intersection graph} $ C = (V,E) $ of $ \Gamma $ is the graph containing a vertex $v_i$ in $ V $ for every $ s_i \in S $ and an edge $ v_i v_j \in E $ between vertices $ v_i, v_j \in V $ if the corresponding edges $ s_i, s_j \in S $ intersect in $ \Gamma $. 
+We also denote the segment in $S$ corresponding to a vertex $v \in V$ by $s(v)$.
+Observe that the intersection graph $ C $ of a $ k $-plane drawing $ \Gamma $ has maximum degree $ k $.  
 %
 Using a standard sweep-line algorithm, computing the intersection graph $C$ of a set of $m$ line segments takes $O(m \log m + |E|)$ time~\cite{bcko-cgaa-08}, where $|E|$ is  the number of intersections.
 
 A \emph{symmetric partial edge drawing} (SPED) $D$ of $\Gamma$ draws a fraction $0 < f_s \le 1$ of each edge $s = uv \in S$ by drawing two symmetric edge stubs at $u$ and $v$ of length $f_s \cdot |s|/2$ each. 
 No two stubs in $D$ may intersect.
 The \emph{ink} or \emph{ink value}  $I(D)$ of a SPED $D$ is the total stub length $I(D) = \sum_{s \in S} f_s |s|$.
-In the problem \maxsped the task is to find for a given drawing $\Gamma$ a SPED $D^*$ such that its ink $I(D^*)$ is maximum over all SPEDs.
+In the problem \maxsped the task is to find for a given drawing~$\Gamma$ a SPED $D^*$ such that its ink $I(D^*)$ is maximum over all SPEDs.
 
 
 %\fabian{This part has to be adapted once the intro is fixed}

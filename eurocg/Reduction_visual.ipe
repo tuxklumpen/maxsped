@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70206" creator="Ipe 7.2.7">
-<info created="D:20180109094301" modified="D:20180109120631"/>
+<info created="D:20180109094301" modified="D:20180109122622"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -330,7 +330,7 @@ h
 <layer name="highlights"/>
 <view layers="alpha true1 false2 true3 tri1 paths highlights" active="highlights"/>
 <view layers="alpha true1 false1 true2 false2 true3 false3 tri1 tri2 tri3 paths highlights" active="highlights"/>
-<path layer="highlights" matrix="0.55 0 0 0.55 88.1664 280.063" fill="lightyellow">
+<path layer="highlights" matrix="0.55 0 0 0.55 88.1664 280.063" fill="KITbrown15">
 254.928 805.855 m
 270.928 805.855 l
 302.928 750.429 l
@@ -339,7 +339,7 @@ h
 222.928 750.429 l
 h
 </path>
-<path matrix="0.48985 0 0 0.48985 114.294 336.634" fill="KITseablue15">
+<path matrix="0.48985 0 0 0.48985 114.294 336.634" fill="KITcyanblue15">
 328 660 m
 328 572 l
 225.94 534.059 l
@@ -348,14 +348,14 @@ h
 225.934 697.949 l
 h
 </path>
-<path matrix="0.485 0 0 0.485 265.08 339.622" fill="KITseablue15">
+<path matrix="0.485 0 0 0.485 265.08 339.622" fill="KITcyanblue15">
 28 660 m
 28 572 l
 116 572 l
 116 660 l
 h
 </path>
-<path matrix="0.485 0 0 0.485 113.08 339.622" fill="KITseablue15">
+<path matrix="0.485 0 0 0.485 113.08 339.622" fill="KITcyanblue15">
 28 660 m
 28 572 l
 116 572 l
@@ -750,9 +750,9 @@ h
 336 688 m
 384 688 l
 </path>
-<text layer="highlights" matrix="0.5 0 0 0.5 99.5899 300.789" transformations="translations" pos="60 616" stroke="black" type="label" width="38.991" height="5.521" depth="0.99" valign="baseline" size="small" style="math">x_1=true</text>
-<text matrix="0.5 0 0 0.5 173.266 328.911" transformations="translations" pos="60 616" stroke="black" type="label" width="43.468" height="6.23" depth="1.74" valign="baseline" size="small" style="math">x_2=false</text>
-<text matrix="0.5 0 0 0.5 250.505 300.789" transformations="translations" pos="60 616" stroke="black" type="label" width="38.991" height="5.521" depth="0.99" valign="baseline" size="small" style="math">x_3=true</text>
+<text layer="highlights" matrix="0.5 0 0 0.5 99.5899 300.789" transformations="translations" pos="60 616" stroke="black" type="label" width="39.476" height="5.521" depth="0.99" valign="baseline" size="small">$x_1$ = \emph{true}</text>
+<text matrix="0.5 0 0 0.5 173.266 328.911" transformations="translations" pos="60 616" stroke="black" type="label" width="41.241" height="6.23" depth="1.74" valign="baseline" size="small">$x_2$ = \emph{false}</text>
+<text matrix="0.5 0 0 0.5 250.505 300.789" transformations="translations" pos="60 616" stroke="black" type="label" width="39.476" height="5.521" depth="0.99" valign="baseline" size="small">$x_3$ = \emph{true}</text>
 <text matrix="0.5 0 0 0.5 135.266 353.918" transformations="translations" pos="221.556 723.417" stroke="black" type="label" width="60.889" height="4.988" depth="0.99" valign="baseline" size="small" style="math">x_1 \lor \neg x_2 \lor \neg x_3</text>
 <path layer="paths" matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
 301.399 721.269 m

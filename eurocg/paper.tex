@@ -307,21 +307,25 @@ Recurrence~(\ref{rec:tree}) can be solved naively in $ O(mk^2) $ time.
 Using the order on the stub lengths  we can improve this to $ O(mk) $ time by computing all $ T_i(u) $ for one $ u \in V $ in $O(k)$ time.
 Let $u \in V$ be a vertex with degree $\deg(u) = \delta$. 
 The values $T_0(u) = \ell_0(u) + \sum_{v\in c(u)} \solshort(v)$ and $T_1(u) = \ell_1(u) + \sum_{v\in c(u)} \sollong(v)$ for the whole segment $s(u)$ and the shortest stubs can be computed in $O(k)$ time each.
+Now $T_{j+1}(u)$ can be computed from $T_j(u)$ in $O(1)$ time as follows.
+Let $v_j $ be the neighbor of $u$ that induces stub length $\ell_j(u)$ and assume $v_j \ne p(u)$.
+In $T_j(u)$ we could still count the value $\sollong(v_j)$, but in $T_{j+1}(u)$ the stub length of $u$ implies that $v_j$ can contribute only $\solshort(v_j)$. 
+Then $T_{j+1}(u) = T_j(u) - \sollong(v_j) + \solshort(v_j)$.
+If $v_j=p(u)$ the two values $T_j(u)$ and $T_{j+1}(u)$ are equal as the corresponding change in stub length has no effect on the children of $u$.
+Computing $\solshort(u)$ and $\sollong(u)$ clearly takes $O(k)$ time.
 
-
-
-\begin{lemma}
-	\label{lem:compute_vertex}
-	Let $ C = (V,E) $ be a tree with maximum degree $ k $ and vertex weights $ \ell_0,\dots,\ell_{\delta} $ for every $ u \in V $ with degree $ \delta $. We can compute $ \solshort(u) $ and $ \sollong(u) $ in $ O(\delta) $ time and space, if the values $ \sollong(v) $ and $ \solshort(v) $ are computed for all children $ v \in c(u) $.
-\end{lemma}
-\begin{proof}
-	 Let $ u \in V $ be a vertex with degree $ \delta < k $ for which we have computed $ \sollong $ and $ \solshort $ for every of its children. 
-%	 The crucial part is that $ T_i(u) $ can be built iteratively by going through the list of stub lengths for $ u $ in ascending order. 
-	First we compute $ T_0(u) $ and $ T_1(u) $, this can be done since they represent the longest (whole edge) and shortest stub lengths. 	 
-	 Now assume we computed $ T_j(u) $ for all stub lengths $ \ell_i(u) $ with $ i \leq j $, hence we want to compute $ T_{j+1}(u) $ next. Doing so only requires to consider the next stub-length $ \ell_{j + 1}(u) $, since all other affected by drawing $ s(u) $ with $ \ell_{j+1}(u) $ where already considered. Hence we can compute $ T_{j+1}(u) $ in $O(1)$ time by simply subtracting $ \sollong(v) $ and adding $ \solshort(v) $.
-	
-	Finally we need to compute $ \solshort(u) $ and $ \sollong(u) $, but this are just two maximizations over at most $ \delta + 1 $ values at most. This can be done in $ O(\delta) $ by simply sweeping over the values.
-\end{proof}
+% \begin{lemma}
+% 	\label{lem:compute_vertex}
+% 	Let $ C = (V,E) $ be a tree with maximum degree $ k $ and vertex weights $ \ell_0,\dots,\ell_{\delta} $ for every $ u \in V $ with degree $ \delta $. We can compute $ \solshort(u) $ and $ \sollong(u) $ in $ O(\delta) $ time and space, if the values $ \sollong(v) $ and $ \solshort(v) $ are computed for all children $ v \in c(u) $.
+% \end{lemma}
+% \begin{proof}
+% 	 Let $ u \in V $ be a vertex with degree $ \delta < k $ for which we have computed $ \sollong $ and $ \solshort $ for every of its children.
+% %	 The crucial part is that $ T_i(u) $ can be built iteratively by going through the list of stub lengths for $ u $ in ascending order.
+% 	First we compute $ T_0(u) $ and $ T_1(u) $, this can be done since they represent the longest (whole edge) and shortest stub lengths.
+% 	 Now assume we computed $ T_j(u) $ for all stub lengths $ \ell_i(u) $ with $ i \leq j $, hence we want to compute $ T_{j+1}(u) $ next. Doing so only requires to consider the next stub-length $ \ell_{j + 1}(u) $, since all other affected by drawing $ s(u) $ with $ \ell_{j+1}(u) $ where already considered. Hence we can compute $ T_{j+1}(u) $ in $O(1)$ time by simply subtracting $ \sollong(v) $ and adding $ \solshort(v) $.
+%
+% 	Finally we need to compute $ \solshort(u) $ and $ \sollong(u) $, but this are just two maximizations over at most $ \delta + 1 $ values at most. This can be done in $ O(\delta) $ by simply sweeping over the values.
+% \end{proof}
 
 \begin{theorem}
 	\label{thm:tree}

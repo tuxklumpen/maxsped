@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70206" creator="Ipe 7.2.7">
-<info created="D:20180109094301" modified="D:20180109122622"/>
+<info created="D:20180109094301" modified="D:20180109130355"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -321,15 +321,15 @@ h
 <layer name="false1"/>
 <layer name="true2"/>
 <layer name="false2"/>
-<layer name="true3"/>
 <layer name="false3"/>
+<layer name="true3"/>
 <layer name="tri1"/>
 <layer name="tri2"/>
 <layer name="tri3"/>
 <layer name="paths"/>
 <layer name="highlights"/>
-<view layers="alpha true1 false2 true3 tri1 paths highlights" active="highlights"/>
-<view layers="alpha true1 false1 true2 false2 true3 false3 tri1 tri2 tri3 paths highlights" active="highlights"/>
+<view layers="alpha true1 false2 false3 tri1 paths highlights" active="highlights"/>
+<view layers="alpha true1 false1 true2 false2 false3 true3 tri1 tri2 tri3 paths highlights" active="highlights"/>
 <path layer="highlights" matrix="0.55 0 0 0.55 88.1664 280.063" fill="KITbrown15">
 254.928 805.855 m
 270.928 805.855 l
@@ -542,37 +542,21 @@ h
 48 592 m
 48 576 l
 </path>
-<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITred" pen="heavier">
+<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITpalegreen" pen="heavier">
 32 640 m
 48 640 l
 </path>
-<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITred" pen="heavier">
+<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITpalegreen" pen="heavier">
 32 592 m
 48 592 l
 </path>
-<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITred" pen="heavier">
+<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITpalegreen" pen="heavier">
 96 592 m
 112 592 l
 </path>
-<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITred" pen="heavier">
+<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITpalegreen" pen="heavier">
 96 640 m
 112 640 l
-</path>
-<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITpalegreen" pen="heavier">
-48 656 m
-48 640 l
-</path>
-<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITpalegreen" pen="heavier">
-96 656 m
-96 640 l
-</path>
-<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITpalegreen" pen="heavier">
-96 592 m
-96 576 l
-</path>
-<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITpalegreen" pen="heavier">
-48 592 m
-48 576 l
 </path>
 <path layer="true1" matrix="0 0.5 -0.5 0 456 602.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
 48 640 m
@@ -581,14 +565,6 @@ h
 <path matrix="0 0.5 -0.5 0 456 602.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
 96 592 m
 96 640 l
-</path>
-<path layer="true3" matrix="0.5 0 0 0.5 48 330.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
-480 640 m
-480 592 l
-</path>
-<path matrix="0.5 0 0 0.5 48 330.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
-528 640 m
-528 592 l
 </path>
 <path layer="true2" matrix="0.5 0 0 0.5 48 330.382" stroke="KITpalegreen" dash="dashed" pen="heavier" cap="1">
 480 624 m
@@ -602,11 +578,11 @@ h
 48 592 m
 96 592 l
 </path>
-<path layer="true3" matrix="0.5 0 0 0.5 48 330.382" stroke="KITred" pen="heavier">
+<path layer="false3" matrix="0.5 0 0 0.5 48 330.382" stroke="KITpalegreen" pen="heavier">
 480 640 m
 528 640 l
 </path>
-<path matrix="0.5 0 0 0.5 48 330.382" stroke="KITred" pen="heavier">
+<path matrix="0.5 0 0 0.5 48 330.382" stroke="KITpalegreen" pen="heavier">
 528 592 m
 480 592 l
 </path>
@@ -618,11 +594,11 @@ h
 96 592 m
 48 592 l
 </path>
-<path layer="false3" matrix="0.5 0 0 0.5 48 330.382" stroke="KITred" dash="dashed" pen="heavier">
+<path layer="true3" matrix="0.5 0 0 0.5 48 330.382" stroke="KITpalegreen" dash="dashed-narrower" pen="heavier">
 480 592 m
 528 592 l
 </path>
-<path matrix="0.5 0 0 0.5 48 330.382" stroke="KITred" dash="dashed" pen="heavier">
+<path matrix="0.5 0 0 0.5 48 330.382" stroke="KITpalegreen" dash="dashed-narrower" pen="heavier">
 528 640 m
 480 640 l
 </path>
@@ -634,11 +610,11 @@ h
 48 640 m
 48 592 l
 </path>
-<path layer="false3" matrix="0.5 0 0 0.5 48 330.382" stroke="KITpalegreen" pen="heavier">
+<path layer="true3" matrix="0.5 0 0 0.5 48 330.382" stroke="KITred" pen="heavier">
 480 640 m
 480 592 l
 </path>
-<path matrix="0.5 0 0 0.5 48 330.382" stroke="KITpalegreen" pen="heavier">
+<path matrix="0.5 0 0 0.5 48 330.382" stroke="KITred" pen="heavier">
 528 640 m
 528 592 l
 </path>
@@ -710,21 +686,9 @@ h
 64 688 m
 80 688 l
 </path>
-<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" pen="heavier">
-384 704 m
-384 688 l
-</path>
-<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" pen="heavier">
-384 640 m
-384 624 l
-</path>
 <path layer="paths" matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
 128 688 m
 80 688 l
-</path>
-<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
-384 688 m
-384 640 l
 </path>
 <path layer="alpha" matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" pen="heavier">
 80 704 m
@@ -734,11 +698,11 @@ h
 80 624 m
 80 640 l
 </path>
-<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" pen="heavier">
+<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" pen="heavier">
 320 688 m
 336 688 l
 </path>
-<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" pen="heavier">
+<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" pen="heavier">
 384 688 m
 400 688 l
 </path>
@@ -746,35 +710,23 @@ h
 80 640 m
 80 688 l
 </path>
-<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" pen="heavier">
+<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" pen="heavier">
 336 688 m
 384 688 l
 </path>
 <text layer="highlights" matrix="0.5 0 0 0.5 99.5899 300.789" transformations="translations" pos="60 616" stroke="black" type="label" width="39.476" height="5.521" depth="0.99" valign="baseline" size="small">$x_1$ = \emph{true}</text>
 <text matrix="0.5 0 0 0.5 173.266 328.911" transformations="translations" pos="60 616" stroke="black" type="label" width="41.241" height="6.23" depth="1.74" valign="baseline" size="small">$x_2$ = \emph{false}</text>
-<text matrix="0.5 0 0 0.5 250.505 300.789" transformations="translations" pos="60 616" stroke="black" type="label" width="39.476" height="5.521" depth="0.99" valign="baseline" size="small">$x_3$ = \emph{true}</text>
-<text matrix="0.5 0 0 0.5 135.266 353.918" transformations="translations" pos="221.556 723.417" stroke="black" type="label" width="60.889" height="4.988" depth="0.99" valign="baseline" size="small" style="math">x_1 \lor \neg x_2 \lor \neg x_3</text>
-<path layer="paths" matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" dash="dotted-narrow" pen="heavier">
-301.399 721.269 m
-336 688 l
-</path>
-<path layer="alpha" matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" pen="heavier">
-336 688 m
-347.713 677.1 l
-</path>
-<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" pen="heavier">
-301.399 721.269 m
-290.412 732.899 l
-</path>
-<path layer="paths" matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" pen="heavier">
+<text matrix="0.5 0 0 0.5 250.505 300.789" transformations="translations" pos="60 616" stroke="black" type="label" width="41.241" height="6.23" depth="1.74" valign="baseline" size="small">$x_3$ = \emph{false}</text>
+<text matrix="0.5 0 0 0.5 135.266 353.918" transformations="translations" pos="221.556 723.417" stroke="black" type="label" width="54.746" height="4.988" depth="0.99" valign="baseline" size="small" style="math">x_1 \lor \neg x_2 \lor x_3</text>
+<path layer="paths" matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" pen="heavier">
 257.555 740.769 m
 301.399 721.269 l
 </path>
-<path layer="alpha" matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" pen="heavier">
+<path layer="alpha" matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" pen="heavier">
 257.554 740.769 m
 243.048 747.518 l
 </path>
-<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" pen="heavier">
+<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITpalegreen" pen="heavier">
 301.399 721.269 m
 316.239 715.286 l
 </path>
@@ -861,6 +813,54 @@ h
 <path layer="paths" matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" dash="dotted-narrow" pen="heavier">
 249.554 726.913 m
 278.63 688.736 l
+</path>
+<path layer="alpha" matrix="0.5 0 0 0.5 264 330.382" stroke="KITred" pen="heavier">
+48 656 m
+48 640 l
+</path>
+<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITred" pen="heavier">
+96 656 m
+96 640 l
+</path>
+<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITred" pen="heavier">
+96 592 m
+96 576 l
+</path>
+<path matrix="0.5 0 0 0.5 264 330.382" stroke="KITred" pen="heavier">
+48 592 m
+48 576 l
+</path>
+<path layer="false3" matrix="0.5 0 0 0.5 48 330.382" stroke="KITred" dash="dotted-narrow" pen="heavier">
+480 640 m
+480 592 l
+</path>
+<path matrix="0.5 0 0 0.5 48 330.382" stroke="KITred" dash="dotted-narrow" pen="heavier">
+528 640 m
+528 592 l
+</path>
+<path layer="alpha" matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" pen="heavier">
+384 704 m
+384 688 l
+</path>
+<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" pen="heavier">
+384 640 m
+384 624 l
+</path>
+<path layer="paths" matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" dash="dotted-narrow" pen="heavier">
+384 688 m
+384 640 l
+</path>
+<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" dash="dotted-narrow" pen="heavier">
+301.399 721.269 m
+336 688 l
+</path>
+<path layer="alpha" matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" pen="heavier">
+336 688 m
+347.713 677.1 l
+</path>
+<path matrix="0.5 0 0 0.5 112 330.382" stroke="KITred" pen="heavier">
+301.399 721.269 m
+290.412 732.899 l
 </path>
 </page>
 </ipe>

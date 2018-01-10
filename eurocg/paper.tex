@@ -121,7 +121,7 @@ User studies have confirmed that such drawings remain readable while reducing cl
 The idea of drawing edges only partially has been formalized in graph drawing as follows~\cite{bk-ecbe-12}. 
 A \emph{partial edge drawing (PED)} is a graph drawing that maps vertices to points and edges to pairs of crossing-free edge stubs of positive length pointing towards each other.
 These edge stubs are obtained by erasing one contiguous central piece of the straight-line segment connecting the two endpoints of each edge.
-In other words each straight-line edge is divided into three parts, of which only the two outer ones are drawn, see Fig.~\ref{fig:examples}.
+In other words each straight-line edge is divided into three parts, of which only the two outer ones are drawn (see Fig.~\ref{fig:examples}).
 More restricted and better readable~\cite{blmt-pedhmitc-16} variations of PEDs are \emph{symmetric} PEDs, in which both stubs of an edge must have the same length (see Fig.~\ref{fig:examples}(b)), and \emph{homogeneous} PEDs, in which the ratio of the stub length to the total edge length is the same for all edges.
 The natural optimization problem in this formal setting is \emph{ink maximization}, i.e., maximizing the total stub length, so that as much information as possible is given in the drawing while all crossings disappear in the negative background space. 
 
@@ -164,7 +164,7 @@ Using a standard sweep-line algorithm, computing the intersection graph $C$ of a
 A \emph{symmetric partial edge drawing} (SPED) $D$ of $\Gamma$ draws a fraction $0 < f_s \le 1$ of each edge $s = uv \in S$ by drawing two symmetric edge stubs at $u$ and $v$ of length $f_s \cdot |s|/2$ each. 
 No two stubs in $D$ may intersect.
 The \emph{ink} or \emph{ink value}  $I(D)$ of a SPED $D$ is the total stub length $I(D) = \sum_{s \in S} f_s |s|$.
-In the problem \maxsped the task is to find for a given drawing~$\Gamma$ a SPED $D^*$ such that its ink $I(D^*)$ is maximum over all SPEDs.
+In the problem \maxsped, the task is to find for a given drawing~$\Gamma$ a SPED $D^*$ such that its ink $I(D^*)$ is maximum over all SPEDs.
 
  
 
@@ -211,16 +211,16 @@ In this section we close the gap between the known hardness of \maxsped~\cite{b-
 	All segments in the gadgets are of length 5.
 	We use pairs of intersecting segments, alternatingly colored red and green.
 	The intersection point of each red-green segment pair is at distance 1 from an endpoint.
-	Thus the maximum amount of ink contributed by such a pair is 7 (one full segment of length 5 and the other one with two stubs of length 1 each).
+	Thus, the maximum amount of ink contributed by such a pair is 7 (one full segment of length 5 and the other one with two stubs of length 1 each).
 	
 	Each variable gadget is a cycle of segment pairs, with at least one pair for each occurrence of the variable in $\phi$, see Fig.~\ref{fig:gadget_connection}. 
 	Observe that this cycle has exactly two ink-maximal SPEDs: either all red edges are full segments and all green edges are length-1 stubs or vice versa.
 	We associate the configuration with green stubs and full red segments with the value \emph{true} and the configuration with full green segments and red stubs with the value \emph{false}.
 	
 	For each clause we construct a triple of mutually intersecting segments, see the gadget on yellow background in the upper part of Fig.~\ref{fig:gadget_connection}.
-	Again, their intersection points are at distance 1 from the endpoints.
-	It is clear that in such a clause triangle at most one of the three segments can be fully drawn, while the stubs of the other two can have length at most 1.
-	Hence the maximum amount of ink in a SPED contributed by a clause gadget is 9.
+	Again, their intersection points are at distance~1 from the endpoints.
+	It is clear that in such a clause triangle at most one of the three segments can be fully drawn, while the stubs of the other two can have length at most~1.
+	Hence, the maximum amount of ink in a SPED contributed by a clause gadget is~9.
 	
 	Finally, we connect variable and clause gadgets in such a way that a clause gadget can contribute its maximum ink value of 9 if and only if the clause is satisfied by the selected truth assignment to the variables.
 	For a positive (negative) literal, we create a path of even length between a green (red) edge of the variable gadget and one of the three edges of the clause gadget as shown in Fig.~\ref{fig:gadget_connection}.
@@ -237,7 +237,7 @@ In this section we close the gap between the known hardness of \maxsped~\cite{b-
 	We draw the clause segment that connects to the selected literal as a full segment and the other two as length-1 stubs.
 	Recall that the literal paths are oriented from the variable gadget to the clause gadget.
 	Since the last segment of the selected literal path must be drawn as length-1 stubs, the only way of having a maximum contribution of that path is by alternating stubs and full segments.
-	Hence the first segment of the path must be a full segment.
+	Hence, the first segment of the path must be a full segment.
 	But because the variable is in the state that sets the literal to \emph{true}, the intersecting variable segment is drawn as two stubs and the path configuration is valid.
 	For the two non-selected literals, we can draw the last segments of their paths as full segments, as well as every segment at an even position, while the segments at odd positions are drawn as stubs. 
 	This is compatible with any of the two variable configurations and proves that we can indeed achieve ink value~$L$.
@@ -247,9 +247,9 @@ In this section we close the gap between the known hardness of \maxsped~\cite{b-
 	In particular, each variable gadget is either in state \emph{true} or \emph{false}.
 	We claim that this truth assignment satisfies $\phi$.
 	For each clause, one segment must have full length and as argued before the path connecting that segment to a variable gadget must have all segments at even positions as length-1 stubs and all segments at odd positions as full segments. 
-	In particular the first segment of the literal path is fully drawn and therefore in a SPED with ink $L$ the intersecting segment of the variable cannot be fully drawn.
+	In particular, the first segment of the literal path is fully drawn and therefore, in a SPED with ink $L$, the intersecting segment of the variable cannot be fully drawn.
 	In fact, it must be drawn as length-1 stubs for otherwise the variable gadget would not contribute its maximum ink value.
-	But then by construction the selected variable value sets our literal to \emph{true}.	
+	But then by construction, the selected variable value sets our literal to \emph{true}.	
 \end{proof}
 
 %\newpage %delete later
@@ -418,7 +418,7 @@ Similar to Section~\ref{sec:tree} we now define three values for each articulati
 	\solmid(u) = \max\{T_1(u),\dots,T_{i_q}(u)\}\\
 	\solshort(u) = \max\{T_1(u),\dots,T_{i_p}(u)\}.
 \end{align*}
-Further we define the recurrence $T_i(u)$ for all articulation nodes $u \in \mathcal V$:
+Further, we define the recurrence $T_i(u)$ for all articulation nodes $u \in \mathcal V$:
 \begin{align}
 \label{rec:cactus_articulation}
 T_i(u) = \ell_i(a(u)) + \sum_{v \in c(u)}
@@ -442,7 +442,7 @@ T_{0}(v) & \text{otherwise}
 \end{cases}.
 \end{align}
 For a block node $ u \in \mathcal V $ we cut open the cycle it represents at vertex $a(p(u))$ (refer to Bruckdorfer et al.~\cite{bcgkmn-pped-17} for details) and consider the three relevant stub lengths of the parent's segment $s(a(p(u)))$ induced by $i_p(u)$ and $i_q(u)$ and the whole segment. 
-The resulting subgraph is a path on $V(u)$ with attached children that are articulation vertices in $\mathcal T$ so we can apply our algorithm of Section~\ref{sec:tree} with minor modifications.
+The resulting subgraph is a path on $V(u)$ with attached children that are articulation vertices in $\mathcal T$, so we can apply our algorithm of Section~\ref{sec:tree} with minor modifications.
 Once all values in the subgraph of block node $u$ are computed, we can derive the values $T_i(u)$ for the block node $u$.
 
 % The resulting graph is a path over the vertices in $ \textit{cycle}(u) $ with attached articulation vertices. This is especially a tree and we use the aglorithm from Section~\ref{sec:tree}, maximizing over three values of the articulation vertices though,  to compute the $ T_i(u) $.

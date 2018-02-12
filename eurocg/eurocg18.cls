@@ -125,7 +125,7 @@ Germany, March 21--23, 2018}
   \vtop{\hsize\textwidth
     \nobreakspace\\
     \ifx\@EventLongTitle\@empty\else
-    \textit{Submitted} to the
+%    \textit{Submitted} to the
     \@EventLongTitle.\\\fi
     %\hspace*{\wd\@tempboxa}\enskip
     This is an extended abstract of a presentation given at 

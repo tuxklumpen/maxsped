@@ -123,6 +123,7 @@ A \emph{partial edge drawing (PED)} is a graph drawing that maps vertices to poi
 These edge stubs are obtained by erasing one contiguous central piece of the straight-line segment connecting the two endpoints of each edge.
 In other words each straight-line edge is divided into three parts, of which only the two outer ones are drawn (see Fig.~\ref{fig:examples}).
 More restricted and better readable~\cite{blmt-pedhmitc-16} variations of PEDs are \emph{symmetric} PEDs, in which both stubs of an edge must have the same length (see Fig.~\ref{fig:examples}(b)), and \emph{homogeneous} PEDs, in which the ratio of the stub length to the total edge length is the same for all edges.
+\textcolor{blue}{Symmetric stubs facilitate finding adjacent vertices due to the identical stub lengths at both vertices, and symmetric homogeneous stubs additionally indicate the distance at which to find a neighboring vertex.}
 The natural optimization problem in this formal setting is \emph{ink maximization}, i.e., maximizing the total stub length, so that as much information as possible is given in the drawing while all crossings disappear in the negative background space. 
 
 
@@ -152,7 +153,7 @@ However, for $k$-plane graph drawings whose edge intersection graphs are collect
 %Intersection graph $C=(V,E)$ with $V=S$ and edges if two segments intersect 
 %Consider maximum degree of $C$ -- here mostly 3.
 
-Throughout the paper let $ G $ be a \emph{simple graph} with edge set $ S = \{s_1,\dots,s_m\}$ and $ \Gamma $ a straight line drawing of $ G $ in the plane. We call $ \Gamma $ \emph{$ k $-plane} if every edge $ s_i \in S $ is crossed by at most $ k $ other edges from $ S $ in $ \Gamma $. We use the terms edge in $ S $ and segment in $ \Gamma $ interchangeably. %, since our input is always a graph $G$ with a given drawing $ \Gamma $. 
+Throughout the paper let $ G $ be a \emph{simple graph} with edge set $ S = \{s_1,\dots,s_m\}$ and $ \Gamma $ a straight-line drawing of $ G $ in the plane. We call $ \Gamma $ \emph{$ k $-plane} if every edge $ s_i \in S $ is crossed by at most $ k $ other edges from $ S $ in $ \Gamma $. We use the terms edge in $ S $ and segment in $ \Gamma $ interchangeably. %, since our input is always a graph $G$ with a given drawing $ \Gamma $. 
 Hence we can also interpret $S$ as a set of line segments.
 
 The \emph{intersection graph} $ C = (V,E) $ of $ \Gamma $ is the graph containing a vertex $v_i$ in $ V $ for every $ s_i \in S $ and an edge $ v_i v_j \in E $ between vertices $ v_i, v_j \in V $ if the corresponding edges $ s_i, s_j \in S $ intersect in $ \Gamma $. 
@@ -190,7 +191,8 @@ In this section we close the gap between the known hardness of \maxsped~\cite{b-
 %\opencutleft
 \begin{proof}
 %		\begin{cutout}{2}{0pt}{0.44\textwidth}{15}
-	We reduce from the \NP-hard problem \ppsat~\cite{l-pftu-82} using similar ideas as in Bruckdorfer's general proof of the hardness of \maxsped~\cite{b-sgh-15}. %, which reduces from the more restricted problem \textsc{Planar Positive 1-in-3 Sat}. 
+	We reduce from the \NP-hard problem \ppsat~\cite{l-pftu-82} using similar ideas as in Bruckdorfer's sketch of the hardness proof for general \maxsped~\cite{b-sgh-15}. 
+%	Bruckdorfer reduces from the more restricted problem \textsc{Planar Positive 1-in-3 Sat}.
 	Let $\phi$ be a planar 3-Sat formula with $n$ variables $\{x_1, \dots, x_n\}$ and $m$ clauses $\{c_1, \dots, c_m\}$, each consisting of three literals.
 	We can assume that $\phi$ comes with a planar drawing of its variable-clause graph $H_\phi$, which has a vertex for each variable $x_i$ and a vertex for each clause $c_j$.
 	Each clause vertex is connected to the three variables appearing in the clause.
@@ -213,7 +215,7 @@ In this section we close the gap between the known hardness of \maxsped~\cite{b-
 	The intersection point of each red-green segment pair is at distance 1 from an endpoint.
 	Thus, the maximum amount of ink contributed by such a pair is 7 (one full segment of length 5 and the other one with two stubs of length 1 each).
 	
-	Each variable gadget is a cycle of segment pairs, with at least one pair for each occurrence of the variable in $\phi$, see Fig.~\ref{fig:gadget_connection}. 
+	Each variable gadget is a cycle of segment pairs, with (at least) one pair for each occurrence of the variable in $\phi$, see Fig.~\ref{fig:gadget_connection}. 
 	Observe that this cycle has exactly two ink-maximal SPEDs: either all red edges are full segments and all green edges are length-1 stubs or vice versa.
 	We associate the configuration with green stubs and full red segments with the value \emph{true} and the configuration with full green segments and red stubs with the value \emph{false}.
 	
@@ -263,7 +265,7 @@ In this section we close the gap between the known hardness of \maxsped~\cite{b-
 %\end{itemize}
 
 Section~\ref{sec:hardness} showed that \maxsped is generally \NP-hard for $k \ge 3$. 
-Now we consider the special case that the intersection graph of the $k$-plane input drawing is a tree or a cactus. In both cases we present polynomial-time dynamic programming algorithms. Let $ C = (V,E) $ be the intersection graph of a given drawing $\Gamma$ of graph $ G $ as defined in Section~\ref{sec:preliminaries}. 
+Now we consider the special case that the intersection graph of the $k$-plane input drawing is a tree or a cactus. In both cases we present polynomial-time dynamic programming algorithms. Let $ C = (V,E) $ be the intersection graph of a given drawing $\Gamma$ of a graph $ G $ as defined in Section~\ref{sec:preliminaries}. 
 Let $ u \in V $ and $ \delta  = \deg(u) $. 
 Then for the corresponding segment $ s(u) \in S $ there are $ \delta + 1 $ relevant stub pairs including the whole segment, see Fig.~\ref{fig:tree}. 
 Let $ \ell_1(u), \dots, \ell_\delta(u) \in \mathbb{R}_+$ be the stub lengths induced by the intersection points of $s(u)$ with the segments of the neighbors of $u$,  sorted from shorter to longer stubs. We define  $ \ell_0(u) $ as the length of the whole segment $ s(u) $. 
@@ -337,9 +339,9 @@ Let $u \in V$ be a vertex with degree $\deg(u) = \delta$.
 The values $T_0(u) = \ell_0(u) + \sum_{v\in c(u)} \solshort(v)$ and $T_1(u) = \ell_1(u) + \sum_{v\in c(u)} \sollong(v)$ for the whole segment $s(u)$ and the shortest stubs can be computed in $O(k)$ time each.
 Now $T_{j+1}(u)$ can be computed from $T_j(u)$ in $O(1)$ time as follows.
 Let $v_j $ be the neighbor of $u$ that induces stub length $\ell_j(u)$ and assume $v_j \ne p(u)$.
-In $T_j(u)$ we could still count the value $\sollong(v_j)$, but in $T_{j+1}(u)$ the stub length of $u$ implies that $v_j$ can contribute only $\solshort(v_j)$. 
+In $T_j(u)$ we could still count the value $\sollong(v_j)$, but in $T_{j+1}(u)$ the stub length of $u$ implies that $v_j$ can contribute only to $\solshort(v_j)$. 
 Then $T_{j+1}(u) = T_j(u) - \sollong(v_j) + \solshort(v_j)$.
-If $v_j=p(u)$ the two values $T_j(u)$ and $T_{j+1}(u)$ are equal as the corresponding change in stub length has no effect on the children of $u$.
+If $v_j=p(u)$, then the two values $T_j(u)$ and $T_{j+1}(u)$ are equal as the corresponding change in stub length has no effect on the children of $u$.
 Computing $\solshort(u)$ and $\sollong(u)$ clearly takes $O(k)$ time.
 
 % \begin{lemma}
@@ -360,7 +362,7 @@ Since the intersection graph $C$ is a tree with $O(m)$ edges it can be computed 
 
 \begin{theorem}
 	\label{thm:tree}
-	Let $ G $ be a simple graph with $m$ edges and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a tree with maximum degree $ k \in \mathbb{N} $, problem \maxsped can be solved in $ O(mk + m \log m) $ time and space.
+	Let $ G $ be a simple graph with $m$ edges and $ \Gamma $ a straight-line drawing of $ G $. If the intersection graph $ C = (V,E) $ of $ G $ is a tree with maximum degree $ k \in \mathbb{N} $, then problem \maxsped can be solved in $ O(mk + m \log m) $ time and space.
 \end{theorem}
 % \begin{proof}
 % 	Since $ C $ is known to be a tree, and hence $ |E| = O(m) $, we can compute the intersection graph and the stub lengths in $ O(m\log m) $ time and space.
@@ -435,11 +437,11 @@ T_i(u) = \ell_i(a(u)) + \sum_{v \in c(u)}
 %For the runtime we can again argue the same as in Section~\ref{sec:tree}, but this time we have to also check cycles of length $ n_c $ which leads to a runtime of $ O(n_ck^2) $ for a block vertex $ u \in \mathcal V $ with $ n_c = |\textit{cycle}(u)| $. In case $ u $ is an articulation vertex we can solve it in $ O(k) $. As before the optimal solution to the \maxsped problem on $ G $ with drawing $ \Gamma $ can be found by backtracking from the root. Additionally the intersection graph can be computed in $ O(m\log m) $ where $ m $ is the number of edges in the original graph $ G $ since $ |E| = O(m) $ in a cactus and we obtain the following theorem.
 T_{i_p(v)}(v) & \text{if } 1 \le i < i_p(v)\\ %\ell_i(a(u)) \leq a \\
 T_{i_q(v)}(v) & \text{if } i_p(v) < i \leq i_q(v) \\
-T_{0}(v) & \text{otherwise}
+T_{0}(v) & \text{otherwise.}
 % \solshort(v) & \text{if } i < i_p(v)\\ %\ell_i(a(u)) \leq a \\
 % \solmid(v) & \text{if } i_p(v) < i \leq i_q(v) \\
 % \sollong(v) & \text{otherwise}
-\end{cases}.
+\end{cases}
 \end{align}
 For a block node $ u \in \mathcal V $ we cut open the cycle it represents at vertex $a(p(u))$ (refer to Bruckdorfer et al.~\cite{bcgkmn-pped-17} for details) and consider the three relevant stub lengths of the parent's segment $s(a(p(u)))$ induced by $i_p(u)$ and $i_q(u)$ and the whole segment. 
 The resulting subgraph is a path on $V(u)$ with attached children that are articulation vertices in $\mathcal T$, so we can apply our algorithm of Section~\ref{sec:tree} with minor modifications.

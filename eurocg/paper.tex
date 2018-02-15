@@ -39,7 +39,7 @@
 \patchBothAmsMathEnvironmentsForLineno{gather}%
 \patchBothAmsMathEnvironmentsForLineno{multline}%
 }
-\linenumbers
+%\linenumbers
 
 %helpful if your graphic files are in another directory
 %\graphicspath{{./graphics/}}
@@ -71,6 +71,8 @@
 %mandatory. First: Use abbreviated first/middle names. 
 %Second (only in severe cases): Use first author plus 'et. al.'
 \authorrunning{M. Höller, F. Klute, S. Nickel, M. N\"ollenburg, and B. Schreiber} 
+
+\ArticleNo{50}
 
 % Author macros::end %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -316,8 +318,8 @@ Figure~\ref{fig:tree} highlights the stub lengths that are considered in $\solsh
 	T_i(u) = \ell_i(u) + \sum_{v \in c(u)}
 	\begin{cases}
 		\solshort(v) & \text{if } s(u) \text{ with length } \ell_i(u) \text{ intersects } s(v) \\
-		\sollong(v) & \text{otherwise}
-	\end{cases}.
+		\sollong(v) & \text{otherwise.}
+	\end{cases}
 \end{align}
 The correctness of Recurrence~(\ref{rec:tree}) follows by induction. 
 For a leaf $u$ in $C$ the set $c(u)$ is empty and the correctness of $T_i(u)$ is immediate.

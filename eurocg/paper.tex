@@ -125,7 +125,7 @@ A \emph{partial edge drawing (PED)} is a graph drawing that maps vertices to poi
 These edge stubs are obtained by erasing one contiguous central piece of the straight-line segment connecting the two endpoints of each edge.
 In other words each straight-line edge is divided into three parts, of which only the two outer ones are drawn (see Fig.~\ref{fig:examples}).
 More restricted and better readable~\cite{blmt-pedhmitc-16} variations of PEDs are \emph{symmetric} PEDs, in which both stubs of an edge must have the same length (see Fig.~\ref{fig:examples}(b)), and \emph{homogeneous} PEDs, in which the ratio of the stub length to the total edge length is the same for all edges.
-\textcolor{blue}{Symmetric stubs facilitate finding adjacent vertices due to the identical stub lengths at both vertices, and symmetric homogeneous stubs additionally indicate the distance at which to find a neighboring vertex.}
+Symmetric stubs facilitate finding adjacent vertices due to the identical stub lengths at both vertices, and symmetric homogeneous stubs additionally indicate the distance at which to find a neighboring vertex.
 The natural optimization problem in this formal setting is \emph{ink maximization}, i.e., maximizing the total stub length, so that as much information as possible is given in the drawing while all crossings disappear in the negative background space. 
 
 
@@ -195,12 +195,16 @@ In this section we close the gap between the known hardness of \maxsped~\cite{b-
 %		\begin{cutout}{2}{0pt}{0.44\textwidth}{15}
 	We reduce from the \NP-hard problem \ppsat~\cite{l-pftu-82} using similar ideas as in Bruckdorfer's sketch of the hardness proof for general \maxsped~\cite{b-sgh-15}. 
 %	Bruckdorfer reduces from the more restricted problem \textsc{Planar Positive 1-in-3 Sat}.
+Here we specify precisely the maximum ink contributions of all gadgets needed for a satisfying variable assignment. 
+Our variable gadgets are cycles of edge pairs that admit exactly two maximum-ink states.
+%Further we changed the variable gadgets to cycles of edge pairs, partly to guarantee, that the gadgets have the same ink value regardless of their corresponding truth values and partly for aesthetic reasons. 
+Finally we construct clause gadgets consisting of three pairwise intersecting edges so that all crossings are between two edges only, while Bruckdorfer's gadgets have multiple edges intersecting in the same point.
 	Let $\phi$ be a planar 3-Sat formula with $n$ variables $\{x_1, \dots, x_n\}$ and $m$ clauses $\{c_1, \dots, c_m\}$, each consisting of three literals.
 	We can assume that $\phi$ comes with a planar drawing of its variable-clause graph $H_\phi$, which has a vertex for each variable $x_i$ and a vertex for each clause $c_j$.
 	Each clause vertex is connected to the three variables appearing in the clause.
 	In the drawing of $H_\phi$ all variable vertices are placed on a horizontal line and the clause vertices connect to the adjacent variable vertices either from above or from below the horizontal line.
-	In our gadget-based reduction we mimic the drawing of $H_\phi$ by creating a 3-plane drawing $\Gamma_\phi$ as a set of line segments of uniform length and a value $L$ such that $\Gamma_\phi$ has a SPED with ink at least $L$ if and only if $\phi$ is satisfiable.
-	Figure~\ref{fig:gadget_connection} shows a sketch of the gadgets.
+	In our reduction (see Fig.~\ref{fig:gadget_connection}) we mimic the drawing of $H_\phi$ by creating a 3-plane drawing $\Gamma_\phi$ as a set of line segments of uniform length and a value $L$ such that $\Gamma_\phi$ has a SPED with ink at least $L$ if and only if $\phi$ is satisfiable.
+%	Figure~\ref{fig:gadget_connection} shows a sketch of the gadgets.
 %		\end{cutout}
 
 		\begin{figure}
@@ -249,14 +253,16 @@ In this section we close the gap between the known hardness of \maxsped~\cite{b-
 	Conversely, assume that we have a SPED with ink value $L$. 
 	By construction, every red-green segment pair and every clause gadget must contribute its respective maximum ink value.
 	In particular, each variable gadget is either in state \emph{true} or \emph{false}.
-	We claim that this truth assignment satisfies $\phi$.
-	For each clause, one segment must have full length and as argued before the path connecting that segment to a variable gadget must have all segments at even positions as length-1 stubs and all segments at odd positions as full segments. 
-	In particular, the first segment of the literal path is fully drawn and therefore, in a SPED with ink $L$, the intersecting segment of the variable cannot be fully drawn.
-	In fact, it must be drawn as length-1 stubs for otherwise the variable gadget would not contribute its maximum ink value.
-	But then by construction, the selected variable value sets our literal to \emph{true}.	
+	By design of the gadgets it is straight-forward to verify that the corresponding truth assignment satisfies~$\phi$.
+%
+	% We claim that this truth assignment satisfies $\phi$.
+	% For each clause, one segment must have full length and as argued before the path connecting that segment to a variable gadget must have all segments at even positions as length-1 stubs and all segments at odd positions as full segments.
+	% In particular, the first segment of the literal path is fully drawn and therefore, in a SPED with ink $L$, the intersecting segment of the variable cannot be fully drawn.
+	% In fact, it must be drawn as length-1 stubs for otherwise the variable gadget would not contribute its maximum ink value.
+	% But then by construction, the selected variable value sets our literal to \emph{true}.
 \end{proof}
 
-\textcolor{blue}{We extended Bruckdorfers proof-sketch by giving the ink contributions of each part of $\Gamma_\phi$, in order to give an ink value $L$ that can be achieved if and only if $\phi$ is satisfiable. Further we changed the variable gadgets to cycles of edge pairs, partly to guarantee, that the gadgets have the same ink value regardless of their corresponding truth values and partly for aesthetic reasons. And finally we changed the clause gadgets from three edges intersecting in the same point to the described triangles in order to achieve general position.}
+
 
 %\newpage %delete later
 \section{Two polynomial special cases}
@@ -308,7 +314,7 @@ We define the following two values, which allow us to categorize the stub length
 %Since we know $ C $ is a tree every vertex $ u \in V $ with degree $ \delta $ has a parent $ p(u) \in V $. For this parent there exists one stub length $ \ell_j(p(u)) $ in the sequence of stub lengths $ \ell_0(p(u)),\dots,\ell_{\delta}(p(u)) $ such that drawing $ p(u) $ with these stubs does not intersect a completely drawn $ u $, while drawing $ p(u) $ with $ \ell_{j + 1}(p(u)) $, i.e. the next longer stub length, intersects $ \ell_0(u) $. We call the solution which would intersect the parent $ \sollong(u) $ and the one not intersecting the parent $ \solshort(u) $. See Figure~\ref{fig:tree} for an illustration. More formally let $ j $ be the index such that stubs of length $ \ell_j(p(u)) $ do not intersect $ s(u) $, but $ \ell_{j +1}(p(u)) $ would, we set:
 \begin{align*}
 %\[	
-	\solshort(u) = \max\{T_1(u),\dots,T_{i_p}(u)\}\\ % \qquad
+	\solshort(u) = \max\{T_1(u),\dots,T_{i_p}(u)\}\\
 	\sollong(u) = \max\{T_0(u),\dots,T_{\delta}(u)\}.
 %\]
 \end{align*}
@@ -420,9 +426,9 @@ For a block node $u$, $i_p$ and $i_q$ are the indices corresponding to the inter
 %These are exactly the indices of the stub-lengths leading to an intersection between two cycles of segments in $ \Gamma $. 
 Similar to Section~\ref{sec:tree} we now define three values for each articulation node $ u \in \mathcal V $ with degree $ \delta $:
 \begin{align*}
-	\sollong(u) = \max\{T_0(u),\dots,T_\delta(u)\}\\
+	\sollong(u) = \max\{T_0(u),\dots,T_\delta(u)\} \\
 	\solmid(u) = \max\{T_1(u),\dots,T_{i_q}(u)\}\\
-	\solshort(u) = \max\{T_1(u),\dots,T_{i_p}(u)\}.
+	 \solshort(u) = \max\{T_1(u),\dots,T_{i_p}(u)\}. 
 \end{align*}
 Further, we define the recurrence $T_i(u)$ for all articulation nodes $u \in \mathcal V$:
 \begin{align}

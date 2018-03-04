@@ -1,0 +1,103 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,left=15mm,bottom=20mm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts,amsmath}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{wrapfig}
+
+\newtoks\Tauthors
+\newtoks\Ttitle
+\newcount\numfigs
+\newbox\figsBox
+\newbox\absBox
+\newdimen\figureheight
+\figureheight=29mm
+\newif\ifFigureBorder
+\FigureBordertrue
+
+\def\authors{\Tauthors=}
+\let\author=\authors
+\def\title{\Ttitle=}
+\def\speaker#1{\setbox0=\hbox{#1}\dp0=0pt\underline{\box0}}
+\def\onefigure{\numfigs=1 \def\Tfigone}
+\def\twofigures#1#2{\numfigs=2 \def\Tfigone{#1}\def\Tfigtwo{#2}}
+\def\nofigures{\numfigs=0}
+\def\wrapfigside{r}
+
+\renewenvironment{abstract}
+{%
+%
+\begingroup
+\ifFigureBorder
+\else 
+  \advance \figureheight by 2\fboxsep
+  \advance \figureheight by 2\fboxrule
+  \fboxsep=-\fboxrule
+\fi
+%
+\ifnum\numfigs=1
+\global\setbox\figsBox=\hbox{\fbox{{{\includegraphics[height=\figureheight]{\Tfigone}}}}}
+\fi
+\ifnum\numfigs=2
+\global\setbox\figsBox=\hbox{%
+\fbox{\includegraphics[height=\figureheight]{\Tfigone}}
+\fbox{\includegraphics[height=\figureheight]{\Tfigtwo}}%
+}
+\fi
+\endgroup % reset figureheight
+\setbox\figsBox = \vbox{\box\figsBox\hrule height 0pt}
+%
+\bigbreak
+\hbox\bgroup\vrule\vbox\bgroup
+\hrule
+\hbox{
+  \begin{minipage}[t]{33.8mm}
+    \strut Weds 15:20--15:37 \\
+\textbf{4A},
+room ???, \#53
+\strut
+  \end{minipage}\vrule
+% \strut\textbf{3A}, Thu 9:20--9:33, room 054}
+%\hrule\texttt{}
+%\hbox{
+\ \begin{minipage}[t]{140mm}%
+\strut\textcolor{blue}{\textbf{\the\Ttitle}}\strut%\end{minipage}\
+%}
+%\hbox{ \begin{minipage}{170mm}
+\par
+\strut\textit{\the\Tauthors}\strut\end{minipage}\ }
+\hrule
+\smallskip
+\setbox \absBox =
+\hbox\bgroup\
+\ifnum\numfigs>0
+  \lower 11,5pt\hbox{\vrule depth\figureheight width 0pt}%
+\fi
+\begin{minipage}[t]{174.5mm}
+\ifnum\numfigs>0
+\setlength\intextsep{0pt}
+\begin{wrapfigure}[7]{\wrapfigside}{0mm}
+  \vbox{\vskip -1,3pt
+    \box\figsBox}
+\end{wrapfigure}
+\fi
+\parskip=1,5pt
+\vskip 2pt
+}
+{ 
+%
+\end{minipage}\ \egroup
+\box\absBox
+\smallskip
+\vskip 1pt
+\hrule\egroup\vrule\egroup
+\FigureBordertrue
+}
+
+
+\begin{document}
+
+\input abstract.tex
+
+\end{document}
